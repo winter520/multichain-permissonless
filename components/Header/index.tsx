@@ -7,8 +7,9 @@ import {
   Avatar,
   Dropdown
 } from "@nextui-org/react";
+// import { useRouter } from 'next/router';
 // import { useTranslation } from 'react-i18next'
-import useTranslation from '@/pages/i18n'
+import {useTranslation} from '@/pages/i18n'
 
 // import { useCallback } from "react";
 import { Layout } from "./layouts";
@@ -33,10 +34,11 @@ function PathMatch (match:any) {
 export default function App() {
   const { isDark } = useTheme();
   const { t } = useTranslation()
-console.log(t('router'))
+  // const router = useRouter();
+// console.log(params)
   return (
     <Layout>
-      <Navbar shouldHideOnScroll isBordered={isDark} variant="sticky" disableShadow>
+      <Navbar isBordered={isDark} variant="sticky" disableShadow>
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           css={{
@@ -45,7 +47,7 @@ console.log(t('router'))
             },
           }}
         >
-          <Logo />
+          <Link href="/"><Logo /></Link>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
@@ -57,11 +59,11 @@ console.log(t('router'))
             navList.map((item, index) => {
               if (item.isOutLink) {
                 return <Navbar.Item key={index} id={index + ''}>
-                  <Link  href={item.path}>{t(item.textKey)}</Link>
+                  <Link href={item.path}>{t(item.textKey)}</Link>
                 </Navbar.Item>
               } else {
                 return <Navbar.Link
-                  href={item.path}
+                  href={`${item.path}`}
                   key={index}
                   isActive={PathMatch(item.regex)}
                   id={index + ''}

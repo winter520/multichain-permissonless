@@ -9,13 +9,14 @@ const LanguageMap = {
   'zh-CN': Zh,
 };
 
-const useTranslation = () => {
+
+export function useTranslation () {
   const router = useRouter();
-  const jsonFun = useCallback((key, params = {}): {key:string, params?:any} => {
+  const jsonFun = useCallback((key, params = {}) => {
       // console.log(router)
       // console.log(key)
       if (!router) return key; 
-      let value = LanguageMap?.[router?.locale]?.[key]; 
+      let value = LanguageMap[router.locale][key]; 
       // console.log(value)
       if (!key || !value) return key; 
       
@@ -29,6 +30,4 @@ const useTranslation = () => {
   return {
     t: jsonFun,
   };
-};
-
-export default useTranslation;
+}
