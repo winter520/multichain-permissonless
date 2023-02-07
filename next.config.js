@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  distDir: 'app',
+  distDir: 'build',
   // compiler: {
   //   // Enables the styled-components SWC transform
   //   styledComponents: true

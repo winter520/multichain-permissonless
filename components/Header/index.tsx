@@ -5,19 +5,30 @@ import {
   Text, 
   useTheme,
   Avatar,
-  Dropdown
+  Dropdown,
+  Switch
 } from "@nextui-org/react";
 // import { useRouter } from 'next/router';
 // import { useTranslation } from 'react-i18next'
 import {useTranslation} from '@/pages/i18n'
+import { useTheme as useNextTheme } from 'next-themes'
 
-// import { useCallback } from "react";
-import { Layout } from "./layouts";
+import AccountDetails from "../AccountDetails";
+
 import Logo from "./logo";
 
 import {navList} from './nav'
+import {
+  SunIcon,
+  MoonIcon
+} from './dark'
 
 import config from '@/config'
+
+import {
+  // useModalOpen,
+  useWalletModalToggle
+} from "@/state/application/hooks"
 
 function PathMatch (match:any) {
   if (config.isBrowser) {
@@ -31,14 +42,19 @@ function PathMatch (match:any) {
   return false
 }
 
+
+
 export default function App() {
   const { isDark } = useTheme();
   const { t } = useTranslation()
+  const toggleWalletModal = useWalletModalToggle()
+  const { setTheme } = useNextTheme()
   // const router = useRouter();
 // console.log(params)
   return (
-    <Layout>
-      <Navbar isBordered={isDark} variant="sticky" disableShadow>
+    <>
+      <AccountDetails />
+      <Navbar variant="sticky" disableShadow>
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           css={{
@@ -72,6 +88,7 @@ export default function App() {
             })
           }
         </Navbar.Content>
+
         <Navbar.Content
           css={{
             "@xs": {
@@ -80,49 +97,23 @@ export default function App() {
             },
           }}
         >
-          <Dropdown placement="bottom-right">
-            <Navbar.Item>
-              <Dropdown.Trigger>
-                <Avatar
-                  bordered
-                  as="button"
-                  color="secondary"
-                  size="md"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
-              </Dropdown.Trigger>
-            </Navbar.Item>
-            <Dropdown.Menu
-              aria-label="User menu actions"
-              color="secondary"
-              onAction={(actionKey) => console.log({ actionKey })}
-            >
-              <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                <Text b color="inherit" css={{ d: "flex" }}>
-                  Signed in as
-                </Text>
-                <Text b color="inherit" css={{ d: "flex" }}>
-                  zoey@example.com
-                </Text>
-              </Dropdown.Item>
-              <Dropdown.Item key="settings" withDivider>
-                My Settings
-              </Dropdown.Item>
-              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-              <Dropdown.Item key="analytics" withDivider>
-                Analytics
-              </Dropdown.Item>
-              <Dropdown.Item key="system">System</Dropdown.Item>
-              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-              <Dropdown.Item key="help_and_feedback" withDivider>
-                Help & Feedback
-              </Dropdown.Item>
-              <Dropdown.Item key="logout" withDivider color="error">
-                Log Out
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Switch
+            size="xl"
+            iconOn={<SunIcon filled />}
+            iconOff={<MoonIcon filled />}
+            checked={isDark}
+            onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
+          />
+          <Avatar
+            bordered
+            as="button"
+            color="secondary"
+            size="md"
+            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            onClick={toggleWalletModal}
+          />
         </Navbar.Content>
+
         <Navbar.Collapse>
           {
             navList.map((item, index) => {
@@ -133,6 +124,6 @@ export default function App() {
           }
         </Navbar.Collapse>
       </Navbar>
-    </Layout>
+    </>
   );
 }

@@ -14,7 +14,6 @@ export default function Logo () {
       <Image
         width={"100%"}
         height={38}
-        // autoResize={true}
         maxDelay={0}
         src={"/logo/logo.png"}
         alt="Multichain"
