@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 // import { NextUIProvider } from '@nextui-org/react'
@@ -10,13 +11,25 @@ import store from '@/state'
 
 import ThemesProvider from '@/theme'
 
+// import dynamic from 'next/dynamic'
+
+// const MyComponentNoSSR = dynamic(() => import('my-component'), {
+//     ssr: false,
+// })
 
 // import Web3ReactManager from '@/components/Web3ReactManager'
 
 // import AppBody from '@/components/AppBody'
 // import AppContainer from '@/components/AppBody/AppContainer'
 
+const isBrowser = (() => typeof window !== 'undefined')()
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const [load,setLoad] = useState(false)
+  useEffect(()=>{
+    setLoad(true)
+  },[])
+  if (!load || !isBrowser) return <></>
   return (
     <>
       <Head>

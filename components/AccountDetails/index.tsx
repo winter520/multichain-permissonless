@@ -47,7 +47,7 @@ export default function AccountDetails () {
                     // paddingLeft: "12px"
                   }}
                 >Account</Text>
-                <Button flat color="primary" auto>
+                <Button ghost color="secondary" auto size="sm">
                   Change
                 </Button>
               </Row>
@@ -59,7 +59,7 @@ export default function AccountDetails () {
         </AccountInfoBox>
       </Modal.Body>
       <Modal.Footer>
-        
+
       </Modal.Footer>
     </Modal>
   </>

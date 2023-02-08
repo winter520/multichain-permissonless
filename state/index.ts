@@ -18,7 +18,14 @@ import user from './user/reducer'
 // import trx from '../nonevm/trx/reducer'
 // import nonevm from '../nonevm'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'rpc', 'pools', 'nft']
+const PERSISTED_KEYS: string[] = [
+  'user',
+  // 'transactions', 
+  // 'lists', 
+  // 'rpc', 
+  // 'pools', 
+  // 'nft'
+]
 
 const store = configureStore({
   reducer: {

@@ -6,15 +6,19 @@ import {
   useTheme,
   Avatar,
   Dropdown,
-  Switch
+  Switch,
+  styled,
+  theme
 } from "@nextui-org/react";
 // import { useRouter } from 'next/router';
 // import { useTranslation } from 'react-i18next'
 import {useTranslation} from '@/pages/i18n'
+import Jazzicon from 'react-jazzicon'
 import { useTheme as useNextTheme } from 'next-themes'
 
-import AccountDetails from "../AccountDetails";
+import Identicon from '../Identicon'
 
+import AccountDetails from "../AccountDetails";
 import Logo from "./logo";
 
 import {navList} from './nav'
@@ -42,7 +46,12 @@ function PathMatch (match:any) {
   return false
 }
 
-
+const IdenticonBox = styled('div', {
+  cursor: "pointer",
+  backgroundColor: theme.colors.secondary.value,
+  padding: "1px",
+  borderRadius: "100%"
+})
 
 export default function App() {
   const { isDark } = useTheme();
@@ -54,7 +63,7 @@ export default function App() {
   return (
     <>
       <AccountDetails />
-      <Navbar variant="sticky" disableShadow>
+      <Navbar variant="sticky" disableShadow >
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           css={{
@@ -67,9 +76,9 @@ export default function App() {
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
-          activeColor="secondary"
+          activeColor="primary"
           hideIn="xs"
-          variant="highlight-rounded"
+          variant="underline"
         >
           {
             navList.map((item, index) => {
@@ -83,6 +92,7 @@ export default function App() {
                   key={index}
                   isActive={PathMatch(item.regex)}
                   id={index + ''}
+                  underlineHeight="light"
                 >{t(item.textKey)}</Navbar.Link>
               }
             })
@@ -97,21 +107,20 @@ export default function App() {
             },
           }}
         >
-          <Switch
-            size="xl"
-            iconOn={<SunIcon filled />}
-            iconOff={<MoonIcon filled />}
-            checked={isDark}
-            onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
-          />
-          <Avatar
-            bordered
-            as="button"
-            color="secondary"
-            size="md"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            onClick={toggleWalletModal}
-          />
+          <Navbar.Item>
+            <Switch
+              size="xl"
+              iconOn={<SunIcon filled />}
+              iconOff={<MoonIcon filled />}
+              checked={isDark}
+              onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
+            />
+          </Navbar.Item>
+          <Navbar.Item>
+            <IdenticonBox onClick={toggleWalletModal}>
+              <Identicon imageKey={"0x1111111111111111111111111111111111111111"} size={32}/>
+            </IdenticonBox>
+          </Navbar.Item>
         </Navbar.Content>
 
         <Navbar.Collapse>
