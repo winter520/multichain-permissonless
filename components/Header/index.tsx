@@ -1,6 +1,6 @@
 import { 
   Navbar, 
-  // Button, 
+  Button, 
   Link, 
   Text, 
   useTheme,
@@ -13,21 +13,27 @@ import {
 // import { useRouter } from 'next/router';
 // import { useTranslation } from 'react-i18next'
 import {useTranslation} from '@/pages/i18n'
-import Jazzicon from 'react-jazzicon'
+// import Jazzicon from 'react-jazzicon'
 import { useTheme as useNextTheme } from 'next-themes'
 
 import Identicon from '../Identicon'
-
 import AccountDetails from "../AccountDetails";
-import Logo from "./logo";
+import TokenLogo from "../TokenLogo";
 
+import Logo from "./logo";
 import {navList} from './nav'
+// import SelectNetwork from "./SelectNetwork";
+
 import {
   SunIcon,
   MoonIcon
 } from './dark'
 
 import config from '@/config'
+
+import {
+  useActiveReact
+} from '@/hooks/useActiveReact'
 
 import {
   // useModalOpen,
@@ -48,9 +54,9 @@ function PathMatch (match:any) {
 
 const IdenticonBox = styled('div', {
   cursor: "pointer",
-  backgroundColor: theme.colors.secondary.value,
-  padding: "1px",
-  borderRadius: "100%"
+  // backgroundColor: theme.colors.secondary.value,
+  // padding: "1px",
+  // borderRadius: "100%"
 })
 
 export default function App() {
@@ -58,6 +64,7 @@ export default function App() {
   const { t } = useTranslation()
   const toggleWalletModal = useWalletModalToggle()
   const { setTheme } = useNextTheme()
+  const {chainId} = useActiveReact()
   // const router = useRouter();
 // console.log(params)
   return (
@@ -100,13 +107,25 @@ export default function App() {
         </Navbar.Content>
 
         <Navbar.Content
-          css={{
-            "@xs": {
-              w: "12%",
-              jc: "flex-end",
-            },
-          }}
+          // css={{
+          //   "@xs": {
+          //     w: "5%",
+          //     jc: "flex-end",
+          //   },
+          // }}
         >
+          <Navbar.Item>
+            <Button
+              light
+              auto
+              icon={<TokenLogo symbol={config.chainInfo[chainId].symbol}/>}
+              css={{
+                backgroundColor: !isDark ? theme.colors.purple100.value : 'rgba(255,255,255,.2)'
+              }}  
+            >
+              {config.chainInfo[chainId].name}
+            </Button>
+          </Navbar.Item>
           <Navbar.Item>
             <Switch
               size="xl"
@@ -118,7 +137,13 @@ export default function App() {
           </Navbar.Item>
           <Navbar.Item>
             <IdenticonBox onClick={toggleWalletModal}>
-              <Identicon imageKey={"0x1111111111111111111111111111111111111111"} size={32}/>
+              <Avatar
+                icon={<Identicon imageKey={"0x1111111111111111111111111111111111111111"}/>}
+                size="sm"
+                zoomed
+                color="gradient"
+                bordered
+              />
             </IdenticonBox>
           </Navbar.Item>
         </Navbar.Content>

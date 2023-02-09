@@ -1,5 +1,13 @@
 import React from 'react'
-import { Modal, Button, Text, Grid, Row, Card, styled } from "@nextui-org/react";
+import {
+  Modal,
+  Button,
+  Text,
+  Grid,
+  Row,
+  Card,
+  styled
+} from "@nextui-org/react";
 
 import {
   useModalOpen,
@@ -13,7 +21,7 @@ const AccountInfoBox = styled('div', {
   padding: '0 0px',
 })
 
-export default function AccountDetails () {
+export default function AccountDetails() {
   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
   const toggleWalletModal = useWalletModalToggle()
   return <>

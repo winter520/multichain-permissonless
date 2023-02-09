@@ -7,7 +7,7 @@ import { useActiveReact } from '@/hooks/useActiveReact'
 import { AppDispatch, AppState } from '../index'
 import {
   updateUserExpertMode,
-  selectNetworkId,
+  selectNetwork,
   starChain,
   starToken,
   addTokenToWallet,
@@ -49,13 +49,13 @@ export function useInterfaceModeManager(): [boolean, () => void] {
 
 export function useUserSelectChainId(): {selectNetworkInfo?:any, setUserSelectNetwork?: (selectChainInfo: any) => void} {
   const dispatch = useDispatch<AppDispatch>()
-  const selectNetworkInfo:any = useSelector<AppState, AppState['user']['selectNetworkId']>(state => {
-    return state.user.selectNetworkId
+  const selectNetworkInfo:any = useSelector<AppState, AppState['user']['selectNetwork']>(state => {
+    return state.user.selectNetwork
   })
 
   const setUserSelectNetwork = useCallback(
     (selectNetworkInfo: any) => {
-      dispatch(selectNetworkId(selectNetworkInfo))
+      dispatch(selectNetwork(selectNetworkInfo))
     },
     [dispatch]
   )

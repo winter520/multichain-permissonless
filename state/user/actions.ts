@@ -3,7 +3,7 @@ import { createAction } from '@reduxjs/toolkit'
 export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>('user/updateUserExpertMode')
 export const updateInterfaceMode = createAction<{ userInterfaceMode: boolean }>('user/updateInterfaceMode')
 
-export const selectNetworkId = createAction<{ chainId: string, label: string }>('user/selectNetworkId')
+export const selectNetwork = createAction<{ chainId: string, label: string }>('user/selectNetwork')
 
 export const starChain = createAction<{ account: any, chainId: any }>('application/starChain')
 export const starToken = createAction<{ chainId: any, token: any }>('application/starToken')

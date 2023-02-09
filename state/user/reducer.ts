@@ -2,7 +2,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
   updateUserExpertMode,
-  selectNetworkId,
+  selectNetwork,
   starChain,
   starToken,
   addTokenToWallet,
@@ -17,7 +17,7 @@ export interface UserState {
   userExpertMode: boolean
   userInterfaceMode: boolean
   timestamp: number
-  selectNetworkId: any
+  selectNetwork: any
   starChain: any
   starToken: any
   addTokenToWallet: any
@@ -29,7 +29,7 @@ export const initialState: UserState = {
   userExpertMode: false,
   userInterfaceMode: false,
   timestamp: currentTimestamp(),
-  selectNetworkId: {},
+  selectNetwork: {},
   starChain: {},
   starToken: {},
   addTokenToWallet: '',
@@ -97,8 +97,8 @@ export default createReducer(initialState, builder =>
         }
       }
     })
-    .addCase(selectNetworkId, (state, { payload: { chainId, label } }) => {
-      state.selectNetworkId = {
+    .addCase(selectNetwork, (state, { payload: { chainId, label } }) => {
+      state.selectNetwork = {
         chainId, label
       }
     })

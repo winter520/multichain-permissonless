@@ -4,6 +4,7 @@ import { save, load } from 'redux-localstorage-simple'
 import application from './application/reducer'
 // import { updateVersion } from './global/actions'
 import user from './user/reducer'
+import address from './address/reducer'
 // import transactions from './transactions/reducer'
 // import swap from './swap/reducer'
 // import lists from './lists/reducer'
@@ -31,6 +32,7 @@ const store = configureStore({
   reducer: {
     application,
     user,
+    address,
     // transactions,
     // swap,
     // burn,

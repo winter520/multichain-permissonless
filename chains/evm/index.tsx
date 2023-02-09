@@ -16,6 +16,10 @@ export function useLoginEvm () {
         }
         evmWallet.request({
           method: "eth_requestAccounts",
+        }).then((account:any) => {
+          console.log(account)
+        }).catch((error:any) => {
+          console.log(error)
         })
       } else if (!type) {
         let walletName = 'Metamask'
@@ -31,5 +35,5 @@ export function useLoginEvm () {
     }
   }, [])
 
-  return loginEvm
+  return {loginEvm}
 }
