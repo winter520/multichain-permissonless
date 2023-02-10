@@ -9,10 +9,10 @@ const nextConfig = {
   //   // Enables the styled-components SWC transform
   //   styledComponents: true
   // },
-  i18n: {
-    locales: ['en-US', 'zh-CN'],
-    defaultLocale: 'en-US',
-  },
+  // i18n: {
+  //   locales: ['en', 'zh'],
+  //   defaultLocale: 'en',
+  // },
   webpack: {
     module: {
       rules: [

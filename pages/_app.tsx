@@ -11,6 +11,7 @@ import store from '@/state'
 
 import ThemesProvider from '@/theme'
 
+
 // import dynamic from 'next/dynamic'
 
 // const MyComponentNoSSR = dynamic(() => import('my-component'), {

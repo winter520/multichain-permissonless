@@ -11,8 +11,8 @@ import {
   theme
 } from "@nextui-org/react";
 // import { useRouter } from 'next/router';
-// import { useTranslation } from 'react-i18next'
-import {useTranslation} from '@/pages/i18n'
+import { useTranslation } from 'react-i18next'
+// import {useTranslation} from '@/pages/i18n--'
 // import Jazzicon from 'react-jazzicon'
 import { useTheme as useNextTheme } from 'next-themes'
 
