@@ -11,8 +11,9 @@ import store from '@/state'
 
 import ThemesProvider from '@/theme'
 
-
+import Header from '@/components/Header'
 // import dynamic from 'next/dynamic'
+import '@/utils/i18n'
 
 // const MyComponentNoSSR = dynamic(() => import('my-component'), {
 //     ssr: false,
@@ -45,6 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SSRProvider>
         <Provider store={store}>
           <ThemesProvider>
+            <Header />
             <Component {...pageProps} />
           </ThemesProvider>
         </Provider>

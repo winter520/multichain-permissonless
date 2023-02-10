@@ -4,6 +4,7 @@ import { CssBaseline } from '@nextui-org/react';
 
 // import Header from '@/components/Header'
 // import './i18n'
+
 class MyDocument extends Document {
   static async getInitialProps(ctx:any) {
     const initialProps = await Document.getInitialProps(ctx);

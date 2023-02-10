@@ -68,14 +68,14 @@ export const moreList = [
     isOutLink: true,
     isView: 1,
   },
-  // {
-  //   path: config.explorer,
-  //   textKey: 'explorer',
-  //   regex: '',
-  //   className: 'otherInfo',
-  //   isOutLink: true,
-  //   isView: 1,
-  // },
+  {
+    path: "https://scan.multichain.org/",
+    textKey: 'explorer',
+    regex: '',
+    className: 'otherInfo',
+    isOutLink: true,
+    isView: 1,
+  },
   {
     path: 'https://multichain.zendesk.com/hc/en-us',
     textKey: 'support',

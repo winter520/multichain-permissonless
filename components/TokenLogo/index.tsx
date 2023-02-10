@@ -21,32 +21,19 @@ function getSourcePath(symbol: string) {
       }
     }
   }
-  console.log(path)
+  // console.log(path)
   return path.default.src
-}
-const imageStyle = (size: any) => {
-  return {
-    width: size,
-    height: size,
-    minMidth: size,
-    minHeight: size,
-    borderRadius: size
-  }
 }
 export default function TokenLogo({
   symbol,
-  size = '1rem',
-  isAny = true,
+  size = 'xs',
   style,
   logoUrl,
-  isLazy,
 }: {
   symbol?: any
   size?: any
   style?: React.CSSProperties
   logoUrl?: any
-  isLazy?: boolean
-  isAny?: any
 }) {
   // const { chainId } = useActiveWeb3React()
   let path = ''
@@ -59,7 +46,8 @@ export default function TokenLogo({
   }
   return <Avatar
     src={path}
-    size="xs"
+    size={size}
+    style={style}
     zoomed
   />
 }

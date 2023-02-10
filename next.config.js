@@ -4,15 +4,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  distDir: 'build',
-  // compiler: {
-  //   // Enables the styled-components SWC transform
-  //   styledComponents: true
-  // },
-  // i18n: {
-  //   locales: ['en', 'zh'],
-  //   defaultLocale: 'en',
-  // },
+  exportPathMap: function () {
+    return {
+      '/': {page: '/'}
+    }
+  },
   webpack: {
     module: {
       rules: [
