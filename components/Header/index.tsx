@@ -11,10 +11,7 @@ import {
   theme
 } from "@nextui-org/react";
 import Link from 'next/link';
-// import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next'
-// import {useTranslation} from '@/pages/i18n--'
-// import Jazzicon from 'react-jazzicon'
+import { t } from 'i18next';
 import { useTheme as useNextTheme } from 'next-themes'
 
 import Identicon from '../Identicon'
@@ -23,7 +20,7 @@ import TokenLogo from "../TokenLogo";
 
 import Logo from "./logo";
 import {moreList, navList} from './nav'
-// import SelectNetwork from "./SelectNetwork";
+import SelectNetwork from "./SelectNetwork";
 
 import {
   SunIcon,
@@ -38,7 +35,8 @@ import {
 
 import {
   // useModalOpen,
-  useWalletModalToggle
+  useNetworkModalToggle,
+  useAccountModalToggle
 } from "@/state/application/hooks"
 
 function PathMatch (match:any) {
@@ -60,32 +58,11 @@ const IdenticonBox = styled('div', {
   // borderRadius: "100%"
 })
 
-const ChevronDownIcon = ({fill, size, width = 24, height = 24, ...props}:any) => {
-  return (
-    <svg
-      fill="none"
-      height={size || height || 24}
-      viewBox="0 0 24 24"
-      width={size || width || 24}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95"
-        stroke={fill}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeMiterlimit={10}
-        strokeWidth={1.5}
-      />
-    </svg>
-  );
-};
 
 export default function App() {
   const { isDark } = useTheme();
-  const { t } = useTranslation()
-  const toggleWalletModal = useWalletModalToggle()
+  const toggleNetworkModal = useNetworkModalToggle()
+  const toggleAccountModal = useAccountModalToggle()
   const { setTheme } = useNextTheme()
   const {chainId} = useActiveReact()
   // const router = useRouter();
@@ -93,6 +70,7 @@ export default function App() {
   return (
     <>
       <AccountDetails />
+      <SelectNetwork />
       <Navbar variant="sticky" disableShadow shouldHideOnScroll>
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
@@ -177,7 +155,8 @@ export default function App() {
               icon={<TokenLogo symbol={config.chainInfo[chainId].symbol}/>}
               css={{
                 backgroundColor: !isDark ? theme.colors.purple100.value : 'rgba(255,255,255,.2)'
-              }}  
+              }}
+              onClick={toggleNetworkModal}
             >
               {config.chainInfo[chainId].name}
             </Button>
@@ -192,7 +171,7 @@ export default function App() {
             />
           </Navbar.Item>
           <Navbar.Item>
-            <IdenticonBox onClick={toggleWalletModal}>
+            <IdenticonBox onClick={toggleAccountModal}>
               <Avatar
                 icon={<Identicon imageKey={"0x1111111111111111111111111111111111111111"}/>}
                 size="sm"

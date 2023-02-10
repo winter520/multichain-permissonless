@@ -11,7 +11,7 @@ import {
 
 import {
   useModalOpen,
-  useWalletModalToggle
+  useAccountModalToggle
 } from "@/state/application/hooks"
 import {
   ApplicationModal,
@@ -22,14 +22,14 @@ const AccountInfoBox = styled('div', {
 })
 
 export default function AccountDetails() {
-  const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
-  const toggleWalletModal = useWalletModalToggle()
+  const accountModalOpen = useModalOpen(ApplicationModal.ACCOUNT)
+  const toggleAccountModal = useAccountModalToggle()
   return <>
     <Modal
       closeButton
       aria-labelledby="modal-title"
-      open={walletModalOpen}
-      onClose={toggleWalletModal}
+      open={accountModalOpen}
+      onClose={toggleAccountModal}
     >
       <Modal.Header>
         <Row wrap="wrap" justify="flex-start" align="center">
