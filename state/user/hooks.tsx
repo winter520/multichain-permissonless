@@ -17,6 +17,7 @@ import {
 } from './actions'
 
 // import config from '@/config'
+import { ChainId } from '@/config/chainConfig/chainId'
 
 
 
@@ -47,21 +48,25 @@ export function useInterfaceModeManager(): [boolean, () => void] {
 }
 
 
-export function useUserSelectChainId(): {selectNetworkInfo?:any, setUserSelectNetwork?: (selectChainInfo: any) => void} {
+export function useUserSelectChainId() {
   const dispatch = useDispatch<AppDispatch>()
   const selectNetworkInfo:any = useSelector<AppState, AppState['user']['selectNetwork']>(state => {
     return state.user.selectNetwork
   })
 
   const setUserSelectNetwork = useCallback(
-    (selectNetworkInfo: any) => {
-      dispatch(selectNetwork(selectNetworkInfo))
+    ({chainId, label}: {
+      chainId: ChainId
+      label:any
+    }) => {
+      dispatch(selectNetwork({chainId, label}))
     },
     [dispatch]
   )
 
   return {
-    selectNetworkInfo, setUserSelectNetwork
+    selectNetworkInfo,
+    setUserSelectNetwork
   }
 }
 

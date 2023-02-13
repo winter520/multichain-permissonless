@@ -32,6 +32,12 @@ import config from '@/config'
 import {
   useActiveReact
 } from '@/hooks/useActiveReact'
+import {
+  useActiveWeb3React
+} from "@/hooks"
+import {
+  injected
+} from "@/connectors"
 
 import {
   // useModalOpen,
@@ -63,8 +69,9 @@ export default function App() {
   const { isDark } = useTheme();
   const toggleNetworkModal = useNetworkModalToggle()
   const toggleAccountModal = useAccountModalToggle()
+  const {activate} = useActiveWeb3React()
   const { setTheme } = useNextTheme()
-  const {chainId} = useActiveReact()
+  const {chainId, account} = useActiveReact()
   // const router = useRouter();
 // console.log(params)
   return (
@@ -171,15 +178,42 @@ export default function App() {
             />
           </Navbar.Item>
           <Navbar.Item>
-            <IdenticonBox onClick={toggleAccountModal}>
-              <Avatar
-                icon={<Identicon imageKey={"0x1111111111111111111111111111111111111111"}/>}
-                size="sm"
-                zoomed
-                color="gradient"
-                bordered
-              />
-            </IdenticonBox>
+            {
+              account ? (
+                <Button
+                  light
+                  auto
+                  icon={<Avatar
+                    icon={<Identicon imageKey={"0x1111111111111111111111111111111111111111"}/>}
+                    size="sm"
+                    zoomed
+                    color="gradient"
+                    bordered
+                  />}
+                  css={{
+                    backgroundColor: !isDark ? theme.colors.purple900.value : 'rgba(255,255,255,.2)'
+                  }}
+                  onClick={toggleAccountModal}
+                >
+                  {config.chainInfo[chainId].name}
+                </Button>
+              ) : (
+                <Button
+                  light
+                  auto
+                  css={{
+                    backgroundColor: !isDark ? theme.colors.purple800.value : 'rgba(255,255,255,.2)',
+                    color: theme.colors.white.value, 
+                  }}
+                  // onClick={toggleNetworkModal}
+                  onClick={() => {
+                    activate(injected)
+                  }}
+                >
+                  {t('ConnectToWallet')}
+                </Button>
+              )
+            }
           </Navbar.Item>
         </Navbar.Content>
 

@@ -96,4 +96,3 @@ export const controlConfig:any = {
   },
 }
 export const INIT_NODE = controlConfig[USE_VERSION].initNode
-export const NetworkContextName = 'NETWORK'

@@ -177,7 +177,7 @@ function ChainListBox ({
 }
 
 export default function SelectNetwork () {
-  const {chainId} = useActiveReact()
+  const {chainId, account} = useActiveReact()
   const {starTabIndex, onChangeStarTab} = useChangeStarTab('CHAIN')
   const networkModalOpen = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()

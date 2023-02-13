@@ -4,7 +4,6 @@ import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { injected } from '@/connectors'
-import { NetworkContextName } from '@/config/constant'
 import {
   ENV_NODE_CONFIG
 } from '@/config/constant'
@@ -12,18 +11,7 @@ import {
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: any } {
   const context = useWeb3ReactCore<Web3Provider>()
-  const contextNetwork = useWeb3ReactCore<Web3Provider>(NetworkContextName)
-  const EVM_CONTEXT = context.active ? context : contextNetwork
-  // const connectedWallet = useConnectedWallet()
-  // const { connect } = useWallet()
-  // console.log(context)
-  // console.log(contextNetwork)
-  // console.log(connectedWallet)
-  return EVM_CONTEXT
-  // return {
-  //   ...EVM_CONTEXT,
-  //   account: connectedWallet?.walletAddress
-  // }
+  return context
 }
 
 export function useEagerConnect() {

@@ -22,7 +22,7 @@ import '@/utils/i18n'
 // import Web3ReactManager from '@/components/Web3ReactManager'
 
 // import AppBody from '@/components/AppBody'
-// import AppContainer from '@/components/AppBody/AppContainer'
+import AppContainer from '@/components/AppBody/AppContainer'
 
 const isBrowser = (() => typeof window !== 'undefined')()
 
@@ -46,8 +46,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SSRProvider>
         <Provider store={store}>
           <ThemesProvider>
-            <Header />
-            <Component {...pageProps} />
+            <AppContainer>
+              <>
+                <Header />
+                <Component {...pageProps} />
+              </>
+            </AppContainer>
           </ThemesProvider>
         </Provider>
       </SSRProvider>

@@ -4,7 +4,9 @@ import {
   // createWeb3ReactRoot,
   Web3ReactProvider
 } from '@web3-react/core'
-import { NetworkContextName, isBrowser } from '@/config/constant'
+
+// import * as web3React from '@web3-react/core'
+import { isBrowser } from '@/config/constant'
 import getLibrary from '@/utils/getLibrary'
 import Web3ReactManager from '@/components/Web3ReactManager'
 
@@ -13,7 +15,7 @@ import Web3ReactManager from '@/components/Web3ReactManager'
 //   // NetworkInfo
 // } from '@terra-money/wallet-provider'
 
-
+// console.log(web3React)
 
 if (isBrowser && 'ethereum' in window) {
   ;(window.ethereum as any).autoRefreshOnNetworkChange = false
@@ -39,10 +41,9 @@ const walletConnectChainIds: Record<number, any> = {
 }
 
 export default function AppContainer({children}: { children: JSX.Element }) {
-  
-  // const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
   return (
     <>
+        {/* {children} */}
       {/* <WalletProvider
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}

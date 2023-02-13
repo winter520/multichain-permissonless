@@ -9,5 +9,6 @@
   "anyCall": "anyCall",
   "support": "Support",
   "explorer": "Explorer",
-  "selectNetwork": "Select Network"
+  "selectNetwork": "Select Network",
+  "ConnectToWallet": "Connect to a wallet"
 }

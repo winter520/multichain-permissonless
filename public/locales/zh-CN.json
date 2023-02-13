@@ -9,5 +9,6 @@
   "anyCall": "anyCall",
   "support": "支持",
   "explorer": "浏览器",
-  "selectNetwork": "选择网络"
+  "selectNetwork": "选择网络",
+  "ConnectToWallet": "连接钱包"
 }

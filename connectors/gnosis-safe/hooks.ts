@@ -8,13 +8,14 @@ export function useSafeAppConnection(connector: SafeAppConnector): boolean {
 
   useEffect(() => {
     connector.isSafeApp().then((loadedInSafe) => {
+      console.log('loadedInSafe', loadedInSafe)
       if (loadedInSafe) {
         // On success active flag will change and in that case we'll set tried to true, check the hook below
         activate(connector, undefined, true).catch(() => {
           setTried(true);
         });
       } else {
-        setTried(true);
+        setTried(false);
       }
     });
   }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
@@ -22,9 +23,9 @@ export function useSafeAppConnection(connector: SafeAppConnector): boolean {
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
     console.log(active)
-    if (active) {
-      setTried(true);
-    }
+    // if (active) {
+    //   setTried(true);
+    // }
   }, [active]);
 
   return tried;
