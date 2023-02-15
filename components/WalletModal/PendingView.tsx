@@ -12,7 +12,12 @@ import {
 } from "@nextui-org/react"
 
 const PendingSection = styled('div', {
-
+  display: "flex",
+  flexFlow: "column nowrap",
+  justifyContent: "center",
+  width: "100%",
+  height: "100%",
+  overflowY: "auto"
 })
 // const PendingSection = styled.div`
 //   ${({ theme }) => theme.flexColumnNoWrap};
@@ -26,7 +31,12 @@ const PendingSection = styled('div', {
 
 
 const LoadingMessage = styled('div', {
-
+  display: "flex",
+  flexFlow: "row nowrap",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  borderRadius: "12px",
+  marginBottom: "20px",
 })
 // const LoadingMessage = styled.div<{ error?: boolean }>`
 //   ${({ theme }) => theme.flexRowNoWrap};
@@ -135,7 +145,7 @@ export default function PendingView({
               color={option.color}
               header={option.name}
               subheader={option.description}
-              icon={require('@/public/images/' + option.iconName)}
+              icon={require('@/public/images/icon/' + option.iconName).default.src}
             />
           )
         }

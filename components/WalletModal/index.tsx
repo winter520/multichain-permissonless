@@ -1,6 +1,6 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { useTranslation } from 'react-i18next'
+import { t } from 'i18next';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -35,7 +35,8 @@ import {
 const Wrapper = styled('div', {
   margin: '0',
   padding: '0',
-  width: '100%'
+  width: '100%',
+  height: '100%'
 })
 const HeaderRow = styled('div', {
   padding: '1rem 1rem',
@@ -129,7 +130,6 @@ export default function WalletModal({
   const { account, chainId } = useActiveReact()
 // console.log(active)
 // console.log(connector)
-  const { t } = useTranslation()
 
   // const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
   const {walletView, setWalletView} = useWalletViews()
@@ -211,7 +211,7 @@ export default function WalletModal({
               link={option.href}
               header={option.name}
               subheader={null}
-              icon={require('@/public/images/' + option.iconName)}
+              icon={require('@/public/images/icon/' + option.iconName).default.src}
             />
           )
         }
@@ -273,7 +273,7 @@ export default function WalletModal({
             link={option.href}
             header={option.name}
             subheader={null} //use option.descriptio to bring back multi-line
-            icon={require('@/public/images/' + option.iconName)}
+            icon={require('@/public/images/icon/' + option.iconName).default.src}
           />
         )
       )
@@ -350,7 +350,6 @@ export default function WalletModal({
     <Modal
       scroll
       closeButton
-      // width="600px"
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={walletModalOpen}

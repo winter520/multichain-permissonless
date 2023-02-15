@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
-import { useTranslation } from 'react-i18next'
+import { t } from 'i18next';
 // import styled, { ThemeContext } from 'styled-components'
 import { useActiveWeb3React } from '@/hooks'
 import {useActiveReact} from '@/hooks/useActiveReact'
@@ -8,7 +8,7 @@ import { AppDispatch } from '@/state'
 import { clearAllTransactions } from '../../state/transactions/actions'
 import { shortenAddress } from '@/utils'
 // import { AutoRow } from '../Row'
-import Copy from './Copy'
+import Copy from '@/components/AccountDetails/copy'
 import Transaction from './Transaction'
 
 import { getEtherscanLink } from '@/utils'
@@ -284,7 +284,6 @@ export default function AccountDetails({
   openOptions
 }: AccountDetailsProps) {
   const { connector } = useActiveWeb3React()
-  const { t } = useTranslation()
   // const theme = useContext(ThemeContext)
   const {account, chainId} = useActiveReact()
   const dispatch = useDispatch<AppDispatch>()

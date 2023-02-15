@@ -215,7 +215,8 @@ export default function App() {
           //   },
           // }}
         >
-          <Navbar.Item hideIn="xs">
+          <ViewAccountInfo />
+          {/* <Navbar.Item hideIn="xs">
             <Button
               light
               auto
@@ -274,7 +275,7 @@ export default function App() {
                 </Button>
               )
             }
-          </Navbar.Item>
+          </Navbar.Item> */}
         </Navbar.Content>
 
         <Navbar.Collapse>

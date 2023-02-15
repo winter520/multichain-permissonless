@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import { useTranslation } from 'react-i18next'
-// import styled from 'styled-components'
 import { Loading as LoadingView } from "@nextui-org/react"
 
 const Loading = ({ duration = -1 }: { duration?: number }) => {

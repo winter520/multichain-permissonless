@@ -3,17 +3,24 @@ import {useCallback, useMemo} from 'react'
 import { ChainId } from '@/config/chainConfig/chainId'
 import config from '@/config'
 
-import {
-  useLoginEvm
-} from '@/chains/evm'
+// import {
+//   useLoginEvm
+// } from '@/chains/evm'
 
 import {
   useUserSelectChainId,
 } from "@/state/user/hooks"
+import {
+  useWalletModalToggle
+} from "@/state/application/hooks"
 
 export function useConnectWallet () {
+  const toggleWalletModal = useWalletModalToggle()
+
+  // const {loginEvm} = useLoginEvm()
+  
   const connectWallet = useCallback((chainId:ChainId) => {
-    const {loginEvm} = useLoginEvm()
+
     if (chainId === ChainId.TERRA) {
       // if (connect) {
       //   try {
@@ -101,8 +108,9 @@ export function useConnectWallet () {
       //   toggleWalletModal()
       // }
     } else {
-      loginEvm()
-      // toggleWalletModal()
+      // loginEvm()
+      console.log(chainId)
+      toggleWalletModal()
     }
   }, [])
 

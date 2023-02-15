@@ -5,7 +5,7 @@ import useCopyClipboard from '@/hooks/useCopyClipboard'
 // import { LinkStyledButton } from '../../theme'
 // import { CheckCircle, Copy } from 'react-feather'
 import CheckCircle from "@/public/images/icon/check-circle.svg"
-import Copy from "@/public/images/icon/Copy.svg"
+import Copy from "@/public/images/icon/copy.svg"
 
 import { 
   Navbar, 

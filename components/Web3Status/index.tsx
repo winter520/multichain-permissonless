@@ -3,7 +3,7 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 // import { darken, lighten } from 'polished'
 import React, { useMemo } from 'react'
 // import { Activity } from 'react-feather'
-import { useTranslation } from 'react-i18next'
+import { t } from 'i18next';
 // import styled, { css } from 'styled-components'
 import { isMobile } from 'react-device-detect'
 // import { useWallet, ConnectType } from '@terra-money/wallet-provider'
@@ -153,7 +153,6 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 
 function Web3StatusInner() {
-  const { t } = useTranslation()
   const { connector, error } = useWeb3React()
   // const { connect } = useWallet()
   const {account, chainId} = useActiveReact()
@@ -162,7 +161,7 @@ function Web3StatusInner() {
   // console.log(ENSName)
   const allTransactions = useAllTransactions()
 
-  const connectWallet = useConnectWallet()
+  const {connectWallet} = useConnectWallet()
 
   const sortedRecentTransactions = useMemo(() => {
     const txs = Object.values(allTransactions)
@@ -214,7 +213,10 @@ function Web3StatusInner() {
     )
   } else {
     return (
-      <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
+      <Web3StatusConnect id="connect-wallet" onClick={() => {
+        console.log(chainId)
+        connectWallet(chainId)
+      }}>
         <Text>{t('ConnectToWallet')}</Text>
       </Web3StatusConnect>
     )

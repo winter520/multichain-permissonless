@@ -9,10 +9,41 @@ import {
 // import styled from 'styled-components'
 // import { ExternalLink } from '../../theme'
 
-const InfoCard = styled(Button, {
-  backgroundColor: theme.colors.primary.value,
-  padding: '1rem',
-})
+// const InfoCard = styled(Button, {
+//   variants: {
+//     size: {
+//       mysize: {
+//         // height: '$12', // space[12]
+//         // borderRadius: '$xs' // radii.xs
+//       }
+//     },
+//     color: {
+//       wallet: {
+//         background: '$gray100', // colors.green800
+//         color: '$gray800', 
+//         border: '$space$1 solid transparent',
+//         '&:hover': {
+//           background: '$gray800',
+//           color: '$gray100',
+//         },
+//         '&:active': {
+//           background: '$gray200',
+//         },
+//         '&:focus': {
+//           borderColor: '$gray300',
+//         },
+//       }
+//     },
+//     display: {
+//       wallet: {
+//         display: "flex",
+//         flexDirection: "row",
+//         alignItems: "center",
+//         justifyContent: "space-between"
+//       }
+//     }
+//   }
+// })
 // const InfoCard = styled.button<{ active?: boolean }>`
 //   background-color: ${({ theme, active }) => (active ? theme.bg3 : theme.bg2)};
 //   padding: 1rem;
@@ -26,9 +57,12 @@ const InfoCard = styled(Button, {
 //   border-color: ${({ theme, active }) => (active ? 'transparent' : theme.bg3)};
 // `
 
-const OptionCard = styled(InfoCard, {
-  marginTop: '2rem',
-  padding: '1rem'
+const OptionCard = styled('div', {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  width: "100%",
 })
 // const OptionCard = styled(InfoCard as any)`
 //   display: flex;
@@ -48,9 +82,30 @@ const OptionCardLeft = styled('div', {
 //   height: 100%;
 // `
 
-const OptionCardClickable:any = styled('div', {
-  marginTop: 0,
-
+const OptionCardClickable:any = styled(Button, {
+  variants: {
+    size: {
+      wallet: {
+        '& > *': {width: "100%"}
+      }
+    },
+    color: {
+      wallet: {
+        background: '$gray100', // colors.green800
+        color: '$gray800', 
+        border: '$space$1 solid transparent',
+        '&:hover': {
+          background: '$gray300',
+        },
+        '&:active': {
+          background: '$gray200',
+        },
+        '&:focus': {
+          borderColor: '$gray300',
+        },
+      }
+    }
+  }
 })
 // const OptionCardClickable = styled(OptionCard)<{ clickable?: boolean }>`
 //   margin-top: 0;
@@ -108,7 +163,14 @@ const SubHeader = styled('div', {
 // `
 
 const IconWrapper = styled('div', {
-
+  display: "flex",
+  flexFlow: "column nowrap",
+  justifyContent: "center",
+  alignItems: "center",
+  "& > img": {
+    width: "24px",
+    height: "24px",
+  }
 })
 // const IconWrapper = styled.div<{ size?: number | null }>`
 //   ${({ theme }) => theme.flexColumnNoWrap};
@@ -148,26 +210,30 @@ export default function Option({
   id: string
 }) {
   const content = (
-    <OptionCardClickable id={id} onClick={onClick} clickable={clickable && !active} active={active}>
-      <OptionCardLeft>
-        <HeaderText color={color}>
-          {active ? (
-            <CircleWrapper>
-              <GreenCircle>
-                <div />
-              </GreenCircle>
-            </CircleWrapper>
-          ) : (
-            ''
-          )}
-          {header}
-        </HeaderText>
-        {subheader && <SubHeader>{subheader}</SubHeader>}
-      </OptionCardLeft>
-      {/* <IconWrapper size={size}> */}
-      <IconWrapper>
-        <img src={icon} alt={'Icon'} />
-      </IconWrapper>
+    <OptionCardClickable id={id} onClick={onClick} color="wallet" display="wallet" size="wallet">
+    {/* <OptionCardClickable id={id} onClick={onClick} clickable={clickable && !active} active={active}> */}
+      <OptionCard>
+
+        <OptionCardLeft>
+          <HeaderText color={color}>
+            {active ? (
+              <CircleWrapper>
+                <GreenCircle>
+                  <div />
+                </GreenCircle>
+              </CircleWrapper>
+            ) : (
+              ''
+            )}
+            {header}
+          </HeaderText>
+          {subheader && <SubHeader>{subheader}</SubHeader>}
+        </OptionCardLeft>
+        {/* <IconWrapper size={size}> */}
+        <IconWrapper>
+          <img src={icon} alt={'Icon'} />
+        </IconWrapper>
+      </OptionCard>
     </OptionCardClickable>
   )
   if (link) {
