@@ -10,5 +10,6 @@
   "support": "Support",
   "explorer": "Explorer",
   "selectNetwork": "Select Network",
-  "ConnectToWallet": "Connect to a wallet"
+  "ConnectToWallet": "Connect to a wallet",
+  "RecentTransactions": "Recent Transactions"
 }

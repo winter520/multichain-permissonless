@@ -15,12 +15,13 @@ import { t } from 'i18next';
 import { useTheme as useNextTheme } from 'next-themes'
 
 import Identicon from '../Identicon'
-import AccountDetails from "../AccountDetails";
+// import AccountDetails from "../AccountDetails";
 import TokenLogo from "../TokenLogo";
 
 import Logo from "./logo";
 import {moreList, navList} from './nav'
 import SelectNetwork from "./SelectNetwork";
+import Web3Status from '../Web3Status'
 
 import {
   SunIcon,
@@ -64,6 +65,65 @@ const IdenticonBox = styled('div', {
   // borderRadius: "100%"
 })
 
+const AccountElement = styled('div', {
+
+})
+// const AccountElement = styled.div<{ active: boolean }>`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
+//   border-radius: 12px;
+//   white-space: nowrap;
+//   width: 100%;
+//   cursor: pointer;
+
+//   :focus {
+//     border: 1px solid blue;
+//   }
+//   /* :hover {
+//     background-color: ${({ theme, active }) => (!active ? theme.bg2 : theme.bg4)};
+//   } */
+// `
+const BalanceText = styled(Text, {
+
+})
+// const BalanceText = styled(Text)`
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//     display: none;
+//   `};
+// `
+
+function ViewAccountInfo () {
+  // const {selectNetworkInfo} = useUserSelectChainId()
+  
+  const {account, chainId} = useActiveReact()
+  // const baseBalance = useBaseBalances(account)
+  const baseBalance = '0'
+  // const toggleWalletModal = useNoWalletModalToggle()
+// console.log(baseBalance?.toSignificant(3))
+  // if (selectNetworkInfo?.label === 'NOWALLET') {
+  //   // return <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} onClick={toggleWalletModal}>
+  //   return <AccountElement style={{ pointerEvents: 'auto' }} onClick={toggleWalletModal}>
+  //     <Web3Status />
+  //   </AccountElement>
+  // }
+  return (
+    <AccountElement style={{ pointerEvents: 'auto' }}>
+    {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
+      {account && baseBalance ? (
+        <BalanceText style={{ flexShrink: 0 }}>
+        {/* <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}> */}
+          {/* {baseBalance?.toSignificant(6)} {config.getCurChainInfo(chainId).symbol} */}
+          {/* {thousandBit(baseBalance?.toExact(), 2)} {config.chainInfo[chainId].symbol} */}
+          {baseBalance} {config.chainInfo[chainId].symbol}
+        </BalanceText>
+      ) : null}
+      <Web3Status />
+    </AccountElement>
+  )
+}
+
 
 export default function App() {
   const { isDark } = useTheme();
@@ -76,7 +136,7 @@ export default function App() {
 // console.log(params)
   return (
     <>
-      <AccountDetails />
+      {/* <AccountDetails /> */}
       <SelectNetwork />
       <Navbar variant="sticky" disableShadow shouldHideOnScroll>
         <Navbar.Toggle showIn="xs" />

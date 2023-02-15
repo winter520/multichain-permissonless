@@ -7,3 +7,4 @@ export enum ApplicationModal {
 }
 
 export const setOpenModal = createAction<ApplicationModal | null>('application/setOpenModal')
+export const updateBlockNumber = createAction<{ chainId: string; blockNumber: number }>('application/updateBlockNumber')

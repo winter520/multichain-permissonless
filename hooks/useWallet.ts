@@ -1,4 +1,4 @@
-import {useCallback} from 'react'
+import {useCallback, useMemo} from 'react'
 
 import { ChainId } from '@/config/chainConfig/chainId'
 import config from '@/config'
@@ -6,6 +6,10 @@ import config from '@/config'
 import {
   useLoginEvm
 } from '@/chains/evm'
+
+import {
+  useUserSelectChainId,
+} from "@/state/user/hooks"
 
 export function useConnectWallet () {
   const connectWallet = useCallback((chainId:ChainId) => {
@@ -104,5 +108,30 @@ export function useConnectWallet () {
 
   return {
     connectWallet
+  }
+}
+
+export function useLogoutWallet () {
+  const {selectNetworkInfo} = useUserSelectChainId()
+  // const {logoutFlow} = useLoginFlow()
+  const useChainId = useMemo(() => {
+    return selectNetworkInfo?.chainId
+  }, [selectNetworkInfo])
+  const logoutWallet = useCallback(() => {
+    if ([ChainId.FLOW, ChainId.FLOW_TEST].includes(useChainId)) {
+      // logoutFlow()
+    }
+  }, [useChainId])
+
+  const isSupportLogout = useMemo(() => {
+    if ([ChainId.FLOW, ChainId.FLOW_TEST].includes(useChainId)) {
+      return true
+    }
+    return false
+  }, [useChainId])
+
+  return {
+    logoutWallet,
+    isSupportLogout
   }
 }

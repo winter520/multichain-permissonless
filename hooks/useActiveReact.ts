@@ -26,6 +26,7 @@ export function useActiveReact () {
 
   return {
     account: useAccount,
-    chainId: useChainId
+    chainId: useChainId,
+    library: ''
   }
 }

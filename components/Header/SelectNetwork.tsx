@@ -221,6 +221,7 @@ export default function SelectNetwork () {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={networkModalOpen}
+      onClose={toggleNetworkModal}
     >
       <Modal.Header>
         {/* <Text id="modal-title" size={18}>

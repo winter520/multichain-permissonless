@@ -18,11 +18,9 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   // 在急切地尝试注入后，如果网络连接从未处于活动状态或处于错误状态，请激活itd
   useEffect(() => {
     if (!networkActive && !networkError) {
-      console.log('triedToConnectToSafe', triedToConnectToSafe)
       if (triedToConnectToSafe) {
         activateNetwork(gnosissafe)
       } else if (triedEager) {
-        console.log('triedEager', triedEager)
         activateNetwork(network)
       }
     }

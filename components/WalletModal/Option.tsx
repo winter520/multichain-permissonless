@@ -1,91 +1,128 @@
 import React from 'react'
-import styled from 'styled-components'
-import { ExternalLink } from '../../theme'
+import Link from 'next/link';
+import {
+  styled,
+  Button,
+  theme
+} from "@nextui-org/react";
 
-const InfoCard = styled.button<{ active?: boolean }>`
-  background-color: ${({ theme, active }) => (active ? theme.bg3 : theme.bg2)};
-  padding: 1rem;
-  outline: none;
-  border: 1px solid;
-  border-radius: 12px;
-  width: 100% !important;
-  &:focus {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.primary1};
-  }
-  border-color: ${({ theme, active }) => (active ? 'transparent' : theme.bg3)};
-`
+// import styled from 'styled-components'
+// import { ExternalLink } from '../../theme'
 
-const OptionCard = styled(InfoCard as any)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding: 1rem;
-`
+const InfoCard = styled(Button, {
+  backgroundColor: theme.colors.primary.value,
+  padding: '1rem',
+})
+// const InfoCard = styled.button<{ active?: boolean }>`
+//   background-color: ${({ theme, active }) => (active ? theme.bg3 : theme.bg2)};
+//   padding: 1rem;
+//   outline: none;
+//   border: 1px solid;
+//   border-radius: 12px;
+//   width: 100% !important;
+//   &:focus {
+//     box-shadow: 0 0 0 1px ${({ theme }) => theme.primary1};
+//   }
+//   border-color: ${({ theme, active }) => (active ? 'transparent' : theme.bg3)};
+// `
 
-const OptionCardLeft = styled.div`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  justify-content: center;
-  height: 100%;
-`
+const OptionCard = styled(InfoCard, {
+  marginTop: '2rem',
+  padding: '1rem'
+})
+// const OptionCard = styled(InfoCard as any)`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: space-between;
+//   margin-top: 2rem;
+//   padding: 1rem;
+// `
 
-const OptionCardClickable = styled(OptionCard)<{ clickable?: boolean }>`
-  margin-top: 0;
-  &:hover {
-    cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
-    border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.primary1}` : ``)};
-  }
-  opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
-`
+const OptionCardLeft = styled('div', {
+  height: '100%'
+})
+// const OptionCardLeft = styled.div`
+//   ${({ theme }) => theme.flexColumnNoWrap};
+//   justify-content: center;
+//   height: 100%;
+// `
 
-const GreenCircle = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap}
-  justify-content: center;
-  align-items: center;
+const OptionCardClickable:any = styled('div', {
+  marginTop: 0,
 
-  &:first-child {
-    height: 8px;
-    width: 8px;
-    margin-right: 8px;
-    background-color: ${({ theme }) => theme.green1};
-    border-radius: 50%;
-  }
-`
+})
+// const OptionCardClickable = styled(OptionCard)<{ clickable?: boolean }>`
+//   margin-top: 0;
+//   &:hover {
+//     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
+//     border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.primary1}` : ``)};
+//   }
+//   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
+// `
 
-const CircleWrapper = styled.div`
-  color: ${({ theme }) => theme.green1};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+const GreenCircle = styled('div', {
 
-const HeaderText = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap};
-  color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : ({ theme }) => theme.text1)};
-  font-size: 1rem;
-  font-weight: 500;
-`
+})
+// const GreenCircle = styled.div`
+//   ${({ theme }) => theme.flexRowNoWrap}
+//   justify-content: center;
+//   align-items: center;
 
-const SubHeader = styled.div`
-  color: ${({ theme }) => theme.text1};
-  margin-top: 10px;
-  font-size: 12px;
-`
+//   &:first-child {
+//     height: 8px;
+//     width: 8px;
+//     margin-right: 8px;
+//     background-color: ${({ theme }) => theme.green1};
+//     border-radius: 50%;
+//   }
+// `
 
-const IconWrapper = styled.div<{ size?: number | null }>`
-  ${({ theme }) => theme.flexColumnNoWrap};
-  align-items: center;
-  justify-content: center;
-  & > img,
-  span {
-    height: ${({ size }) => (size ? size + 'px' : '24px')};
-    width: ${({ size }) => (size ? size + 'px' : '24px')};
-  }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    align-items: flex-end;
-  `};
-`
+const CircleWrapper = styled('div', {
+
+})
+// const CircleWrapper = styled.div`
+//   color: ${({ theme }) => theme.green1};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `
+
+const HeaderText = styled('div', {
+
+})
+// const HeaderText = styled.div`
+//   ${({ theme }) => theme.flexRowNoWrap};
+//   color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : ({ theme }) => theme.text1)};
+//   font-size: 1rem;
+//   font-weight: 500;
+// `
+
+const SubHeader = styled('div', {
+
+})
+// const SubHeader = styled.div`
+//   color: ${({ theme }) => theme.text1};
+//   margin-top: 10px;
+//   font-size: 12px;
+// `
+
+const IconWrapper = styled('div', {
+
+})
+// const IconWrapper = styled.div<{ size?: number | null }>`
+//   ${({ theme }) => theme.flexColumnNoWrap};
+//   align-items: center;
+//   justify-content: center;
+//   & > img,
+//   span {
+//     height: ${({ size }) => (size ? size + 'px' : '24px')};
+//     width: ${({ size }) => (size ? size + 'px' : '24px')};
+//   }
+//   ${({ theme }) => theme.mediaWidth.upToMedium`
+//     align-items: flex-end;
+//   `};
+// `
 
 export default function Option({
   link = null,
@@ -106,7 +143,7 @@ export default function Option({
   color: string
   header: React.ReactNode
   subheader: React.ReactNode | null
-  icon: string
+  icon: any
   active?: boolean
   id: string
 }) {
@@ -127,13 +164,14 @@ export default function Option({
         </HeaderText>
         {subheader && <SubHeader>{subheader}</SubHeader>}
       </OptionCardLeft>
-      <IconWrapper size={size}>
+      {/* <IconWrapper size={size}> */}
+      <IconWrapper>
         <img src={icon} alt={'Icon'} />
       </IconWrapper>
     </OptionCardClickable>
   )
   if (link) {
-    return <ExternalLink href={link}>{content}</ExternalLink>
+    return <Link href={link}>{content}</Link>
   }
 
   return content

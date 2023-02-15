@@ -4,115 +4,109 @@ import { useTranslation } from 'react-i18next'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import styled from 'styled-components'
-import MetamaskIcon from '../../assets/images/metamask.png'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
-import { injected } from '../../connectors'
+// import styled from 'styled-components'
+import MetamaskIcon from '@/public/images/icon/metamask.svg'
+import { injected } from '@/connectors'
 import { SUPPORTED_WALLETS } from '@/connectors'
-import usePrevious from '../../hooks/usePrevious'
+import usePrevious from '@/hooks/usePrevious'
 import {useActiveReact} from '../../hooks/useActiveReact'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
-import {useWalletViews} from '../../state/wallet/hooks'
-import {WALLET_VIEWS} from '../../state/wallet/actions'
+import {useWalletViews} from '@/state/wallet/hooks'
+import {WALLET_VIEWS} from '@/state/wallet/actions'
 // import { ExternalLink } from '../../theme'
 import AccountDetails from '../AccountDetails'
 
-import Modal from '../Modal'
+// import Modal from '../Modal'
 
 import Option from './Option'
 import PendingView from './PendingView'
 
 import config from '@/config'
 
-const CloseIcon = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 14px;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
-`
+import { 
+  Button,
+  Modal,
+  Input,
+  styled,
+  theme
+} from "@nextui-org/react";
 
-const CloseColor = styled(Close)`
-  path {
-    stroke: ${({ theme }) => theme.text4};
-  }
-`
-
-const Wrapper = styled.div`
-  ${({ theme }) => theme.flexColumnNoWrap}
-  margin: 0;
-  padding: 0;
-  width: 100%;
-`
-
-const HeaderRow = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap};
-  padding: 1rem 1rem;
-  font-weight: 500;
-  color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem;
-  `};
-`
-
-const ContentWrapper = styled.div`
-  background-color: ${({ theme }) => theme.bg2};
-  padding: 2rem;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 1rem`};
-`
-
-const UpperSection = styled.div`
-  position: relative;
-
-  h5 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  h5:last-child {
-    margin-bottom: 0px;
-  }
-
-  h4 {
-    margin-top: 0;
-    font-weight: 500;
-  }
-`
-
-// const Blurb = styled.div`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: center;
-//   justify-content: center;
-//   flex-wrap: wrap;
-//   margin-top: 2rem;
+const Wrapper = styled('div', {
+  margin: '0',
+  padding: '0',
+  width: '100%'
+})
+const HeaderRow = styled('div', {
+  padding: '1rem 1rem',
+  color: theme.colors.primary.value
+})
+// const HeaderRow = styled.div`
+//   ${({ theme }) => theme.flexRowNoWrap};
+//   padding: 1rem 1rem;
+//   font-weight: 500;
+//   color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
 //   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     margin: 1rem;
-//     font-size: 12px;
+//     padding: 1rem;
+//   `};
+// `
+const ContentWrapper = styled('div', {
+  // backgroundColor: theme.colors.background.value,
+  padding: '2rem',
+  borderBottomLeftRadius: '20px',
+  borderBottomRightRadius: '20px'
+})
+// const ContentWrapper = styled.div`
+//   background-color: ${({ theme }) => theme.bg2};
+//   padding: 2rem;
+//   border-bottom-left-radius: 20px;
+//   border-bottom-right-radius: 20px;
+
+//   ${({ theme }) => theme.mediaWidth.upToMedium`padding: 1rem`};
+// `
+
+const UpperSection = styled('div', {
+  position: 'relative'
+})
+// const UpperSection = styled.div`
+//   position: relative;
+
+//   h5 {
+//     margin: 0;
+//     margin-bottom: 0.5rem;
+//     font-size: 1rem;
+//     font-weight: 400;
+//   }
+
+//   h5:last-child {
+//     margin-bottom: 0px;
+//   }
+
+//   h4 {
+//     margin-top: 0;
+//     font-weight: 500;
+//   }
+// `
+
+const OptionGrid = styled('div', {
+  display: 'grid',
+  gridGap: '10px'
+})
+// const OptionGrid = styled.div`
+//   display: grid;
+//   grid-gap: 10px;
+//   ${({ theme }) => theme.mediaWidth.upToMedium`
+//     grid-template-columns: 1fr;
+//     grid-gap: 10px;
 //   `};
 // `
 
-const OptionGrid = styled.div`
-  display: grid;
-  grid-gap: 10px;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    grid-template-columns: 1fr;
-    grid-gap: 10px;
-  `};
-`
-
-const HoverText = styled.div`
-  :hover {
-    cursor: pointer;
-  }
-`
+const HoverText = styled('div', {})
+// const HoverText = styled.div`
+//   :hover {
+//     cursor: pointer;
+//   }
+// `
 
 // const WALLET_VIEWS = {
 //   OPTIONS: 'options',
@@ -173,12 +167,15 @@ export default function WalletModal({
     }
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
 
-  const tryActivation = async (connector: AbstractConnector | undefined) => {
+  // const tryActivation = async (connector: AbstractConnector | undefined | WalletConnectConnector) => {
+  const tryActivation = async (connector: any) => {
+  // const tryActivation = async (connector: AbstractConnector | undefined) => {
     setPendingWallet(connector) // set wallet for pending view
     setWalletView(WALLET_VIEWS.PENDING)
 
     // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+    // if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+    if (connector?.walletConnectProvider?.wc?.uri) {
       connector.walletConnectProvider = undefined
     }
     // console.log(connector)
@@ -214,7 +211,7 @@ export default function WalletModal({
               link={option.href}
               header={option.name}
               subheader={null}
-              icon={require('../../assets/images/' + option.iconName)}
+              icon={require('@/public/images/' + option.iconName)}
             />
           )
         }
@@ -276,7 +273,7 @@ export default function WalletModal({
             link={option.href}
             header={option.name}
             subheader={null} //use option.descriptio to bring back multi-line
-            icon={require('../../assets/images/' + option.iconName)}
+            icon={require('@/public/images/' + option.iconName)}
           />
         )
       )
@@ -287,13 +284,10 @@ export default function WalletModal({
     if (error) {
       return (
         <UpperSection>
-          <CloseIcon onClick={toggleWalletModal}>
-            <CloseColor />
-          </CloseIcon>
           <HeaderRow>{error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('ErrorConnecting')}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>{t('tip37', {name:config.getCurChainInfo(chainId).name})}</h5>
+              <h5>{t('tip37', {name:config.chainInfo[chainId].name})}</h5>
             ) : (
               t('tip36')
             )}
@@ -314,9 +308,6 @@ export default function WalletModal({
     }
     return (
       <UpperSection>
-        <CloseIcon onClick={toggleWalletModal}>
-          <CloseColor />
-        </CloseIcon>
         {walletView !== WALLET_VIEWS.ACCOUNT ? (
           <HeaderRow color="blue">
             <HoverText
@@ -356,8 +347,19 @@ export default function WalletModal({
   }
 
   return (
-    <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
+    <Modal
+      scroll
+      closeButton
+      // width="600px"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+      open={walletModalOpen}
+      onClose={toggleWalletModal}
+    >
+
       <Wrapper>{getModalContent()}</Wrapper>
+    {/* <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
+    </Modal> */}
     </Modal>
   )
 }

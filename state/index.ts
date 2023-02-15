@@ -5,7 +5,8 @@ import application from './application/reducer'
 // import { updateVersion } from './global/actions'
 import user from './user/reducer'
 import address from './address/reducer'
-// import transactions from './transactions/reducer'
+import wallet from './wallet/reducer'
+import transactions from './transactions/reducer'
 // import swap from './swap/reducer'
 // import lists from './lists/reducer'
 // import burn from './burn/reducer'
@@ -17,11 +18,12 @@ import address from './address/reducer'
 
 // import xlm from '../nonevm/stellar/reducer'
 // import trx from '../nonevm/trx/reducer'
-// import nonevm from '../nonevm'
-
+import chains from "@/chains"
+// console.log(chains)
+// console.log(application)
 const PERSISTED_KEYS: string[] = [
   'user',
-  // 'transactions', 
+  'transactions',
   // 'lists', 
   // 'rpc', 
   // 'pools', 
@@ -33,7 +35,9 @@ const store = configureStore({
     application,
     user,
     address,
-    // transactions,
+    wallet,
+    transactions,
+    ...chains
     // swap,
     // burn,
     // nft,

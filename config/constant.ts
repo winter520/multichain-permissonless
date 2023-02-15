@@ -96,3 +96,5 @@ export const controlConfig:any = {
   },
 }
 export const INIT_NODE = controlConfig[USE_VERSION].initNode
+
+export const END_STATUS = [1, 3, 10, 16,-2, -3]
