@@ -8,14 +8,9 @@ import {
 } from '@/state/address/hooks'
 import {INIT_NODE} from '@/config/constant'
 
-import {
-  useActiveWeb3React
-} from '@/hooks'
-
 export function useActiveReact () {
   const {selectNetworkInfo} = useUserSelectChainId()
   const {account} = useWalletAddress()
-  // const {account} = useActiveWeb3React()
 
   const useChainId = useMemo(() => {
     let chainId = selectNetworkInfo?.chainId
@@ -25,19 +20,12 @@ export function useActiveReact () {
     return chainId
   }, [selectNetworkInfo])
 
-  // const useAccount = useMemo(() => {
-  //   // if (isNaN(useChainId)) {
+  return useMemo(() => {
 
-  //   //   return getAccount(useChainId)
-  //   // } else if (account && !isNaN(useChainId)) {
-  //   //   return account
-  //   // }
-  //   return getAccount(useChainId)
-  // }, [useChainId, account])
-  // console.log(account)
-  return {
-    account: account,
-    chainId: useChainId,
-    library: ''
-  }
+    return {
+      account: account,
+      chainId: useChainId,
+      library: ''
+    }
+  }, [account, useChainId])
 }

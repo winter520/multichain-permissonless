@@ -4,8 +4,6 @@ import { t } from 'i18next';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-// import styled from 'styled-components'
-import MetamaskIcon from '@/public/images/icon/metamask.svg'
 import { injected } from '@/connectors'
 import { SUPPORTED_WALLETS } from '@/connectors'
 import usePrevious from '@/hooks/usePrevious'
@@ -153,7 +151,7 @@ export default function WalletModal({
                 header={'Install Metamask'}
                 subheader={null}
                 link={'https://metamask.io/'}
-                icon={MetamaskIcon}
+                icon={require('@/public/images/icon/metamask.svg').default.src}
               />
             )
           } else {

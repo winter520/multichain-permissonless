@@ -5,17 +5,18 @@ import config from "@/config";
 //   useUserSelectChainId
 // } from '@/state/user/hooks'
 const toHex = (num:any) => {
-  return "0x" + num.toString(16);
+  return "0x" + Number(num).toString(16);
 };
 
-export async function useSwitchNetworks() {
+export function useSwitchNetworks() {
   // const {setUserSelectNetwork} = useUserSelectChainId()
-  const switchNetwork = useCallback((chainId:ChainId, type:any) => {
+  const switchNetwork = useCallback((chainId:ChainId, type?:any) => {
     return new Promise(resolve => {
       const { ethereum } = window
       if (ethereum && !isNaN(Number(chainId))) {
         const useChainId = toHex(chainId)
         const {chainInfo} = config
+        console.log('useChainId', useChainId)
         ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: useChainId }],

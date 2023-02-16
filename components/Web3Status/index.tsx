@@ -23,11 +23,6 @@ import Identicon from '../Identicon'
 // import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
 
-// import NoWalletTxList from '../AccountDetails/NoWalletTxList'
-
-// import { ChainId } from '../../config/chainConfig/chainId'
-// import Activity from "@/public/images/icon/activity.svg"
-
 import {useConnectWallet} from '@/hooks/useWallet'
 import { ChainId } from '@/config/chainConfig/chainId'
 // import config from '../../config'
@@ -36,7 +31,8 @@ import {
   Text,
   styled,
   Button,
-  Image
+  Image,
+  theme
 } from "@nextui-org/react"
 // import Link from 'next/link'
 
@@ -101,8 +97,17 @@ const Web3StatusConnect:any = styled(Web3StatusGeneric, {
 //     `}
 // `
 
-const Web3StatusConnected:any = styled(Web3StatusGeneric, {
+const Web3StatusConnected:any = styled(Button, {
+  // variants: {
+  //   size: {
 
+  //   },
+  //   color: {
+  //     pending: {
+  //       backgroundColor: theme.colors.gradient.value,
+  //     }
+  //   }
+  // }
 })
 // const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
 //   background: ${({ pending, theme }) => (pending ? theme.primary1 : theme.primary1)};
@@ -139,7 +144,7 @@ const NetworkIcon = styled(Activity, {
 //   width: 16px;
 //   height: 16px;
 // `
-console.log(Activity)
+// console.log(Activity)
 // we want the latest one to come first, so return negative if a is after b
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
@@ -176,20 +181,20 @@ function Web3StatusInner() {
 
   if (account) {
     return (
-      <Web3StatusConnected id="web3-status-connected" onClick={connectWallet} pending={hasPendingTransactions}>
+      <Web3StatusConnected auto color="primary" id="web3-status-connected" onClick={connectWallet}>
         {hasPendingTransactions ? (
           <>
             {/* <RowBetween> */}
               {/* <Text>{pending?.length} {t('Pending')}</Text> <Loader stroke="white" /> */}
-              <Text>{pending?.length} {t('Pending')}</Text> <Loading />
+              {pending?.length} {t('Pending')} <Loading />
             {/* </RowBetween> */}
           </>
         ) : (
           <>{
             isMobile ? (
-              <Text>{ENSName || shortenAddress(account, 2)}</Text>
+              <>{ENSName || shortenAddress(account, 2)}</>
             ) : (
-              <Text>{ENSName || shortenAddress(account)}</Text>
+              <>{ENSName || shortenAddress(account)}</>
             )
           }
           </>
@@ -206,7 +211,7 @@ function Web3StatusInner() {
   // } else if (config?.chainInfo?.[chainId]?.chainType === 'NOWALLET') {
   } else if ([ChainId.BTC, ChainId.BTC_TEST].includes(chainId)) {
     return (
-      <Web3StatusConnected id="web3-status-connected" onClick={connectWallet} pending={hasPendingTransactions}>
+      <Web3StatusConnected auto color="primary" id="web3-status-connected" onClick={connectWallet}>
         <Text>{chainId}</Text>
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
       </Web3StatusConnected>

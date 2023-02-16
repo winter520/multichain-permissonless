@@ -15,10 +15,7 @@ import { getEtherscanLink } from '@/utils'
 import { injected } from '@/connectors'
 import Identicon from '../Identicon'
 // import { ButtonSecondary } from '../Button'
-// import { ExternalLink as LinkIcon } from 'react-feather'
-// import { ExternalLink, LinkStyledButton, TYPE } from '../../theme'
-import LinkIcon from "@/public/images/icon/external-link.svg"
-
+import { ExternalLink as LinkIcon } from 'react-feather'
 import config from '@/config'
 // import { ChainId } from '../../config/chainConfig/chainId'
 // import {useLoginFlow} from '../../nonevm/flow'
@@ -35,7 +32,8 @@ import {
   Dropdown,
   Switch,
   styled,
-  theme
+  theme,
+  Row
 } from "@nextui-org/react";
 import Link from 'next/link'
 
@@ -258,6 +256,8 @@ const WalletAction = styled(Button, {
 //   }
 // `
 
+const LinkStyledButton = styled(Button, {})
+
 function renderTransactions(transactions: string[]) {
   return (
     <TransactionListWrapper>
@@ -322,7 +322,7 @@ export default function AccountDetails({
       </WalletAction>
     } else if (isSupportLogout) {
       return <WalletAction
-        style={{ fontSize: '.825rem', fontWeight: 400 }}
+        css={{ fontSize: '.825rem', fontWeight: 400 }}
         onClick={() => {
           logoutWallet()
           toggleWalletModal()
@@ -353,7 +353,7 @@ export default function AccountDetails({
                 <div>
                   {connector !== injected && !isNaN(chainId) && (
                     <WalletAction
-                      style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
+                      css={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
                       onClick={() => {
                         ;(connector as any).close()
                       }}
@@ -440,6 +440,10 @@ export default function AccountDetails({
             <TYPE.body>{t('RecentTransactions')}</TYPE.body>
             <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
           </AutoRow> */}
+          <Row>
+            <Text>{t('RecentTransactions')}</Text>
+            <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
+          </Row>
           <Grid.Container gap={0} justify="center">
             <Grid xs={12}>
               <Text>{t('RecentTransactions')}</Text>

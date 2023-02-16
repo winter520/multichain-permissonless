@@ -1,11 +1,11 @@
 import React from "react";
 import AppBody from '@/components/AppBody'
 import {
-  useActiveWeb3React
-} from "@/hooks"
+  useActiveReact
+} from "@/hooks/useActiveReact"
 
 export default function Router () {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useActiveReact()
   return <>
     <AppBody>
       Router

@@ -8,7 +8,8 @@ import {
   Dropdown,
   Switch,
   styled,
-  theme
+  theme,
+  Row
 } from "@nextui-org/react";
 import Link from 'next/link';
 import { t } from 'i18next';
@@ -65,8 +66,10 @@ const IdenticonBox = styled('div', {
   // borderRadius: "100%"
 })
 
-const AccountElement = styled('div', {
-
+const AccountElement = styled(Row, {
+  background: theme.colors.gray100.value,
+  borderRadius: '12px',
+  paddingLeft: '1rem'
 })
 // const AccountElement = styled.div<{ active: boolean }>`
 //   display: flex;
@@ -86,7 +89,7 @@ const AccountElement = styled('div', {
 //   } */
 // `
 const BalanceText = styled(Text, {
-
+  paddingRight: '0.5rem',
 })
 // const BalanceText = styled(Text)`
 //   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -109,10 +112,12 @@ function ViewAccountInfo () {
   //   </AccountElement>
   // }
   return (
-    <AccountElement style={{ pointerEvents: 'auto' }}>
+    <AccountElement justify="flex-end" align="center">
     {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
       {account && baseBalance ? (
-        <BalanceText style={{ flexShrink: 0 }}>
+        <BalanceText css={{
+          color: theme.colors.gray800.value
+        }}>
         {/* <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}> */}
           {/* {baseBalance?.toSignificant(6)} {config.getCurChainInfo(chainId).symbol} */}
           {/* {thousandBit(baseBalance?.toExact(), 2)} {config.chainInfo[chainId].symbol} */}
@@ -227,6 +232,15 @@ export default function App() {
             >
               {config.chainInfo[chainId].name}
             </Button>
+          </Navbar.Item>
+          <Navbar.Item hideIn="xs">
+            <Switch
+              size="xl"
+              iconOn={<SunIcon filled />}
+              iconOff={<MoonIcon filled />}
+              checked={isDark}
+              onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
+            />
           </Navbar.Item>
           <ViewAccountInfo />
           {/* <Navbar.Item hideIn="xs">

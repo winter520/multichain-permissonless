@@ -1,10 +1,5 @@
 import React from 'react'
 import {Avatar} from "@nextui-org/react";
-// import { useActiveWeb3React } from '../../hooks'
-
-// import config from '@/config'
-
-import initPath from '@/public/images/icon/question.svg'
 
 function getSourcePath(symbol: string) {
   let path:any = ''
@@ -17,7 +12,7 @@ function getSourcePath(symbol: string) {
       try {
         path = require('@/public/images/coin/' + symbol + '.jpg')
       } catch (error) {
-        path = initPath
+        path = require('@/public/images/icon/question.svg')
       }
     }
   }
@@ -35,14 +30,11 @@ export default function TokenLogo({
   style?: React.CSSProperties
   logoUrl?: any
 }) {
-  // const { chainId } = useActiveWeb3React()
   let path = ''
   if (logoUrl) {
     path = logoUrl
   } else if (symbol) {
     path = getSourcePath(symbol)
-  } else {
-    path = initPath
   }
   return <Avatar
     src={path}

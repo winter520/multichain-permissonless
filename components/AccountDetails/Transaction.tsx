@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
 // import styled from 'styled-components'
-// import { CheckCircle, Triangle } from 'react-feather'
+import { CheckCircle, Triangle } from 'react-feather'
 
-// import { useActiveWeb3React } from '../../hooks'
 import {useTxnsDtilOpen} from '@/state/application/hooks'
 import {useActiveReact} from '@/hooks/useActiveReact'
 import { getEtherscanLink } from '../../utils'
@@ -12,8 +11,6 @@ import { useAllTransactions } from '../../state/transactions/hooks'
 // import Loader from '../Loader'
 import {Status, getStatus} from '@/config/status'
 
-import CheckCircle from "@/public/images/icon/check-circle.svg"
-import Triangle from "@/public/images/icon/alert-triangle.svg"
 import {
   Loading,
   Text,
@@ -75,7 +72,7 @@ const IconWrapper = styled('div', {
 // `
 
 export default function Transaction({ hash }: { hash: string }) {
-  // const { chainId } = useActiveWeb3React()
+
   const { chainId } = useActiveReact()
   const {onChangeViewDtil} = useTxnsDtilOpen()
   

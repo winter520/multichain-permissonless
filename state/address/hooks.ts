@@ -9,32 +9,45 @@ import {
 } from '../../state'
 import {setAddress} from './actions'
 
-import { ChainId } from '@/config/chainConfig/chainId'
-
 import {
   useUserSelectChainId
 } from "@/state/user/hooks"
 
+import {
+  useActiveWeb3React
+} from "@/hooks"
+
 export function useWalletAddress () {
   const {chainId} = useUserSelectChainId()
+  const {account: evmAccount} = useActiveWeb3React()
   const account:any = useSelector<AppState, AppState['address']>(state => state.address)
   const dispatch = useDispatch<AppDispatch>()
   // console.log(account)
   // console.log(chainId)
   const setAccount = useCallback((chainId:any, address: any) => {
-    dispatch(setAddress({chainId, address}))
+    if (isNaN(chainId)) {
+      dispatch(setAddress({chainId, address}))
+    }
   }, [])
 
-  const getAccount = useCallback((chainId:ChainId) => {
-    if (account?.[chainId]?.address) {
-      return account?.[chainId]?.address
+  const getAccount = useCallback((chainId:any) => {
+    if (isNaN(chainId)) {
+      if (account?.[chainId]?.address) {
+        return account?.[chainId]?.address
+      }
+    } else {
+      return evmAccount
     }
     return undefined
-  }, [])
+  }, [evmAccount])
 
   const useAccount = useMemo(() => {
-    return account?.[chainId]?.address
-  }, [chainId, account])
+    if (isNaN(chainId)) {
+      return account?.[chainId]?.address
+    } else {
+      return evmAccount
+    }
+  }, [chainId, account, evmAccount])
   
   return {
     setAccount,

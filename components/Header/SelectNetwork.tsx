@@ -15,6 +15,9 @@ import {
 import {
   useActiveReact
 } from '@/hooks/useActiveReact'
+import {
+  useSwitchNetworks
+} from "@/hooks/useSwitchNetwork"
 
 import config from '@/config';
 import {
@@ -203,98 +206,19 @@ function Option ({
           </Row>
         </Grid>
       </Grid.Container>
-      
-      {/* <WalletLogoBox>
-        <WalletLogoBox2>
-          <div className="left" onClick={() => changeNetwork(config.chainInfo[curChainId])}>
-            <IconWrapper>
-              <TokenLogo symbol={item?.networkLogo ?? item?.symbol} size={'46px'}></TokenLogo>
-            </IconWrapper>
-            <OptionCardLeft id={'chain_list_name_' + curChainId}>
-              <HeaderText>
-                {' '}
-                {
-                (
-                  curChainId
-                  && selectChainId
-                  && curChainId.toString() === selectChainId.toString()
-                ) ? (
-                  <CircleWrapper>
-                    <GreenCircle>
-                      <div />
-                    </GreenCircle>
-                  </CircleWrapper>
-                ) : (
-                  ''
-                )}
-                {item.networkName}
-              </HeaderText>
-            </OptionCardLeft>
-            <OptionCardLeft1 id={'chain_list_url_' + curChainId} onClick={e => e.stopPropagation()}>
-              <Input value={viewUrl} id={'chain_list_input_' + curChainId} onChange={(event:any) => {
-                setViewUrl(event.target.value)
-              }}/>
-            </OptionCardLeft1>
-          </div>
-          <div className='right'>
-            {
-              item.nodeRpc && !isNaN(curChainId) ? (
-                <StyledMenuIcon id={'chain_list_set_' + curChainId} onClick={e => {
-                  const htmlNameNode = document.getElementById('chain_list_name_' + curChainId)
-                  const htmlNameNode1 = document.getElementById('chain_list_set_' + curChainId)
-                  const htmlUrlNode = document.getElementById('chain_list_url_' + curChainId)
-                  const htmlUrlNode1 = document.getElementById('chain_list_tick_' + curChainId)
-                  if (htmlNameNode) htmlNameNode.style.display = 'none'
-                  if (htmlNameNode1) htmlNameNode1.style.display = 'none'
-                  if (htmlUrlNode) htmlUrlNode.style.display = 'block'
-                  if (htmlUrlNode1) htmlUrlNode1.style.display = 'block'
-                  e.stopPropagation()
-                }}></StyledMenuIcon>
-              ) : ''
-            }
-            {viewLoading ? <LoaderIcon></LoaderIcon> : (
-              <CheckSquareIcon id={'chain_list_tick_' + curChainId} onClick={e => {
-                setViewLoading(true)
-                const htmlNameNode = document.getElementById('chain_list_name_' + curChainId)
-                const htmlNameNode1 = document.getElementById('chain_list_set_' + curChainId)
-                const htmlUrlNode = document.getElementById('chain_list_url_' + curChainId)
-                const htmlUrlNode1 = document.getElementById('chain_list_tick_' + curChainId)
-                isConnect(viewUrl).then((res:any) => {
-                  setViewLoading(false)
-                  if (res.msg === 'Success') {
-                    if (viewUrl === item.nodeRpc) {
-                      if (htmlNameNode) htmlNameNode.style.display = 'block'
-                      if (htmlNameNode1) htmlNameNode1.style.display = 'block'
-                      if (htmlUrlNode) htmlUrlNode.style.display = 'none'
-                      if (htmlUrlNode1) htmlUrlNode1.style.display = 'none'
-                    } else {
-                      setLocalRPC(curChainId, viewUrl)
-                      history.go(0)
-                    }
-                  } else {
-                    alert(res.error)
-                  }
-                })
-                e.stopPropagation()
-              }}></CheckSquareIcon>
-            )}
-            <StyledStarIcon className={starChainList?.[curChainId] ? 'star' : ''} onClick={() => onChangeStarChain(curChainId)}/>
-          </div>
-        </WalletLogoBox2>
-      </WalletLogoBox> */}
     </>
   )
 }
 
 function ChainListBox ({
   useChainId,
-  openUrl,
+  changeNetwork,
   searchQuery,
   selectTab,
   size
 }: {
   useChainId: any
-  openUrl: (value:any) => void
+  changeNetwork: (value:any) => void
   searchQuery: any
   selectTab: any
   size?: number
@@ -331,7 +255,7 @@ function ChainListBox ({
   }, [spportChainArr, starChainList, selectTab])
 
   function List({ records }: { records?: any [] }) {
-    console.log(records)
+    // console.log(records)
     return (<>{
       records?.map((item:any, index:any) => {
         if (
@@ -350,7 +274,7 @@ function ChainListBox ({
           return (
             <OptionCardClickable key={index} className={ useChainId?.toString() === item?.chainID?.toString()  ? 'active' : ''}>
               <Option curChainId={item.chainID} selectChainId={useChainId} changeNetwork={(val) => {
-                openUrl(val)
+                changeNetwork(val)
               }}></Option>
             </OptionCardClickable>
           )
@@ -379,12 +303,13 @@ export default function SelectNetwork () {
   const {starTabIndex, onChangeStarTab} = useChangeStarTab('CHAIN')
   const networkModalOpen = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()
-  const {loginEvm} = useLoginEvm()
+  // const {loginEvm} = useLoginEvm()
+  const {switchNetwork} = useSwitchNetworks()
 
   const {selectNetworkInfo, setUserSelectNetwork} = useUserSelectChainId()
   const [searchQuery, setSearchQuery] = useState<string>('')
-
-  const inputRef = useRef<HTMLInputElement>()
+  // console.log(networkModalOpen)
+  // const inputRef = useRef<HTMLInputElement>()
   const useChainId = useMemo(() => {
     // const hrefPath = window.location.pathname
     // if (selectNetworkInfo && hrefPath.indexOf('/' + selectNetworkInfo?.label?.toLowerCase()) !== -1) {
@@ -393,7 +318,8 @@ export default function SelectNetwork () {
     }
     return chainId
   }, [selectNetworkInfo, chainId])
-  function openUrl (item:any) {
+
+  function changeNetwork (item:any) {
     if (item?.chainType && item?.chainType !== 'EVM') {
       if (setUserSelectNetwork) {
         setUserSelectNetwork({
@@ -403,7 +329,20 @@ export default function SelectNetwork () {
       }
       toggleNetworkModal()
     } else {
-      loginEvm()
+      switchNetwork(item.chainID, 1).then((res:any) => {
+        // console.log(res)
+        if (res.msg === 'Error') {
+          alert(t('changeMetamaskNetwork', {label: item.networkName}))
+        } else {
+          if (setUserSelectNetwork) {
+            setUserSelectNetwork({
+              chainId: item.chainID,
+              label: item?.chainType ?? item.chainID
+            })
+          }
+        }
+        toggleNetworkModal()
+      })
     }
   }
   const handleInput = useCallback((event:any) => {
@@ -419,12 +358,9 @@ export default function SelectNetwork () {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={networkModalOpen}
-      onClose={toggleNetworkModal}
+      onClose={networkModalOpen ? toggleNetworkModal : () => {}}
     >
       <Modal.Header>
-        {/* <Text id="modal-title" size={18}>
-          Modal with a lot of content
-        </Text> */}
         <Input
           size="lg"
           clearable
@@ -438,19 +374,11 @@ export default function SelectNetwork () {
       <Modal.Body>
         <ChainListBox
           useChainId={useChainId}
-          openUrl={openUrl}
+          changeNetwork={changeNetwork}
           searchQuery={searchQuery}
           selectTab={starTabIndex}
         />
       </Modal.Body>
-      <Modal.Footer>
-        {/* <Button auto flat color="error" onPress={() => setVisible(false)}>
-          Close
-        </Button>
-        <Button auto onPress={() => setVisible(false)}>
-          Agree
-        </Button> */}
-      </Modal.Footer>
     </Modal>
   </>
 }

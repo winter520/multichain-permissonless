@@ -6,14 +6,16 @@ export const lightTheme = createTheme({
   theme: {
     colors: {
       // generic colors
-      white: '#ffffff',
-      black: '#000000',
+      // white: '#ffffff',
+      // black: '#000000',
 
-      // background colors (light)
-      background: "$white",
-      backgroundAlpha: "rgba(255, 255, 255, 0.8)", // used for semi-transparent backgrounds like the navbar
-      foreground: "$black",
-      backgroundContrast: "$white",
+      // // background colors (light)
+      // background: "$white",
+      // backgroundAlpha: "rgba(255, 255, 255, 0.8)", // used for semi-transparent backgrounds like the navbar
+      // foreground: "$black",
+      // backgroundContrast: "$white",
+
+      gradient: 'linear-gradient(to right, #734ce2 , #606bfb)',
 
 
       //semantic colors (light)
@@ -26,15 +28,15 @@ export const lightTheme = createTheme({
       // blue700: '#2F37B4',
       // blue800: '#1E2491',
       // blue900: '#121678',
-      purple100: '#DFE2FE',
-      purple200: '#BFC5FE',
-      purple300: '#9FA7FD',
-      purple400: '#8690FC',
-      purple500: '#5F6BFB',
-      purple600: '#454FD7',
-      purple700: '#2F37B4',
-      purple800: '#1E2491',
-      purple900: '#121678',
+      // purple100: '#DFE2FE',
+      // purple200: '#BFC5FE',
+      // purple300: '#9FA7FD',
+      // purple400: '#8690FC',
+      // purple500: '#5F6BFB',
+      // purple600: '#454FD7',
+      // purple700: '#2F37B4',
+      // purple800: '#1E2491',
+      // purple900: '#121678',
       // ...
 
       // brand colors

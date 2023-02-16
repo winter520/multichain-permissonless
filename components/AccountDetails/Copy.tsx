@@ -3,9 +3,7 @@ import React from 'react'
 import useCopyClipboard from '@/hooks/useCopyClipboard'
 
 // import { LinkStyledButton } from '../../theme'
-// import { CheckCircle, Copy } from 'react-feather'
-import CheckCircle from "@/public/images/icon/check-circle.svg"
-import Copy from "@/public/images/icon/copy.svg"
+import { CheckCircle, Copy } from 'react-feather'
 
 import { 
   Navbar, 
@@ -46,12 +44,12 @@ const TransactionStatusText = styled('span', {
 //   align-items: center;
 // `
 
-export default function CopyHelper(props: { toCopy: string; children?: React.ReactNode }) {
+export default function CopyHelper({toCopy, children}: { toCopy: string; children?: React.ReactNode }) {
   const [isCopied, setCopied] = useCopyClipboard()
-
+  // console.log(toCopy)
   return (
     <CopyIcon onClick={(event:any) => {
-      setCopied(props.toCopy)
+      setCopied(toCopy)
       event.stopPropagation()
     }}>
       {isCopied ? (
@@ -64,7 +62,7 @@ export default function CopyHelper(props: { toCopy: string; children?: React.Rea
           <Copy size={'16'} />
         </TransactionStatusText>
       )}
-      {isCopied ? '' : props.children}
+      {isCopied ? '' : children}
     </CopyIcon>
   )
 }
