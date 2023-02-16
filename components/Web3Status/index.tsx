@@ -2,7 +2,7 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 // import { darken, lighten } from 'polished'
 import React, { useMemo } from 'react'
-// import { Activity } from 'react-feather'
+import { Activity } from 'react-feather'
 import { t } from 'i18next';
 // import styled, { css } from 'styled-components'
 import { isMobile } from 'react-device-detect'
@@ -26,7 +26,7 @@ import WalletModal from '../WalletModal'
 // import NoWalletTxList from '../AccountDetails/NoWalletTxList'
 
 // import { ChainId } from '../../config/chainConfig/chainId'
-import Activity from "@/public/images/icon/activity.svg"
+// import Activity from "@/public/images/icon/activity.svg"
 
 import {useConnectWallet} from '@/hooks/useWallet'
 import { ChainId } from '@/config/chainConfig/chainId'
@@ -35,7 +35,8 @@ import {
   Loading,
   Text,
   styled,
-  Button
+  Button,
+  Image
 } from "@nextui-org/react"
 // import Link from 'next/link'
 
@@ -138,7 +139,7 @@ const NetworkIcon = styled(Activity, {
 //   width: 16px;
 //   height: 16px;
 // `
-
+console.log(Activity)
 // we want the latest one to come first, so return negative if a is after b
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
@@ -198,10 +199,9 @@ function Web3StatusInner() {
     )
   } else if (error) {
     return (
-      <Web3StatusError onClick={connectWallet}>
-        <NetworkIcon />
-        <Text>{error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('Error')}</Text>
-      </Web3StatusError>
+      <Button color="error" onClick={() => connectWallet(chainId)} icon={<Activity size="24" />}>
+        {error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('Error')}
+      </Button>
     )
   // } else if (config?.chainInfo?.[chainId]?.chainType === 'NOWALLET') {
   } else if ([ChainId.BTC, ChainId.BTC_TEST].includes(chainId)) {
@@ -217,7 +217,7 @@ function Web3StatusInner() {
         console.log(chainId)
         connectWallet(chainId)
       }}>
-        <Text>{t('ConnectToWallet')}</Text>
+        {t('ConnectToWallet')}
       </Web3StatusConnect>
     )
   }

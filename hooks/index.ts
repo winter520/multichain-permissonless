@@ -7,6 +7,9 @@ import { injected } from '@/connectors'
 import {
   ENV_NODE_CONFIG
 } from '@/config/constant'
+import {
+  useWalletAddress
+} from "@/state/address/hooks"
 // import { useConnectedWallet } from '@terra-money/wallet-provider'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: any } {
@@ -50,13 +53,14 @@ export function useEagerConnect() {
  * 用于网络和注入-在检查用户所在的网络后，将用户登录和注销
  */
 export function useInactiveListener(suppress = false) {
-  const { active, error, activate, chainId } = useWeb3ReactCore() // 特别是使用useWeb3React，因为这个钩子的作用
-
+  const { active, error, activate, chainId, account } = useWeb3ReactCore() // 特别是使用useWeb3React，因为这个钩子的作用
+  const {setAccount} = useWalletAddress()
   useEffect(() => {
     if (chainId) {
       window.localStorage.setItem(ENV_NODE_CONFIG, chainId.toString())
     }
-  }, [chainId])
+    setAccount(chainId, account)
+  }, [chainId, account])
 
   useEffect(() => {
     const { ethereum } = window
@@ -70,6 +74,7 @@ export function useInactiveListener(suppress = false) {
           history.go(0)
         }
         // eat errors
+        
         activate(injected, undefined, true).catch(error => {
           console.error('Failed to activate after chain changed', error)
         })

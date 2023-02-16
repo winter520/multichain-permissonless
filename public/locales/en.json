@@ -11,5 +11,9 @@
   "explorer": "Explorer",
   "selectNetwork": "Select Network",
   "ConnectToWallet": "Connect to a wallet",
-  "RecentTransactions": "Recent Transactions"
+  "RecentTransactions": "Recent Transactions",
+  "WrongNetwork": "Wrong Network",
+  "ErrorConnecting": "Error connecting",
+  "ErrorConnectingTip": "Error connecting. Try refreshing the page.",
+  "WrongNetworkTip": "Please connect to the appropriate {{name}} network."
 }

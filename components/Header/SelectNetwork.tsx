@@ -3,7 +3,14 @@ import {
   Button,
   Modal,
   Input,
-  styled
+  styled,
+  Grid,
+  Row,
+  Col,
+  Tooltip,
+  Text,
+  theme,
+  Badge
 } from "@nextui-org/react";
 import {
   useActiveReact
@@ -31,9 +38,11 @@ import {
 } from "@/state/user/hooks"
 
 import { t } from 'i18next';
+import { Settings, CheckSquare, Star } from 'react-feather'
 
 import {LazyList} from "@/components/Lazyload/LazyList"
 import Loading from "@/components/Lazyload/Loading"
+import TokenLogo from "@/components/TokenLogo"
 
 import {
   useLoginEvm
@@ -75,6 +84,23 @@ const OptionCardClickable = styled('div', {
   }
 });
 
+export const IconButton = styled('button', {
+  dflex: 'center',
+  border: 'none',
+  outline: 'none',
+  cursor: 'pointer',
+  padding: '0',
+  margin: '0',
+  bg: 'transparent',
+  transition: '$default',
+  '&:hover': {
+    opacity: '0.8'
+  },
+  '&:active': {
+    opacity: '0.6'
+  }
+});
+
 function Option ({
   curChainId,
   selectChainId,
@@ -84,9 +110,180 @@ function Option ({
   selectChainId:any,
   changeNetwork: (value:any) => void
 }) {
-  return <>
+  const item = config.chainInfo[curChainId]
+  const [viewUrl, setViewUrl] = useState<string>(item.nodeRpc)
+  const [viewLoading, setViewLoading] = useState<boolean>(false)
+  const [edit, setEdit] = useState(false)
 
-  </>
+  const {onChangeStarChain, starChainList} = useStarChain()
+  // console.log(viewUrl)
+  const isActive = useMemo(() => {
+    if (
+      curChainId
+      && selectChainId
+      && curChainId.toString() === selectChainId.toString()
+    ) return true
+    return false
+  }, [curChainId, selectChainId])
+  return (
+    <>
+      <Grid.Container
+        gap={0}
+        justify="center"
+        css={{
+          padding: '12px 0',
+          borderBottom: '1px solid ' + theme.colors.gray200.value,
+          cursor: 'pointer'
+        }}
+      >
+        <Grid xs={10} onClick={() => {changeNetwork(item)}}>
+          <Row justify="flex-start" align="center" css={{
+            width:'100%'
+          }}>
+            {
+              isActive ? <Badge color="success" variant="dot" /> : ''
+            }
+            <TokenLogo
+              symbol={item?.networkLogo ?? item?.symbol}
+              size={'md'}
+              style={{
+                marginRight: '10px'
+              }}
+            ></TokenLogo>
+            {
+              edit ? (
+                <Input 
+                  underlined 
+                  placeholder="Please input RPC" 
+                  color="secondary"
+                  value={viewUrl}
+                  onChange={(event:any) => {
+                    setViewUrl(event.target.value)
+                  }}
+                  css={{
+                    width:'100%'
+                  }}
+                />
+              ) : (
+                <Text>{item.networkName}</Text>
+              )
+            }
+          </Row>
+        </Grid>
+        <Grid xs={2}>
+          <Row justify="center" align="center">
+            <Col css={{ d: "flex" }}>
+              {
+                edit ? (
+                  <Tooltip content="Details">
+                    <IconButton onClick={() => console.log("View user")}>
+                      <CheckSquare size={20} />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip content="Edit user">
+                    <IconButton onClick={() => setEdit(true)}>
+                      <Settings size={20} />
+                    </IconButton>
+                  </Tooltip>
+                )
+              }
+            </Col>
+            <Col css={{ d: "flex" }}>
+              <Tooltip
+                content="Favorites"
+                color={starChainList?.[curChainId] ? 'warning' : 'default'}
+                onClick={() => onChangeStarChain(curChainId)}
+              >
+                <IconButton>
+                  <Star size={20}  />
+                </IconButton>
+              </Tooltip>
+            </Col>
+          </Row>
+        </Grid>
+      </Grid.Container>
+      
+      {/* <WalletLogoBox>
+        <WalletLogoBox2>
+          <div className="left" onClick={() => changeNetwork(config.chainInfo[curChainId])}>
+            <IconWrapper>
+              <TokenLogo symbol={item?.networkLogo ?? item?.symbol} size={'46px'}></TokenLogo>
+            </IconWrapper>
+            <OptionCardLeft id={'chain_list_name_' + curChainId}>
+              <HeaderText>
+                {' '}
+                {
+                (
+                  curChainId
+                  && selectChainId
+                  && curChainId.toString() === selectChainId.toString()
+                ) ? (
+                  <CircleWrapper>
+                    <GreenCircle>
+                      <div />
+                    </GreenCircle>
+                  </CircleWrapper>
+                ) : (
+                  ''
+                )}
+                {item.networkName}
+              </HeaderText>
+            </OptionCardLeft>
+            <OptionCardLeft1 id={'chain_list_url_' + curChainId} onClick={e => e.stopPropagation()}>
+              <Input value={viewUrl} id={'chain_list_input_' + curChainId} onChange={(event:any) => {
+                setViewUrl(event.target.value)
+              }}/>
+            </OptionCardLeft1>
+          </div>
+          <div className='right'>
+            {
+              item.nodeRpc && !isNaN(curChainId) ? (
+                <StyledMenuIcon id={'chain_list_set_' + curChainId} onClick={e => {
+                  const htmlNameNode = document.getElementById('chain_list_name_' + curChainId)
+                  const htmlNameNode1 = document.getElementById('chain_list_set_' + curChainId)
+                  const htmlUrlNode = document.getElementById('chain_list_url_' + curChainId)
+                  const htmlUrlNode1 = document.getElementById('chain_list_tick_' + curChainId)
+                  if (htmlNameNode) htmlNameNode.style.display = 'none'
+                  if (htmlNameNode1) htmlNameNode1.style.display = 'none'
+                  if (htmlUrlNode) htmlUrlNode.style.display = 'block'
+                  if (htmlUrlNode1) htmlUrlNode1.style.display = 'block'
+                  e.stopPropagation()
+                }}></StyledMenuIcon>
+              ) : ''
+            }
+            {viewLoading ? <LoaderIcon></LoaderIcon> : (
+              <CheckSquareIcon id={'chain_list_tick_' + curChainId} onClick={e => {
+                setViewLoading(true)
+                const htmlNameNode = document.getElementById('chain_list_name_' + curChainId)
+                const htmlNameNode1 = document.getElementById('chain_list_set_' + curChainId)
+                const htmlUrlNode = document.getElementById('chain_list_url_' + curChainId)
+                const htmlUrlNode1 = document.getElementById('chain_list_tick_' + curChainId)
+                isConnect(viewUrl).then((res:any) => {
+                  setViewLoading(false)
+                  if (res.msg === 'Success') {
+                    if (viewUrl === item.nodeRpc) {
+                      if (htmlNameNode) htmlNameNode.style.display = 'block'
+                      if (htmlNameNode1) htmlNameNode1.style.display = 'block'
+                      if (htmlUrlNode) htmlUrlNode.style.display = 'none'
+                      if (htmlUrlNode1) htmlUrlNode1.style.display = 'none'
+                    } else {
+                      setLocalRPC(curChainId, viewUrl)
+                      history.go(0)
+                    }
+                  } else {
+                    alert(res.error)
+                  }
+                })
+                e.stopPropagation()
+              }}></CheckSquareIcon>
+            )}
+            <StyledStarIcon className={starChainList?.[curChainId] ? 'star' : ''} onClick={() => onChangeStarChain(curChainId)}/>
+          </div>
+        </WalletLogoBox2>
+      </WalletLogoBox> */}
+    </>
+  )
 }
 
 function ChainListBox ({
@@ -134,6 +331,7 @@ function ChainListBox ({
   }, [spportChainArr, starChainList, selectTab])
 
   function List({ records }: { records?: any [] }) {
+    console.log(records)
     return (<>{
       records?.map((item:any, index:any) => {
         if (
@@ -227,7 +425,15 @@ export default function SelectNetwork () {
         {/* <Text id="modal-title" size={18}>
           Modal with a lot of content
         </Text> */}
-        <Input size="lg" clearable placeholder={t("selectNetwork") ?? ''} onChange={handleInput} />
+        <Input
+          size="lg"
+          clearable
+          placeholder={t("selectNetwork") ?? ''}
+          onChange={handleInput}
+          css={{
+            width:'90%'
+          }}
+        />
       </Modal.Header>
       <Modal.Body>
         <ChainListBox

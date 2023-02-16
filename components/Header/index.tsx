@@ -215,6 +215,19 @@ export default function App() {
           //   },
           // }}
         >
+          <Navbar.Item hideIn="xs">
+            <Button
+              light
+              auto
+              icon={<TokenLogo symbol={config.chainInfo[chainId].symbol}/>}
+              css={{
+                backgroundColor: !isDark ? theme.colors.purple100.value : 'rgba(255,255,255,.2)'
+              }}
+              onClick={toggleNetworkModal}
+            >
+              {config.chainInfo[chainId].name}
+            </Button>
+          </Navbar.Item>
           <ViewAccountInfo />
           {/* <Navbar.Item hideIn="xs">
             <Button

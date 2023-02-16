@@ -29,93 +29,15 @@ import {
   Modal,
   Input,
   styled,
-  theme
+  theme,
+  Text,
+  Spacer
 } from "@nextui-org/react";
-
-const Wrapper = styled('div', {
-  margin: '0',
-  padding: '0',
-  width: '100%',
-  height: '100%'
-})
-const HeaderRow = styled('div', {
-  padding: '1rem 1rem',
-  color: theme.colors.primary.value
-})
-// const HeaderRow = styled.div`
-//   ${({ theme }) => theme.flexRowNoWrap};
-//   padding: 1rem 1rem;
-//   font-weight: 500;
-//   color: ${props => (props.color === 'blue' ? ({ theme }) => theme.primary1 : 'inherit')};
-//   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     padding: 1rem;
-//   `};
-// `
-const ContentWrapper = styled('div', {
-  // backgroundColor: theme.colors.background.value,
-  padding: '2rem',
-  borderBottomLeftRadius: '20px',
-  borderBottomRightRadius: '20px'
-})
-// const ContentWrapper = styled.div`
-//   background-color: ${({ theme }) => theme.bg2};
-//   padding: 2rem;
-//   border-bottom-left-radius: 20px;
-//   border-bottom-right-radius: 20px;
-
-//   ${({ theme }) => theme.mediaWidth.upToMedium`padding: 1rem`};
-// `
-
-const UpperSection = styled('div', {
-  position: 'relative'
-})
-// const UpperSection = styled.div`
-//   position: relative;
-
-//   h5 {
-//     margin: 0;
-//     margin-bottom: 0.5rem;
-//     font-size: 1rem;
-//     font-weight: 400;
-//   }
-
-//   h5:last-child {
-//     margin-bottom: 0px;
-//   }
-
-//   h4 {
-//     margin-top: 0;
-//     font-weight: 500;
-//   }
-// `
 
 const OptionGrid = styled('div', {
   display: 'grid',
   gridGap: '10px'
 })
-// const OptionGrid = styled.div`
-//   display: grid;
-//   grid-gap: 10px;
-//   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     grid-template-columns: 1fr;
-//     grid-gap: 10px;
-//   `};
-// `
-
-const HoverText = styled('div', {})
-// const HoverText = styled.div`
-//   :hover {
-//     cursor: pointer;
-//   }
-// `
-
-// const WALLET_VIEWS = {
-//   OPTIONS: 'options',
-//   OPTIONS_SECONDARY: 'options_secondary',
-//   ACCOUNT: 'account',
-//   PENDING: 'pending'
-// }
-
 export default function WalletModal({
   pendingTransactions,
   confirmedTransactions,
@@ -283,48 +205,55 @@ export default function WalletModal({
   function getModalContent() {
     if (error) {
       return (
-        <UpperSection>
-          <HeaderRow>{error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('ErrorConnecting')}</HeaderRow>
-          <ContentWrapper>
+        <>
+          <Modal.Header>
+            <Text size="$xl" b>
+              {error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('ErrorConnecting')}
+            </Text>
+          </Modal.Header>
+          <Modal.Body>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>{t('tip37', {name:config.chainInfo[chainId].name})}</h5>
+              <h5>{t('WrongNetworkTip', {name:config.chainInfo[chainId].name})}</h5>
             ) : (
-              t('tip36')
+              t('ErrorConnectingTip')
             )}
-          </ContentWrapper>
-        </UpperSection>
+            <Spacer />
+          </Modal.Body>
+        </>
       )
     }
     if (account && walletView === WALLET_VIEWS.ACCOUNT) {
       return (
-        <AccountDetails
-          toggleWalletModal={toggleWalletModal}
-          pendingTransactions={pendingTransactions}
-          confirmedTransactions={confirmedTransactions}
-          ENSName={ENSName}
-          openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
-        />
+        <Modal.Body>
+          <AccountDetails
+            toggleWalletModal={toggleWalletModal}
+            pendingTransactions={pendingTransactions}
+            confirmedTransactions={confirmedTransactions}
+            ENSName={ENSName}
+            openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
+          />
+        </Modal.Body>
       )
     }
     return (
-      <UpperSection>
+      <>
         {walletView !== WALLET_VIEWS.ACCOUNT ? (
-          <HeaderRow color="blue">
-            <HoverText
-              onClick={() => {
-                setPendingError(false)
-                setWalletView(WALLET_VIEWS.ACCOUNT)
-              }}
-            >
+          <Modal.Header>
+            <Text size="$xl" color='primary' b onClick={() => {
+              setPendingError(false)
+              setWalletView(WALLET_VIEWS.ACCOUNT)
+            }}>
               {t('Back')}
-            </HoverText>
-          </HeaderRow>
+            </Text>
+          </Modal.Header>
         ) : (
-          <HeaderRow>
-            <HoverText>{t('ConnectToWallet')}</HoverText>
-          </HeaderRow>
+          <Modal.Header>
+            <Text size="$xl" b>
+              {t('ConnectToWallet')}
+            </Text>
+          </Modal.Header>
         )}
-        <ContentWrapper>
+        <Modal.Body>
           {walletView === WALLET_VIEWS.PENDING ? (
             <PendingView
               connector={pendingWallet}
@@ -335,14 +264,8 @@ export default function WalletModal({
           ) : (
             <OptionGrid>{getOptions()}</OptionGrid>
           )}
-          {/* {walletView !== WALLET_VIEWS.PENDING && (
-            <Blurb>
-              <span>{t('NewToEthereum')} &nbsp;</span>{' '}
-              <ExternalLink href="https://ethereum.org/wallets/">{t('tip35')}</ExternalLink>
-            </Blurb>
-          )} */}
-        </ContentWrapper>
-      </UpperSection>
+        </Modal.Body>
+      </>
     )
   }
 
@@ -355,10 +278,7 @@ export default function WalletModal({
       open={walletModalOpen}
       onClose={toggleWalletModal}
     >
-
-      <Wrapper>{getModalContent()}</Wrapper>
-    {/* <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
-    </Modal> */}
+      {getModalContent()}
     </Modal>
   )
 }

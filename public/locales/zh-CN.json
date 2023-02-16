@@ -11,5 +11,9 @@
   "explorer": "浏览器",
   "selectNetwork": "选择网络",
   "ConnectToWallet": "连接钱包",
-  "RecentTransactions": "最近的交易"
+  "RecentTransactions": "最近的交易",
+  "WrongNetwork": "错误的网络",
+  "ErrorConnecting": "连接时出错",
+  "ErrorConnectingTip": "连接时出错。尝试刷新页面。",
+  "WrongNetworkTip": "请连接到相应的{{name}}网络。"
 }

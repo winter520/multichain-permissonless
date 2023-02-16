@@ -66,6 +66,8 @@ export function useUserSelectChainId() {
 
   return {
     selectNetworkInfo,
+    chainId: selectNetworkInfo?.chainId,
+    label: selectNetworkInfo?.label,
     setUserSelectNetwork
   }
 }
