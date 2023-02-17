@@ -33,7 +33,8 @@ import {
   Switch,
   styled,
   theme,
-  Row
+  Row,
+  Modal
 } from "@nextui-org/react";
 import Link from 'next/link'
 
@@ -341,10 +342,7 @@ export default function AccountDetails({
   return (
     <>
       <UpperSection>
-        <CloseIcon onClick={toggleWalletModal}>
-          <CloseColor />
-        </CloseIcon>
-        <HeaderRow>{t('Account')}</HeaderRow>
+        
         <AccountSection>
           <YourAccount>
             <InfoCard>

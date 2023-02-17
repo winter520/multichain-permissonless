@@ -222,15 +222,22 @@ export default function WalletModal({
     }
     if (account && walletView === WALLET_VIEWS.ACCOUNT) {
       return (
-        <Modal.Body>
-          <AccountDetails
-            toggleWalletModal={toggleWalletModal}
-            pendingTransactions={pendingTransactions}
-            confirmedTransactions={confirmedTransactions}
-            ENSName={ENSName}
-            openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
-          />
-        </Modal.Body>
+        <>
+          <Modal.Header>
+            <Text size="$xl" b>
+              {t('Account')}
+            </Text>
+          </Modal.Header>
+          <Modal.Body>
+            <AccountDetails
+              toggleWalletModal={toggleWalletModal}
+              pendingTransactions={pendingTransactions}
+              confirmedTransactions={confirmedTransactions}
+              ENSName={ENSName}
+              openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
+            />
+          </Modal.Body>
+        </>
       )
     }
     return (

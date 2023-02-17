@@ -10,7 +10,8 @@ import {
   Tooltip,
   Text,
   theme,
-  Badge
+  Badge,
+  Loading as LoadingView
 } from "@nextui-org/react";
 import {
   useActiveReact
@@ -47,13 +48,16 @@ import {LazyList} from "@/components/Lazyload/LazyList"
 import Loading from "@/components/Lazyload/Loading"
 import TokenLogo from "@/components/TokenLogo"
 
+// import {
+//   useLoginEvm
+// } from "@/chains/evm"
 import {
-  useLoginEvm
-} from "@/chains/evm"
+  setLocalRPC
+} from "@/config/chainConfig/methods"
 
 const NetWorkList = styled('div',{
   width:"100%",
-  overflow: "auto"
+  overflow: "auto",
 })
 
 const LoadingBox = styled('div')
@@ -87,6 +91,36 @@ const OptionCardClickable = styled('div', {
   }
 });
 
+const TabButton = styled(Button, {
+  variants: {
+    color: {
+      active: {
+        backgroundColor: theme.colors.secondary.value + "!important",
+        color: theme.colors.white.value + "!important",
+      },
+      default: {
+        // backgroundColor: theme.colors.secondary.value + "!important",
+        // color: theme.colors.white.value,
+      }
+    }
+  }
+})
+
+const defaultIconStroke = theme.colors.gray800.value
+
+const StyledStarIcon = styled(Star, {
+  width: '20px',
+  height: '20px',
+  "& > *": {
+    stroke: defaultIconStroke
+  },
+  "&.star": {
+    "> *": {
+      stroke: theme.colors.warning.value,
+      fill: theme.colors.warning.value,
+    }
+  }
+})
 export const IconButton = styled('button', {
   dflex: 'center',
   border: 'none',
@@ -103,6 +137,33 @@ export const IconButton = styled('button', {
     opacity: '0.6'
   }
 });
+
+const Web3 = require('web3')
+
+function isConnect (rpc:string) {
+  return new Promise(resolve => {
+    if (!rpc || rpc.indexOf('https://') !== 0) {
+      resolve({
+        msg: 'Error',
+        error: "Failed to construct 'URL': Invalid URL"
+      })
+    } else {
+      const web3Fn = new Web3(new Web3.providers.HttpProvider(rpc))
+      web3Fn.eth.getBlock('latest').then((res:any) => {
+        console.log(res)
+        resolve({
+          msg: 'Success',
+          info: res
+        })
+      }).catch((err:any) => {
+        resolve({
+          msg: 'Error',
+          error: err.toString()
+        })
+      })
+    }
+  })
+}
 
 function Option ({
   curChainId,
@@ -163,6 +224,7 @@ function Option ({
                   onChange={(event:any) => {
                     setViewUrl(event.target.value)
                   }}
+                  onClick={e => e.stopPropagation()}
                   css={{
                     width:'100%'
                   }}
@@ -174,32 +236,60 @@ function Option ({
           </Row>
         </Grid>
         <Grid xs={2}>
-          <Row justify="center" align="center">
-            <Col css={{ d: "flex" }}>
-              {
-                edit ? (
-                  <Tooltip content="Details">
-                    <IconButton onClick={() => console.log("View user")}>
-                      <CheckSquare size={20} />
-                    </IconButton>
-                  </Tooltip>
-                ) : (
-                  <Tooltip content="Edit user">
-                    <IconButton onClick={() => setEdit(true)}>
-                      <Settings size={20} />
-                    </IconButton>
-                  </Tooltip>
-                )
-              }
-            </Col>
+          <Row justify="flex-end" align="center" css={{
+            width: "100%"
+          }}>
+            {
+              isNaN(curChainId) ? <Col css={{ d: "flex" }}></Col> : (
+                <Col css={{ d: "flex" }}>
+                  {
+                    edit ? (
+                      <>
+                        {
+                          viewLoading ? (
+                            <LoadingView size="sm"  type="default"/>
+                          ) : (
+                            <Tooltip content="Details" onClick={() => {
+                              setViewLoading(true)
+                              isConnect(viewUrl).then((res:any) => {
+                                setViewLoading(false)
+                                if (res.msg === 'Success') {
+                                  if (viewUrl != item.nodeRpc) {
+                                    setEdit(false)
+                                    setLocalRPC(curChainId, viewUrl)
+                                    history.go(0)
+                                  }
+                                  setEdit(false)
+                                } else {
+                                  alert(res.error)
+                                }
+                              })
+                            }}>
+                              <IconButton onClick={() => console.log("View user")}>
+                                <CheckSquare size={20} style={{stroke: defaultIconStroke}} />
+                              </IconButton>
+                            </Tooltip>
+                          )
+                        }
+                      </>
+                    ) : (
+                      <Tooltip content="Edit RPC">
+                        <IconButton onClick={() => setEdit(true)}>
+                          <Settings size={20} style={{stroke: defaultIconStroke}} />
+                        </IconButton>
+                      </Tooltip>
+                    )
+                  }
+                </Col>
+              )
+            }
             <Col css={{ d: "flex" }}>
               <Tooltip
                 content="Favorites"
-                color={starChainList?.[curChainId] ? 'warning' : 'default'}
                 onClick={() => onChangeStarChain(curChainId)}
               >
                 <IconButton>
-                  <Star size={20}  />
+                  <StyledStarIcon size={20} className={starChainList?.[curChainId] ? 'star' : ''}  />
                 </IconButton>
               </Tooltip>
             </Col>
@@ -299,7 +389,7 @@ function ChainListBox ({
 }
 
 export default function SelectNetwork () {
-  const {chainId, account} = useActiveReact()
+  const {chainId} = useActiveReact()
   const {starTabIndex, onChangeStarTab} = useChangeStarTab('CHAIN')
   const networkModalOpen = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()
@@ -360,18 +450,37 @@ export default function SelectNetwork () {
       open={networkModalOpen}
       onClose={networkModalOpen ? toggleNetworkModal : () => {}}
     >
-      <Modal.Header>
-        <Input
-          size="lg"
-          clearable
-          placeholder={t("selectNetwork") ?? ''}
-          onChange={handleInput}
-          css={{
-            width:'90%'
-          }}
-        />
+      <Modal.Header css={{
+        flexWrap:'wrap',
+        borderBottom: '1px solid ' + theme.colors.gray100.value,
+        paddingBottom: '0px',
+      }}>
+        <Row>
+          <Col>
+            <Input
+              size="lg"
+              clearable
+              placeholder={t("selectNetwork") ?? ''}
+              onChange={handleInput}
+              css={{
+                width:'100%'
+              }}
+            />
+          </Col>
+        </Row>
+        <Row justify="flex-start" align='center'>
+          <Col>
+            <Button.Group color="secondary" light size="sm" ghost>
+              <TabButton color={starTabIndex === 0 ? 'active' : 'default'} onClick={() => onChangeStarTab(0)}>My Favorites</TabButton>
+              <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Chains</TabButton>
+              <TabButton color={starTabIndex === 2 ? 'active' : 'default'} onClick={() => onChangeStarTab(2)}>Hot</TabButton>
+            </Button.Group>
+          </Col>
+        </Row>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body css={{
+        minHeight: '50vh'
+      }}>
         <ChainListBox
           useChainId={useChainId}
           changeNetwork={changeNetwork}
