@@ -15,5 +15,12 @@
   "WrongNetwork": "错误的网络",
   "ErrorConnecting": "连接时出错",
   "ErrorConnectingTip": "连接时出错。尝试刷新页面。",
-  "WrongNetworkTip": "请连接到相应的{{name}}网络。"
+  "WrongNetworkTip": "请连接到相应的{{name}}网络。",
+  "Connected": "已连接",
+  "Disconnect": "断开",
+  "Change": "切换",
+  "CopyAddress": "复制地址",
+  "clearAll": "全部清除",
+  "ViewOn": "查看",
+  "txView": "您的交易将出现在这里..."
 }

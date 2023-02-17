@@ -133,10 +133,8 @@ function ViewAccountInfo () {
 export default function App() {
   const { isDark } = useTheme();
   const toggleNetworkModal = useNetworkModalToggle()
-  const toggleAccountModal = useAccountModalToggle()
-  const {activate} = useActiveWeb3React()
   const { setTheme } = useNextTheme()
-  const {chainId, account} = useActiveReact()
+  const {chainId} = useActiveReact()
   // const router = useRouter();
 // console.log(params)
   return (
@@ -243,66 +241,6 @@ export default function App() {
             />
           </Navbar.Item>
           <ViewAccountInfo />
-          {/* <Navbar.Item hideIn="xs">
-            <Button
-              light
-              auto
-              icon={<TokenLogo symbol={config.chainInfo[chainId].symbol}/>}
-              css={{
-                backgroundColor: !isDark ? theme.colors.purple100.value : 'rgba(255,255,255,.2)'
-              }}
-              onClick={toggleNetworkModal}
-            >
-              {config.chainInfo[chainId].name}
-            </Button>
-          </Navbar.Item>
-          <Navbar.Item hideIn="xs">
-            <Switch
-              size="xl"
-              iconOn={<SunIcon filled />}
-              iconOff={<MoonIcon filled />}
-              checked={isDark}
-              onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
-            />
-          </Navbar.Item>
-          <Navbar.Item>
-            {
-              account ? (
-                <Button
-                  light
-                  auto
-                  icon={<Avatar
-                    icon={<Identicon imageKey={"0x1111111111111111111111111111111111111111"}/>}
-                    size="sm"
-                    zoomed
-                    color="gradient"
-                    bordered
-                  />}
-                  css={{
-                    backgroundColor: !isDark ? theme.colors.purple900.value : 'rgba(255,255,255,.2)'
-                  }}
-                  onClick={toggleAccountModal}
-                >
-                  {config.chainInfo[chainId].name}
-                </Button>
-              ) : (
-                <Button
-                  light
-                  auto
-                  css={{
-                    backgroundColor: !isDark ? theme.colors.purple800.value : 'rgba(255,255,255,.2)',
-                    color: theme.colors.white.value, 
-                  }}
-                  // onClick={toggleNetworkModal}
-                  onClick={() => {
-                    activate(injected)
-                  }}
-                >
-                  {t('ConnectToWallet')}
-                </Button>
-              )
-            }
-          </Navbar.Item> */}
         </Navbar.Content>
 
         <Navbar.Collapse>

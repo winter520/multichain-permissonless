@@ -469,8 +469,14 @@ export default function SelectNetwork () {
           </Col>
         </Row>
         <Row justify="flex-start" align='center'>
-          <Col>
-            <Button.Group color="secondary" light size="sm" ghost>
+          <Col css={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+          }}>
+            <Button.Group color="secondary" light size="sm" ghost css={{
+              marginLeft: '0',
+              marginRight: '0'
+            }}>
               <TabButton color={starTabIndex === 0 ? 'active' : 'default'} onClick={() => onChangeStarTab(0)}>My Favorites</TabButton>
               <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Chains</TabButton>
               <TabButton color={starTabIndex === 2 ? 'active' : 'default'} onClick={() => onChangeStarTab(2)}>Hot</TabButton>

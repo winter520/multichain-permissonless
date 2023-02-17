@@ -5,21 +5,16 @@ import useCopyClipboard from '@/hooks/useCopyClipboard'
 // import { LinkStyledButton } from '../../theme'
 import { CheckCircle, Copy } from 'react-feather'
 
-import { 
-  Navbar, 
-  Button, 
-  // Link as LinkUI, 
-  Text, 
-  useTheme,
-  Avatar,
-  Dropdown,
-  Switch,
+import {
   styled,
   theme
 } from "@nextui-org/react";
 
 const CopyIcon = styled('div', {
-
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  color: theme.colors.gray700.value
 })
 // const CopyIcon = styled(LinkStyledButton)`
 //   color: ${({ theme }) => theme.text3};

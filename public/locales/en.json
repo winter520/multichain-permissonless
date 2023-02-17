@@ -15,5 +15,12 @@
   "WrongNetwork": "Wrong Network",
   "ErrorConnecting": "Error connecting",
   "ErrorConnectingTip": "Error connecting. Try refreshing the page.",
-  "WrongNetworkTip": "Please connect to the appropriate {{name}} network."
+  "WrongNetworkTip": "Please connect to the appropriate {{name}} network.",
+  "Connected": "Connected",
+  "Disconnect": "Disconnect",
+  "Change": "Change",
+  "CopyAddress": "Copy Address",
+  "clearAll": "clear all",
+  "ViewOn": "View on",
+  "txView": "Your transactions will appear here..."
 }

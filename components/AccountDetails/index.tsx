@@ -34,7 +34,9 @@ import {
   styled,
   theme,
   Row,
-  Modal
+  Modal,
+  Col,
+  Card
 } from "@nextui-org/react";
 import Link from 'next/link'
 
@@ -74,7 +76,7 @@ const UpperSection = styled('div', {
 //   }
 // `
 
-const InfoCard = styled('div', {
+const InfoCard = styled(Card, {
 
 })
 // const InfoCard = styled.div`
@@ -172,7 +174,10 @@ const AccountControl = styled('div', {
 // `
 
 const AddressLink = styled(Link, {
-
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  marginLeft: '10px'
 })
 // const AddressLink = styled(ExternalLink)<{ hasENS: boolean; isENS: boolean }>`
 //   font-size: 0.825rem;
@@ -243,8 +248,33 @@ const TransactionListWrapper = styled('div', {
 // `
 
 const WalletAction = styled(Button, {
-
-})
+  variants: {
+    size: {
+      walletaction: {
+        height: '$12', // space[12]
+        padding: '4px 6px!important'
+      }
+    },
+    color: {
+      walletaction: {
+        background: 'none', // colors.green800
+        color: theme.colors.secondary.value, 
+        border: '1px solid '+ theme.colors.secondaryBorder.value,
+        '&:hover': {
+          background: 'none',
+          color: theme.colors.secondary.value,
+          border: '1px solid '+ theme.colors.secondaryBorderHover.value,
+        },
+        '&:active': {
+          background: 'none',
+        },
+        '&:focus': {
+          borderColor: 'none',
+        },
+      }
+    }
+  }
+});
 // const WalletAction = styled(ButtonSecondary)`
 //   width: fit-content;
 //   font-weight: 400;
@@ -258,6 +288,13 @@ const WalletAction = styled(Button, {
 // `
 
 const LinkStyledButton = styled(Button, {})
+
+const ActionColor = theme.colors.gray700.value
+const ActionText = styled(Text, {
+  marginLeft: '5px',
+  fontSize: '12px',
+  color: ActionColor + '!important'
+})
 
 function renderTransactions(transactions: string[]) {
   return (
@@ -295,16 +332,15 @@ export default function AccountDetails({
   } = useLogoutWallet()
 
   function formatConnectorName() {
-    return <WalletName>{t('Connected')}</WalletName>
+    return <Text css={{
+      color: theme.colors.gray700.value,
+    }} size="sm">{t('Connected')}</Text>
   }
 
   function getStatusIcon() {
     if (connector === injected) {
       return (
-        // <IconWrapper size={16}>
-        <IconWrapper>
-          <Identicon imageKey={'0x' + chainId} />
-        </IconWrapper>
+        <Identicon imageKey={'0x' + chainId} size={16} />
       )
     }
     return null
@@ -313,7 +349,9 @@ export default function AccountDetails({
   function changeWallet () {
     if (!isNaN(chainId)) {
       return <WalletAction
-        style={{ fontSize: '.825rem', fontWeight: 400 }}
+        auto
+        color="walletaction"
+        size="walletaction"
         onClick={() => {
           openOptions()
           // logoutWallet()
@@ -323,7 +361,9 @@ export default function AccountDetails({
       </WalletAction>
     } else if (isSupportLogout) {
       return <WalletAction
-        css={{ fontSize: '.825rem', fontWeight: 400 }}
+        auto
+        color="walletaction"
+        size="walletaction"
         onClick={() => {
           logoutWallet()
           toggleWalletModal()
@@ -341,103 +381,99 @@ export default function AccountDetails({
 
   return (
     <>
-      <UpperSection>
-        
-        <AccountSection>
-          <YourAccount>
-            <InfoCard>
-              <AccountGroupingRow>
-                {formatConnectorName()}
-                <div>
-                  {connector !== injected && !isNaN(chainId) && (
-                    <WalletAction
-                      css={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
-                      onClick={() => {
-                        ;(connector as any).close()
-                      }}
-                    >
-                      {t('Disconnect')}
-                    </WalletAction>
-                  )}
-                  {changeWallet()}
-                </div>
-              </AccountGroupingRow>
-              <AccountGroupingRow id="web3-account-identifier-row">
-                <AccountControl>
-                  {ENSName ? (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {ENSName}</p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {account && shortenAddress(account)}</p>
-                      </div>
-                    </>
-                  )}
-                </AccountControl>
-              </AccountGroupingRow>
-              <AccountGroupingRow>
-                {ENSName ? (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {account && (
-                          <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>{t('CopyAddress')}</span>
-                          </Copy>
-                        )}
-                        {chainId && account && (
-                          <AddressLink
-                            // hasENS={!!ENSName}
-                            // isENS={true}
-                            href={getEtherscanLink(chainId, ENSName, 'address')}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>{t('ViewOn')} {config.chainInfo[chainId].name}</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
-                ) : (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {account && (
-                          <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>{t('CopyAddress')}</span>
-                          </Copy>
-                        )}
-                        {chainId && account && (
-                          <AddressLink
-                            // hasENS={!!ENSName}
-                            // isENS={false}
-                            href={getEtherscanLink(chainId, account, 'address')}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>{t('ViewOn')} {config.chainInfo[chainId].name}</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
+      <InfoCard>
+        <Card.Header>
+
+          <Row justify="space-between" align='center'>
+            <Col>
+              {formatConnectorName()}
+            </Col>
+            <Col css={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}>
+              {connector !== injected && !isNaN(chainId) && (
+                <WalletAction
+                  auto
+                  color="walletaction"
+                  size="walletaction"
+                  onClick={() => {
+                    ;(connector as any).close()
+                  }}
+                >
+                  {t('Disconnect')}
+                </WalletAction>
+              )}
+              {changeWallet()}
+            </Col>
+          </Row>
+        </Card.Header>
+        <Card.Body css={{
+          paddingTop: '0',
+          paddingBottom: '0',
+        }}>
+          <Row justify="flex-start" align='center'>
+            {ENSName ? (
+              <>
+                {getStatusIcon()}
+                <ActionText size="$xl"> {ENSName}</ActionText>
+              </>
+            ) : (
+              <>
+                {getStatusIcon()}
+                <ActionText size="$xl"> {account && shortenAddress(account)}</ActionText>
+              </>
+            )}
+          </Row>
+        </Card.Body>
+        <Card.Footer>
+          {ENSName ? (
+            <>
+              <Row justify='flex-start' align='center'>
+                {account && (
+                  <Copy toCopy={account}>
+                    <ActionText>{t('CopyAddress')}</ActionText>
+                  </Copy>
                 )}
-              </AccountGroupingRow>
-            </InfoCard>
-          </YourAccount>
-        </AccountSection>
-      </UpperSection>
+                {chainId && account && (
+                  <AddressLink
+                    // hasENS={!!ENSName}
+                    // isENS={true}
+                    href={getEtherscanLink(chainId, ENSName, 'address')}
+                  >
+                    <LinkIcon size={16} />
+                    <ActionText>{t('ViewOn')} {config.chainInfo[chainId].name}</ActionText>
+                  </AddressLink>
+                )}
+              </Row>
+            </>
+          ) : (
+            <>
+              <Row justify='flex-start' align='center'>
+                {account && (
+                  <Copy toCopy={account}>
+                    <ActionText>{t('CopyAddress')}</ActionText>
+                  </Copy>
+                )}
+                {chainId && account && (
+                  <AddressLink
+                    // hasENS={!!ENSName}
+                    // isENS={false}
+                    href={getEtherscanLink(chainId, account, 'address')}
+                  >
+                    <LinkIcon size={16} style={{
+                      color: ActionColor
+                    }}/>
+                    <ActionText>{t('ViewOn')} {config.chainInfo[chainId].name}</ActionText>
+                  </AddressLink>
+                )}
+              </Row>
+            </>
+          )}
+        </Card.Footer>
+      </InfoCard>
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
-          {/* <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between' }}>
-            <TYPE.body>{t('RecentTransactions')}</TYPE.body>
-            <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
-          </AutoRow> */}
           <Row>
             <Text>{t('RecentTransactions')}</Text>
             <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
@@ -452,9 +488,7 @@ export default function AccountDetails({
         </LowerSection>
       ) : (
         <LowerSection>
-          {/* <TYPE.body color={theme.text1}>{t('tip17')}</TYPE.body> */}
-          {/* <TYPE.body>{t('tip17')}</TYPE.body> */}
-          <Text>{t('tip17')}</Text>
+          <ActionText>{t('txView')}</ActionText>
         </LowerSection>
       )}
     </>

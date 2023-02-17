@@ -1,7 +1,8 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { t } from 'i18next';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import {ChevronLeft} from 'react-feather'
+// import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { injected } from '@/connectors'
@@ -29,7 +30,9 @@ import {
   styled,
   theme,
   Text,
-  Spacer
+  Spacer,
+  Row,
+  Col
 } from "@nextui-org/react";
 
 const OptionGrid = styled('div', {
@@ -244,12 +247,25 @@ export default function WalletModal({
       <>
         {walletView !== WALLET_VIEWS.ACCOUNT ? (
           <Modal.Header>
-            <Text size="$xl" color='primary' b onClick={() => {
-              setPendingError(false)
-              setWalletView(WALLET_VIEWS.ACCOUNT)
-            }}>
-              {t('Back')}
-            </Text>
+            <Row justify='flex-start'>
+              <Col css={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+              }}>
+                <Text size="$md" color='defult' b onClick={() => {
+                  setPendingError(false)
+                  setWalletView(WALLET_VIEWS.ACCOUNT)
+                }} css={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  cursor:"pointer"
+                }}>
+                  <ChevronLeft />
+                  {t('Back')}
+                </Text>
+              </Col>
+            </Row>
           </Modal.Header>
         ) : (
           <Modal.Header>
