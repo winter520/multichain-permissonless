@@ -1,7 +1,8 @@
 
 export enum VERSION {
   V1 = 'MULTICHAIN',
-  V1_TEST = 'MULTICHAIN_TEST'
+  V1_TEST = 'MULTICHAIN_TEST',
+  USDC_DEMO = 'USDC_DEMO',
 }
 
 export enum CHAIN_TYPE {
@@ -9,8 +10,8 @@ export enum CHAIN_TYPE {
   COMMON = 'COMMON'
 }
 export const isBrowser = (() => typeof window !== 'undefined')()
-export const INIT_VERSION = VERSION.V1
-// export const INIT_VERSION = VERSION.V7_TEST
+// export const INIT_VERSION = VERSION.V1
+export const INIT_VERSION = VERSION.USDC_DEMO
 // export const INIT_VERSION = VERSION.V7_BAS_TEST
 
 function getUrlVersion (init:any) {
@@ -84,15 +85,21 @@ export const ENV_NODE_CONFIG = USE_VERSION + '_ENV_NODE_CONFIG'
 
 export const controlConfig:any = {
   [VERSION.V1]: {
-    bridgeInitDataChain: '56',
     hiddenCoin: [],
     hiddenChain: [],
     showCoin: [],
     showChain: [],
     initNode: '56',
     isOpenRouter: 1,
-    isOpenRouterTxns: 0,
-    isOpenBridge: 0
+  },
+  [VERSION.USDC_DEMO]: {
+    hiddenCoin: [],
+    hiddenChain: [],
+    showCoin: [],
+    showChain: [],
+    initNode: '56',
+    isOpenRouter: 0,
+    isOpenUSDC: 1,
   },
 }
 export const INIT_NODE = controlConfig[USE_VERSION].initNode

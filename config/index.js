@@ -3,14 +3,16 @@ import {
 } from '@/config/chainConfig'
 import {
   isBrowser,
-  bridgeApi
+  bridgeApi,
+  controlConfig
 } from '@/config/constant'
 // const isBrowser = () => typeof window !== 'undefined'
 
 const config = {
   isBrowser,
   chainInfo,
-  bridgeApi
+  bridgeApi,
+  controlConfig
 }
 
 export default config
