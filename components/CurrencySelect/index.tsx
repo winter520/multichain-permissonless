@@ -18,7 +18,7 @@ import { t } from "i18next"
 import {
   ChevronDown
 } from '@/components/Icon'
-import InputNumber from '@/components/NumericalInput'
+import InputNumber from '@/components/Input'
 
 import TokenLogo from "../TokenLogo"
 
@@ -38,6 +38,7 @@ import {
 interface CurrencySelectProps {
   value: string  // token amount
   onUserInput: (value: string) => void // user input amount
+  tokenlist: Array<any>
   id?: string | undefined | number
   isError?: boolean
   label?: string
@@ -47,6 +48,7 @@ interface CurrencySelectProps {
 export default function CurrencySelect ({
   value,
   onUserInput,
+  tokenlist=[],
   id,
   isError,
   label,

@@ -2,7 +2,6 @@ import React from 'react'
 import {
   styled,
   Input,
-  
 } from '@nextui-org/react'
 import { escapeRegExp } from '@/utils'
 
@@ -33,7 +32,6 @@ export const InputNumber = React.memo(function InnerInput({
   width?: string
   size?: any
   css?: any
-  error?: boolean
 } & Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'onChange' | 'as'>) {
   const enforcer = (nextUserInput: string) => {
     if (nextUserInput === '' || inputRegex.test(escapeRegExp(nextUserInput))) {

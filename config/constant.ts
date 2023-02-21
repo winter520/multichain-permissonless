@@ -102,6 +102,8 @@ export const controlConfig:any = {
     isOpenUSDC: 1,
   },
 }
-export const INIT_NODE = controlConfig[USE_VERSION].initNode
+export const initConfig = controlConfig[USE_VERSION]
+
+export const INIT_NODE = initConfig.initNode
 
 export const END_STATUS = [1, 3, 10, 16,-2, -3]

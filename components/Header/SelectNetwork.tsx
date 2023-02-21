@@ -47,6 +47,7 @@ import { Settings, CheckSquare, Star } from 'react-feather'
 import {LazyList} from "@/components/Lazyload/LazyList"
 import Loading from "@/components/Lazyload/Loading"
 import TokenLogo from "@/components/TokenLogo"
+import SearchInput from '@/components/Input/searchInput'
 
 // import {
 //   useLoginEvm
@@ -435,8 +436,8 @@ export default function SelectNetwork () {
       })
     }
   }
-  const handleInput = useCallback((event:any) => {
-    const input = event.target.value
+  const handleInput = useCallback((input:any) => {
+    // const input = event.target.value
     setSearchQuery(input)
     // fixedList.current?.scrollTo(0)
   }, [])
@@ -457,14 +458,10 @@ export default function SelectNetwork () {
       }}>
         <Row>
           <Col>
-            <Input
-              size="lg"
-              clearable
+            <SearchInput
+              value={searchQuery}
+              onUserInput={handleInput}
               placeholder={t("selectNetwork") ?? ''}
-              onChange={handleInput}
-              css={{
-                width:'100%'
-              }}
             />
           </Col>
         </Row>

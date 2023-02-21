@@ -6,7 +6,6 @@ export const darkTheme = createTheme({
     colors: {
       gradient: 'linear-gradient(to right, #734ce2 , #606bfb)',
       backgroundContrast: 'transparent radial-gradient(closest-side at 50% 50%, #21263E 0%, #1C2133 100%) 0% 0% no-repeat padding-box',
-      // backgroundGradient: 'transparent radial-gradient(closest-side at 50% 50%, #21263E 0%, #1C2133 100%) 0% 0% no-repeat padding-box;',
       contentBg: '#151A2F',
       purple: '#524DFB',
       purple100: '#DCDBFE',
