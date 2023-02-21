@@ -1,0 +1,317 @@
+[{
+	"inputs": [{
+		"internalType": "address",
+		"name": "_admin",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_callProxy",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_usdcBridge",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_usdcMessageTransmitter",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_usdcToken",
+		"type": "address"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "constructor"
+}, {
+	"anonymous": false,
+	"inputs": [{
+		"indexed": true,
+		"internalType": "address",
+		"name": "_old",
+		"type": "address"
+	}, {
+		"indexed": true,
+		"internalType": "address",
+		"name": "_new",
+		"type": "address"
+	}],
+	"name": "ApplyAdmin",
+	"type": "event"
+}, {
+	"anonymous": false,
+	"inputs": [{
+		"indexed": true,
+		"internalType": "address",
+		"name": "_old",
+		"type": "address"
+	}, {
+		"indexed": true,
+		"internalType": "address",
+		"name": "_new",
+		"type": "address"
+	}],
+	"name": "ChangeAdmin",
+	"type": "event"
+}, {
+	"anonymous": false,
+	"inputs": [{
+		"indexed": false,
+		"internalType": "address",
+		"name": "sender",
+		"type": "address"
+	}, {
+		"indexed": false,
+		"internalType": "address",
+		"name": "receiver",
+		"type": "address"
+	}, {
+		"indexed": false,
+		"internalType": "uint256",
+		"name": "amount",
+		"type": "uint256"
+	}, {
+		"indexed": false,
+		"internalType": "uint256",
+		"name": "fromChainId",
+		"type": "uint256"
+	}, {
+		"indexed": false,
+		"internalType": "string",
+		"name": "swapid",
+		"type": "string"
+	}],
+	"name": "LogCallin",
+	"type": "event"
+}, {
+	"anonymous": false,
+	"inputs": [{
+		"indexed": false,
+		"internalType": "address",
+		"name": "sender",
+		"type": "address"
+	}, {
+		"indexed": false,
+		"internalType": "uint256",
+		"name": "amount",
+		"type": "uint256"
+	}, {
+		"indexed": false,
+		"internalType": "address",
+		"name": "receiver",
+		"type": "address"
+	}, {
+		"indexed": false,
+		"internalType": "uint256",
+		"name": "toChainId",
+		"type": "uint256"
+	}],
+	"name": "LogCallout",
+	"type": "event"
+}, {
+	"inputs": [],
+	"name": "admin",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "anyExecute",
+	"outputs": [{
+		"internalType": "bool",
+		"name": "success",
+		"type": "bool"
+	}, {
+		"internalType": "bytes",
+		"name": "result",
+		"type": "bytes"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "applyAdmin",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "callProxy",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "_amount",
+		"type": "uint256"
+	}, {
+		"internalType": "uint32",
+		"name": "_destinationDomain",
+		"type": "uint32"
+	}, {
+		"internalType": "address",
+		"name": "_mintRecipient",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_burnToken",
+		"type": "address"
+	}, {
+		"internalType": "uint256",
+		"name": "_toChainId",
+		"type": "uint256"
+	}, {
+		"internalType": "bool",
+		"name": "_payFeeOnSrc",
+		"type": "bool"
+	}],
+	"name": "callout",
+	"outputs": [],
+	"stateMutability": "payable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "_admin",
+		"type": "address"
+	}],
+	"name": "changeAdmin",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"name": "clientPeers",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "",
+		"type": "string"
+	}],
+	"name": "completedCallin",
+	"outputs": [{
+		"internalType": "bool",
+		"name": "",
+		"type": "bool"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "depositFee",
+	"outputs": [],
+	"stateMutability": "payable",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "executionBudget",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "pendingAdmin",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "_callProxy",
+		"type": "address"
+	}],
+	"name": "setCallProxy",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256[]",
+		"name": "_chainIds",
+		"type": "uint256[]"
+	}, {
+		"internalType": "address[]",
+		"name": "_peers",
+		"type": "address[]"
+	}],
+	"name": "setClientPeers",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "_to",
+		"type": "address"
+	}, {
+		"internalType": "uint256",
+		"name": "_amount",
+		"type": "uint256"
+	}],
+	"name": "withdraw",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "_pool",
+		"type": "address"
+	}, {
+		"internalType": "address",
+		"name": "_to",
+		"type": "address"
+	}],
+	"name": "withdrawAllFee",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "_to",
+		"type": "address"
+	}, {
+		"internalType": "uint256",
+		"name": "_amount",
+		"type": "uint256"
+	}],
+	"name": "withdrawFee",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"stateMutability": "payable",
+	"type": "receive"
+}]

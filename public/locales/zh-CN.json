@@ -22,5 +22,6 @@
   "CopyAddress": "复制地址",
   "clearAll": "全部清除",
   "ViewOn": "查看",
-  "txView": "您的交易将出现在这里..."
+  "txView": "您的交易将出现在这里...",
+  "From": "发送"
 }

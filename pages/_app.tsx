@@ -15,6 +15,7 @@ import Header from '@/components/Header'
 // import dynamic from 'next/dynamic'
 import '@/utils/i18n'
 
+
 // const MyComponentNoSSR = dynamic(() => import('my-component'), {
 //     ssr: false,
 // })
@@ -26,12 +27,15 @@ import AppContainer from '@/components/AppBody/AppContainer'
 
 const isBrowser = (() => typeof window !== 'undefined')()
 
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [load,setLoad] = useState(false)
   useEffect(()=>{
     setLoad(true)
   },[])
   if (!load || !isBrowser) return <></>
+  
   return (
     <>
       <Head>

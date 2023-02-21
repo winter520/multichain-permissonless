@@ -29,3 +29,5 @@ interface Window {
   NasExtWallet: any
 }
 declare const __DEV__: boolean;
+declare module 'toformat'
+declare module 'big.js'

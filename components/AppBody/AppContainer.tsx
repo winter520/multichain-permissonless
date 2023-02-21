@@ -9,7 +9,7 @@ import {
 import { isBrowser } from '@/config/constant'
 import getLibrary from '@/utils/getLibrary'
 import Web3ReactManager from '@/components/Web3ReactManager'
-
+import { globalCss, theme } from '@nextui-org/react'
 // import {
 //   WalletProvider,
 //   // NetworkInfo
@@ -39,8 +39,14 @@ const walletConnectChainIds: Record<number, any> = {
   0: testnet,
   1: mainnet,
 }
+const globalStyles = globalCss({
+  'html,body': { 
+    // background: theme.colors.backgroundContrast.value + '!important'
+   }
+});
 
 export default function AppContainer({children}: { children: JSX.Element }) {
+  globalStyles()
   return (
     <>
         {/* {children} */}

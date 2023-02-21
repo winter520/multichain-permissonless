@@ -22,5 +22,6 @@
   "CopyAddress": "Copy Address",
   "clearAll": "clear all",
   "ViewOn": "View on",
-  "txView": "Your transactions will appear here..."
+  "txView": "Your transactions will appear here...",
+  "From": "From"
 }
