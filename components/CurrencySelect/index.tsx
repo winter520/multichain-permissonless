@@ -22,121 +22,18 @@ import InputNumber from '@/components/NumericalInput'
 
 import TokenLogo from "../TokenLogo"
 
+import {
+  // useModalOpen,
+  useNetworkModalToggle
+} from "@/state/application/hooks"
 
-const InputPanel:any = styled('div', {
-  width: '100%',
-  // padding: '30px'
-})
-
-
-const ChainName = styled(Button, {
-  variants: {
-    size: {
-      chain: {
-        fontWeight: 'bold',
-      }
-    },
-    colors: {
-      chain: { 
-        borderRadius: '$xs', // radii.xs
-        border: '1px solid #524DFB',
-        background: 'none',
-        boxShadow: 'none',
-        
-        '&:hover': {
-          background: 'none',
-        },
-        '&:active': {
-          background: 'none',
-        },
-        '&:focus': {
-          background: 'none',
-        },
-      }
-    }
-  },
-  '& .common.light': {
-    color: '#524DFB',
-  },
-  '& .common.dark': {
-    color: theme.colors.white.value,
-  },
-})
-const BalanceView = styled(Button, {
-  variants: {
-    size: {
-      balance: {
-      }
-    },
-    colors: {
-      balance: { 
-        borderRadius: '$xs', // radii.xs
-        border: 'none',
-        background: 'none',
-        boxShadow: 'none',
-        
-        '&:hover': {
-          background: 'none',
-        },
-        '&:active': {
-          background: 'none',
-        },
-        '&:focus': {
-          background: 'none',
-        },
-      }
-    }
-  },
-  '& .common.light': {
-    color: '#524DFB',
-  },
-  '& .common.dark': {
-    color: theme.colors.white.value,
-  },
-})
-
-const CurrencyInput = styled('div', {
-  margin: '10px 0',
-  '&.light': {
-    background: 'rgba(0,0,0,.05)'
-  },
-  '&.dark': {
-    background: '#394358'
-  }
-})
-
-const TokenView = styled(Button, {
-  variants: {
-    size: {
-      token: {
-      }
-    },
-    colors: {
-      token: { 
-        borderRadius: '$xs', // radii.xs
-        border: 'none',
-        background: 'none',
-        boxShadow: 'none',
-        color: theme.colors.text.value,
-        '&:hover': {
-          background: 'none',
-        },
-        '&:active': {
-          background: 'none',
-        },
-        '&:focus': {
-          background: 'none',
-        },
-      }
-    }
-  },
-  '& .common.light': {
-    color: '#524DFB',
-  },
-  '& .common.dark': {
-    color: theme.colors.white.value,
-  },
-})
+import {
+  InputPanel,
+  ChainName,
+  BalanceView,
+  CurrencyInput,
+  TokenView
+} from './styled'
 
 interface CurrencySelectProps {
   value: string  // token amount
@@ -157,6 +54,7 @@ export default function CurrencySelect ({
   placeholder
 }: CurrencySelectProps) {
   const { isDark } = useTheme();
+  const toggleNetworkModal = useNetworkModalToggle()
   return <>
     <InputPanel id={id} className={isError ? 'error' : ''}>
       <Card color="custom" css={{
@@ -164,7 +62,14 @@ export default function CurrencySelect ({
       }}>
         <Card.Header>
           <Row justify="space-between">
-            <ChainName auto iconRight={<ChevronDown width="16" height="16" fill={isDark ? theme.colors.white.value : '#524DFB'} />} bordered color="secondary" size={'chain'}>
+            <ChainName
+              auto
+              iconRight={<ChevronDown width="16" height="16" fill={isDark ? theme.colors.white.value : '#524DFB'} />}
+              bordered
+              color="secondary"
+              size={'chain'}
+              onClick={() => toggleNetworkModal()}
+            >
               <Row justify="space-between">
                 <span className={"common " + (isDark ? 'dark' : 'light')}>{label ? t(label) : ''}</span>
                 <Spacer x={2} />
@@ -182,7 +87,8 @@ export default function CurrencySelect ({
           </Row>
         </Card.Header>
         <Card.Body css={{
-          paddingTop: '0' 
+          paddingTop: '0',
+          paddingBottom: '0',
         }}>
           <CurrencyInput className={isDark ? 'dark' : 'light'}>
             <Row css={{width: '100%'}} align="center">
@@ -195,6 +101,7 @@ export default function CurrencySelect ({
                   fontSize: '28px!important',
                   height: '60px'
                 }}
+                placeholder={placeholder}
               />
               <TokenView auto iconRight={<ChevronDown width="16" height="16" fill={isDark ? theme.colors.white.value : theme.colors.text.value} />}  colors='token' size='token'>
                 <TokenLogo symbol={'USDC'} style={{marginRight: '10px'}}></TokenLogo>
@@ -203,9 +110,6 @@ export default function CurrencySelect ({
             </Row>
           </CurrencyInput>
         </Card.Body>
-        {/* <Card.Footer>
-          
-        </Card.Footer> */}
       </Card>
     </InputPanel>
   </>

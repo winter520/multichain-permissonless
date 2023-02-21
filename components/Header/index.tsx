@@ -67,9 +67,11 @@ const IdenticonBox = styled('div', {
 })
 
 const AccountElement = styled(Row, {
-  background: theme.colors.gray100.value,
-  borderRadius: '12px',
-  paddingLeft: '1rem'
+  '&.login': {
+    background: theme.colors.gray100.value,
+    borderRadius: '12px',
+    paddingLeft: '1rem'
+  }
 })
 // const AccountElement = styled.div<{ active: boolean }>`
 //   display: flex;
@@ -112,7 +114,7 @@ function ViewAccountInfo () {
   //   </AccountElement>
   // }
   return (
-    <AccountElement justify="flex-end" align="center">
+    <AccountElement justify="flex-end" align="center" className={account && baseBalance ? 'login' : ''}>
     {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
       {account && baseBalance ? (
         <BalanceText css={{
@@ -143,13 +145,7 @@ export default function App() {
       <SelectNetwork />
       <Navbar variant="sticky" disableShadow shouldHideOnScroll>
         <Navbar.Toggle showIn="xs" />
-        <Navbar.Brand
-          // css={{
-          //   "@xs": {
-          //     w: "12%",
-          //   },
-          // }}
-        >
+        <Navbar.Brand>
           <Link href="/"><Logo /></Link>
         </Navbar.Brand>
         <Navbar.Content

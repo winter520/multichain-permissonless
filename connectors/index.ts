@@ -33,6 +33,7 @@ for (const c of sc) {
   if (isNaN(Number(c))) continue
   spportChainArr.push(Number(c))
 }
+console.log(spportChainArr)
 export const walletconnect = new WalletConnectConnector({
   supportedChainIds: [...spportChainArr],
   rpc: {

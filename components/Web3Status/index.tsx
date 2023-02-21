@@ -181,7 +181,7 @@ function Web3StatusInner() {
 
   if (account) {
     return (
-      <Web3StatusConnected auto color="primary" id="web3-status-connected" onClick={connectWallet}>
+      <Web3StatusConnected auto color="secondary" id="web3-status-connected" onClick={connectWallet}>
         {hasPendingTransactions ? (
           <>
             {/* <RowBetween> */}
@@ -211,7 +211,7 @@ function Web3StatusInner() {
   // } else if (config?.chainInfo?.[chainId]?.chainType === 'NOWALLET') {
   } else if ([ChainId.BTC, ChainId.BTC_TEST].includes(chainId)) {
     return (
-      <Web3StatusConnected auto color="primary" id="web3-status-connected" onClick={connectWallet}>
+      <Web3StatusConnected auto color="secondary" id="web3-status-connected" onClick={connectWallet}>
         <Text>{chainId}</Text>
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
       </Web3StatusConnected>

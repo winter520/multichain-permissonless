@@ -1,6 +1,7 @@
 import {
   CSS,
-  Text
+  Text,
+  Row
 } from "@nextui-org/react";
 
 export default function Title ({
@@ -13,15 +14,17 @@ export default function Title ({
   css?: CSS
 }) {
   return <>
-    <Text
-      size={size}
-      b
-      css={{
-        marginBottom: '20px',
-        ...css
-      }}
-    >
-      {title}
-    </Text>
+    <Row>
+      <Text
+        size={size}
+        b
+        css={{
+          marginBottom: '20px',
+          ...css
+        }}
+      >
+        {title}
+      </Text>
+    </Row>
   </>
 }

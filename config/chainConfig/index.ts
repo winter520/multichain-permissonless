@@ -343,19 +343,8 @@ const useChain:any = {
     ChainId.REEF_TEST,
   ],
   [VERSION.USDC_DEMO]: [
-    ...testChainList,
-    ChainId.TRX_TEST,
-    ChainId.NEAR_TEST,
-    ChainId.XLM_TEST,
-    ChainId.IOTA_TEST,
-    ChainId.ADA_TEST,
-    ChainId.FLOW_TEST,
-    ChainId.SOL_TEST,
-    ChainId.APT_TEST,
-    ChainId.BTC_TEST,
-    // ChainId.ATOM_TEST,
-    ChainId.ATOM_SEI_TEST,
-    ChainId.REEF_TEST,
+    ChainId.AVAX_TEST,
+    ChainId.GOERLI
   ],
 }
 
