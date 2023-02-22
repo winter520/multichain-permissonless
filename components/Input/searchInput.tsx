@@ -5,6 +5,7 @@ import {
 } from '@nextui-org/react'
 
 const StyledInput = styled(Input, {
+  margin: '10px 0'
   // '&.nobg, &.nobg label': {
   //   background: 'none'
   // },

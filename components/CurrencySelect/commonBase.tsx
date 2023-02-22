@@ -72,9 +72,7 @@ export default function CommonBases({
   }, [tokenList])
   return (
     <>
-      <Row justify="flex-start" align="center" wrap="wrap" css={{
-        marginTop: '6px',
-      }}>
+      <Row justify="flex-start" align="center" wrap="wrap">
         {viewTokenList.map((item: any) => {
           const selected = selectCurrency?.tokenKey === item.tokenKey
           return (

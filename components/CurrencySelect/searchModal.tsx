@@ -152,7 +152,9 @@ export default function SearchModal({
         borderBottom: '1px solid ' + theme.colors.gray100.value,
         paddingBottom: '0px',
       }}>
-        <Row>
+        <Row css={{
+          paddingBottom: '6px',
+        }}>
           <Col>
             <SearchInput
               value={searchQuery}
@@ -161,25 +163,31 @@ export default function SearchModal({
             />
           </Col>
         </Row>
-        <CommonBases
-          onSelect={handleCurrencySelect}
-          selectCurrency={selectCurrency}
-          tokenList={mainTokenList}
-        />
-        <Row justify="flex-start" align='center'>
-          <Col css={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-          }}>
-            <Button.Group color="secondary" light size="sm" ghost css={{
-              marginLeft: '0',
-              marginRight: '0'
-            }}>
-              <TabButton color={starTabIndex === 0 ? 'active' : 'default'} onClick={() => onChangeStarTab(0)}>My Favorites</TabButton>
-              <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Tokens</TabButton>
-            </Button.Group>
-          </Col>
-        </Row>
+        {
+          selectDestChainId ? '' : (
+            <>
+              <CommonBases
+                onSelect={handleCurrencySelect}
+                selectCurrency={selectCurrency}
+                tokenList={mainTokenList}
+              />
+              <Row justify="flex-start" align='center'>
+                <Col css={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                }}>
+                  <Button.Group color="secondary" light size="sm" ghost css={{
+                    marginLeft: '0',
+                    marginRight: '0'
+                  }}>
+                    <TabButton color={starTabIndex === 0 ? 'active' : 'default'} onClick={() => onChangeStarTab(0)}>My Favorites</TabButton>
+                    <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Tokens</TabButton>
+                  </Button.Group>
+                </Col>
+              </Row>
+            </>
+          )
+        }
       </Modal.Header>
       <Modal.Body css={{
         minHeight: '50vh'

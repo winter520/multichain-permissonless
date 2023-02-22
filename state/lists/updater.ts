@@ -44,8 +44,8 @@ export default function Updater () {
   }, [chainId])
 
   const getTokenlist = useCallback(() => {
-    const url = `https://l2api.anyswap.exchange/v4/tokenlistV4/${chainId}`
-    // const url = `https://l2api.anyswap.exchange/v4/tokenlist/usdc/${chainId}`
+    // const url = `https://l2api.anyswap.exchange/v4/tokenlistV4/${chainId}`
+    const url = `https://l2api.anyswap.exchange/v4/tokenlist/usdc/${chainId}`
     fetch(url).then(res => res.json()).then((result:any) => {
       console.log(result)
       dispatch(usdcList({ chainId: useChain, tokenList: result, version: 1 }))

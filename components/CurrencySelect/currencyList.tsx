@@ -110,16 +110,26 @@ function CurrencyRow ({
             <TokenInfoView>
               <Row justify="flex-start" align="center">
                 <Text b color={isDark ? theme.colors.gray500.value : theme.colors.gray800.value} size="$md">{currency.symbol}</Text>
-                <Tooltip content="Favorites">
-                  <IconButton onClick={(event:any) => {
-                    onChangeStarToken(currency.address)
-                    event.stopPropagation()
-                  }} css={{
-                    marginLeft: '10px'
-                  }}>
-                    <StyledStarIcon className={starTokenList?.[currency.address] ? 'star' : ''}/>
-                  </IconButton>
-                </Tooltip>
+                {selectDestChainId ? (
+                  <>
+                    <Text color={isDark ? theme.colors.gray500.value : theme.colors.gray800.value} size="$md">
+                      {currency.sortId === 0 ? ' (Bridge)' : ' (Router ' + currency.sortId + ')'}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Tooltip content="Favorites">
+                      <IconButton onClick={(event:any) => {
+                        onChangeStarToken(currency.address)
+                        event.stopPropagation()
+                      }} css={{
+                        marginLeft: '10px'
+                      }}>
+                        <StyledStarIcon className={starTokenList?.[currency.address] ? 'star' : ''}/>
+                      </IconButton>
+                    </Tooltip>
+                  </>
+                )}
               </Row>
               <Text color={isDark ? theme.colors.gray800.value : theme.colors.gray500.value} size="$xs">{currency.name}</Text>
             </TokenInfoView>
