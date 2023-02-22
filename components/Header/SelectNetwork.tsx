@@ -250,23 +250,23 @@ function Option ({
                           viewLoading ? (
                             <LoadingView size="sm"  type="default"/>
                           ) : (
-                            <Tooltip content="Details" onClick={() => {
-                              setViewLoading(true)
-                              isConnect(viewUrl).then((res:any) => {
-                                setViewLoading(false)
-                                if (res.msg === 'Success') {
-                                  if (viewUrl != item.nodeRpc) {
+                            <Tooltip content="Details">
+                              <IconButton onClick={() => {
+                                setViewLoading(true)
+                                isConnect(viewUrl).then((res:any) => {
+                                  setViewLoading(false)
+                                  if (res.msg === 'Success') {
+                                    if (viewUrl != item.nodeRpc) {
+                                      setEdit(false)
+                                      setLocalRPC(curChainId, viewUrl)
+                                      history.go(0)
+                                    }
                                     setEdit(false)
-                                    setLocalRPC(curChainId, viewUrl)
-                                    history.go(0)
+                                  } else {
+                                    alert(res.error)
                                   }
-                                  setEdit(false)
-                                } else {
-                                  alert(res.error)
-                                }
-                              })
-                            }}>
-                              <IconButton onClick={() => console.log("View user")}>
+                                })
+                              }}>
                                 <CheckSquare size={20} style={{stroke: defaultIconStroke}} />
                               </IconButton>
                             </Tooltip>
@@ -287,9 +287,8 @@ function Option ({
             <Col css={{ d: "flex" }}>
               <Tooltip
                 content="Favorites"
-                onClick={() => onChangeStarChain(curChainId)}
               >
-                <IconButton>
+                <IconButton onClick={() => onChangeStarChain(curChainId)}>
                   <StyledStarIcon size={20} className={starChainList?.[curChainId] ? 'star' : ''}  />
                 </IconButton>
               </Tooltip>

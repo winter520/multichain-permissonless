@@ -25,6 +25,8 @@ import {
 
 
 import SearchInput from '@/components/Input/searchInput'
+import CommonBases from './commonBase'
+import CurrencyList from './currencyList'
 
 const TabButton = styled(Button, {
   variants: {
@@ -44,12 +46,10 @@ const TabButton = styled(Button, {
 interface CurrencySearchModalProps {
   isOpen: boolean
   onDismiss: () => void
-  selectedCurrency?: any
+  selectCurrency?: any
   onCurrencySelect: (currency: any) => void
-  otherSelectedCurrency?: any
   tokenlist?: any
   chainId?: any
-  bridgeKey?: any
   allBalances?: any
   selectDestChainId?: any
 }
@@ -58,11 +58,9 @@ export default function SearchModal({
   isOpen,
   onDismiss,
   onCurrencySelect,
-  selectedCurrency,
-  otherSelectedCurrency,
+  selectCurrency,
   tokenlist = [],
   chainId,
-  bridgeKey,
   selectDestChainId
 }: CurrencySearchModalProps) {
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -70,14 +68,14 @@ export default function SearchModal({
   const {starTokenList} = useStarToken()
   
   const [mainTokenList, setMainTokenList] = useState<any>([])
-  const [tokenList, setTokenList] = useState<any>([])
+  const [formatTokenlist, setFormatTokenlist] = useState<any>([])
 
   const starTokenListStr = useMemo(() => {
     return JSON.stringify(starTokenList)
   }, [starTokenList])
 
   useEffect(() => {
-    const list:any = {}
+    // const list:any = {}
     const arr:any = []
     const mainarr:any = []
     // console.log(111)
@@ -85,14 +83,23 @@ export default function SearchModal({
     // console.log(starTokenList)
     const starList = starTokenListStr ? JSON.parse(starTokenListStr) : {}
     for (const obj of tokenlist) {
-      const token = obj.address
+      const token:string = obj.address
       if (!obj.name || !obj.symbol || config.initConfig.hiddenCoin.includes(token)) continue
-      if (starTabIndex === 0 && starList[token]) {
-        arr.push(obj)
-      } else if (starTabIndex === 1 || obj.type) {
-        arr.push(obj)
+      if (
+        !searchQuery
+        || (
+          token.toLowerCase() === searchQuery.toLowerCase()
+          || obj.name.toLowerCase().indexOf(searchQuery.toLowerCase())
+          || obj.symbol.toLowerCase().indexOf(searchQuery.toLowerCase())
+        )
+      ) {
+        if (starTabIndex === 0 && starList[token]) {
+          arr.push(obj)
+        } else if (starTabIndex === 1 || obj.type) {
+          arr.push(obj)
+        }
       }
-      list[token] = obj
+      // list[token] = obj
       // arr.push(data)
       if (
         (obj.symbol === 'USDT' && chainId?.toString() === '250')
@@ -110,9 +117,9 @@ export default function SearchModal({
         })
       }
     }
-    setTokenList(arr)
+    setFormatTokenlist(arr)
     setMainTokenList(mainarr)
-  }, [tokenlist, chainId, starTabIndex, starTokenListStr])
+  }, [tokenlist, chainId, starTabIndex, starTokenListStr, searchQuery])
 
   const handleInput = useCallback((event:any) => {
     const input = event.target.value
@@ -130,16 +137,15 @@ export default function SearchModal({
     },
     [onCurrencySelect]
   )
-
+    // console.log(isOpen)
   return <>
     <Modal
       scroll
       closeButton
-      // width="600px"
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={isOpen}
-      onClose={() => onDismiss()}
+      onClose={onDismiss}
     >
       <Modal.Header css={{
         flexWrap:'wrap',
@@ -155,6 +161,11 @@ export default function SearchModal({
             />
           </Col>
         </Row>
+        <CommonBases
+          onSelect={handleCurrencySelect}
+          selectCurrency={selectCurrency}
+          tokenList={mainTokenList}
+        />
         <Row justify="flex-start" align='center'>
           <Col css={{
             display: 'flex',
@@ -165,8 +176,7 @@ export default function SearchModal({
               marginRight: '0'
             }}>
               <TabButton color={starTabIndex === 0 ? 'active' : 'default'} onClick={() => onChangeStarTab(0)}>My Favorites</TabButton>
-              <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Chains</TabButton>
-              <TabButton color={starTabIndex === 2 ? 'active' : 'default'} onClick={() => onChangeStarTab(2)}>Hot</TabButton>
+              <TabButton color={starTabIndex === 1 ? 'active' : 'default'} onClick={() => onChangeStarTab(1)}>All Tokens</TabButton>
             </Button.Group>
           </Col>
         </Row>
@@ -174,7 +184,13 @@ export default function SearchModal({
       <Modal.Body css={{
         minHeight: '50vh'
       }}>
-
+        <CurrencyList
+          tokenlist={formatTokenlist}
+          selectCurrency={selectCurrency}
+          onCurrencySelect={handleCurrencySelect}
+          allBalances={{}}
+          selectDestChainId={selectDestChainId}
+        />
       </Modal.Body>
     </Modal>
   </>

@@ -1,4 +1,7 @@
-
+import {
+  useState,
+  useCallback
+} from 'react'
 import config from "@/config"
 import { ChainId } from "@/config/chainConfig/chainId"
 import {
@@ -22,6 +25,7 @@ import InputNumber from '@/components/Input'
 
 import TokenLogo from "../TokenLogo"
 
+
 import {
   // useModalOpen,
   useNetworkModalToggle
@@ -35,28 +39,42 @@ import {
   TokenView
 } from './styled'
 
+import SearchModal from "./searchModal"
+
 interface CurrencySelectProps {
   value: string  // token amount
   onUserInput: (value: string) => void // user input amount
   tokenlist: Array<any>
+  selectCurrency: any
+  onCurrencySelect: (currency: any) => void
   id?: string | undefined | number
   isError?: boolean
   label?: string
   selectChain?: ChainId | string | number
+  selectDestChainId?: ChainId | string | number
   placeholder?: string
 }
 export default function CurrencySelect ({
   value,
   onUserInput,
   tokenlist=[],
+  selectCurrency,
+  onCurrencySelect,
   id,
   isError,
   label,
   selectChain,
+  selectDestChainId,
   placeholder
 }: CurrencySelectProps) {
   const { isDark } = useTheme();
   const toggleNetworkModal = useNetworkModalToggle()
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const handleDismissSearch = useCallback(() => {
+    setModalOpen(false)
+  }, [setModalOpen])
+
   return <>
     <InputPanel id={id} className={isError ? 'error' : ''}>
       <Card color="custom" css={{
@@ -105,14 +123,32 @@ export default function CurrencySelect ({
                 }}
                 placeholder={placeholder}
               />
-              <TokenView auto iconRight={<ChevronDown width="16" height="16" fill={isDark ? theme.colors.white.value : theme.colors.text.value} />}  colors='token' size='token'>
-                <TokenLogo symbol={'USDC'} style={{marginRight: '10px'}}></TokenLogo>
-                USDC
+              <TokenView
+                auto
+                iconRight={<ChevronDown width="16" height="16" fill={isDark ? theme.colors.white.value : theme.colors.text.value} />}
+                colors='token'
+                size='token'
+                onClick={() => {
+                  console.log(modalOpen)
+                  setModalOpen(true)
+                }}
+              >
+                <TokenLogo symbol={selectCurrency?.symbol} logoUrl={selectCurrency?.logoUrl} style={{marginRight: '10px'}}></TokenLogo>
+                {selectCurrency?.symbol}
               </TokenView>
             </Row>
           </CurrencyInput>
         </Card.Body>
       </Card>
     </InputPanel>
+    <SearchModal
+      isOpen={modalOpen}
+      onDismiss={handleDismissSearch}
+      onCurrencySelect={onCurrencySelect}
+      selectCurrency={selectCurrency}
+      tokenlist={tokenlist}
+      selectDestChainId={selectDestChainId}
+      chainId={selectChain}
+    />
   </>
 }

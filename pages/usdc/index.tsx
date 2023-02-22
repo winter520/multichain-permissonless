@@ -67,9 +67,11 @@ export default function USDC () {
   const [inputValue, setInputValue] = useState('')
   
   const [tokenlist, setTokenlist] = useState<any>([])
+  const [selectCurrency, setSelectCurrency] = useState<any>('')
 
   const getTokenlist = useCallback(() => {
-    const url = `https://l2api.anyswap.exchange/v4/tokenlist/usdc/${chainId}`
+    const url = `https://l2api.anyswap.exchange/v4/tokenlistV4/${chainId}`
+    // const url = `https://l2api.anyswap.exchange/v4/tokenlist/usdc/${chainId}`
     fetch(url).then(res => res.json()).then((result:any) => {
       console.log(result)
       const arr = []
@@ -110,8 +112,13 @@ export default function USDC () {
               label='From'
               tokenlist={tokenlist}
               selectChain={chainId}
+              selectCurrency={selectCurrency}
               onUserInput={(value) => {
                 setInputValue(value)
+              }}
+              onCurrencySelect={(currency) => {
+                console.log(currency)
+                setSelectCurrency(currency)
               }}
             />
             <Row css={{paddingLeft: '10px', margin: '15px 0'}}>

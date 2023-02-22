@@ -77,6 +77,7 @@ export const BalanceView = styled(Button, {
 
 export const CurrencyInput = styled('div', {
   margin: '12px 0',
+  padding: '0 10px 0 0', 
   '&.light': {
     background: 'rgba(0,0,0,.05)'
   },
