@@ -56,14 +56,14 @@ import {
   setLocalRPC
 } from "@/config/chainConfig/methods"
 
-const NetWorkList = styled('div',{
+export const NetWorkList = styled('div',{
   width:"100%",
   overflow: "auto",
 })
 
-const LoadingBox = styled('div')
+export const LoadingBox = styled('div')
 
-const OptionCardClickable = styled('div', {
+export const OptionCardClickable = styled('div', {
   width: '100%',
   variants: {
     size: {
@@ -166,7 +166,7 @@ function isConnect (rpc:string) {
   })
 }
 
-function Option ({
+export function Option ({
   curChainId,
   selectChainId,
   changeNetwork
@@ -380,7 +380,9 @@ function ChainListBox ({
         {/* <LazyList records={ spportChainArr } pageSize={ pageSize } */}
         <LazyList records={ chainList } pageSize={ pageSize } boxRef={ boxRef } watchRef={ watchRef } list={ List }>
           <LoadingBox ref={ watchRef }>
-            <Loading></Loading>
+            <Row justify='center' align='center'>
+              <Loading></Loading>
+            </Row>
           </LoadingBox>
         </LazyList>
       </NetWorkList>

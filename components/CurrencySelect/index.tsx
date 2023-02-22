@@ -51,7 +51,6 @@ interface CurrencySelectProps {
   isError?: boolean
   label?: string
   selectChain?: ChainId | string | number
-  selectDestChainId?: ChainId | string | number
   placeholder?: string
 }
 export default function CurrencySelect ({
@@ -64,7 +63,6 @@ export default function CurrencySelect ({
   isError,
   label,
   selectChain,
-  selectDestChainId,
   placeholder
 }: CurrencySelectProps) {
   const { isDark } = useTheme();
@@ -147,7 +145,7 @@ export default function CurrencySelect ({
       onCurrencySelect={onCurrencySelect}
       selectCurrency={selectCurrency}
       tokenlist={tokenlist}
-      selectDestChainId={selectDestChainId}
+      selectDestChainId={''}
       chainId={selectChain}
     />
   </>

@@ -17,6 +17,7 @@ import {
 import {t} from 'i18next'
 
 import CurrencySelect from "@/components/CurrencySelect"
+import DestCurrencySelect from "@/components/CurrencySelect/destCurrencySelect"
 import { useActiveReact } from '@/hooks/useActiveReact'
 
 import {
@@ -76,6 +77,10 @@ export default function USDC () {
   
   const [tokenlist, setTokenlist] = useState<any>([])
   const [selectCurrency, setSelectCurrency] = useState<any>('')
+  const [selectDestChain, setSelectDestChain] = useState<any>('')
+  const [destChainArr, setDestChainArr] = useState<any>('')
+  const [selectDestCurrencyList, setSelectDestCurrencyList] = useState<any>()
+  const [selectDestCurrency, setSelectDestCurrency] = useState<any>()
 
   const initToken:any = getParams('fromToken') ? getParams('fromToken') : ''
 
@@ -92,15 +97,25 @@ export default function USDC () {
   let initToChainId:any = getParams('toChainId') ? getParams('toChainId') : ''
   initToChainId = initToChainId ? initToChainId.toLowerCase() : ''
 
-  const destChainArr = useMemo(() => {
+  useEffect(() => {
     const arr = []
     if (selectCurrency) {
       const destList = selectCurrency?.destChains
       for (const c in destList) {
         arr.push(c)
       }
+      const initDestChain = arr[0]
+      setDestChainArr(arr)
+      setSelectDestChain(initDestChain)
+      const destCurrenyArr = []
+      for (const tokenKey in destList[initDestChain]) {
+        destCurrenyArr.push({
+          ...destList[initDestChain][tokenKey],
+          tokenKey
+        })
+      }
+      setSelectDestCurrencyList(destCurrenyArr)
     }
-    return arr
   }, [selectCurrency])
 
   useEffect(() => {
@@ -161,13 +176,20 @@ export default function USDC () {
                 icon={<ArrowDown width="16" height="16" />}
               />
             </Row>
-            <CurrencySelect
+            <DestCurrencySelect
               value={inputValue}
-              tokenlist={[]}
+              tokenlist={selectDestCurrencyList}
+              destChainArr={destChainArr}
               label='To'
-              selectChain={'56'}
-              onUserInput={(value) => {
-                setInputValue(value)
+              selectChain={selectDestChain}
+              selectCurrency={selectDestCurrency}
+              onCurrencySelect={(currency) => {
+                console.log(currency)
+                setSelectDestCurrency(currency)
+              }}
+              onChainSelect={(destChainId) => {
+                console.log(destChainId)
+                setSelectDestChain(destChainId)
               }}
             />
           </Card.Body>

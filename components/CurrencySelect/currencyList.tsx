@@ -23,6 +23,9 @@ import {
   useStarToken
 } from '@/state/user/hooks'
 
+const LoadingBox = styled('div', {
+
+})
 const ListBox = styled('div', {
 
 })
@@ -203,7 +206,11 @@ export default function CurrencyList ({
       <ListBox ref={ boxRef }>
         <LazyList records={ htmlNodes } pageSize={ pageSize }
           boxRef={ boxRef } watchRef={ watchRef } list={ List }>
-          <Loading></Loading>
+          <LoadingBox ref={ watchRef }>
+            <Row justify='center' align='center'>
+              <Loading></Loading>
+            </Row>
+          </LoadingBox>
         </LazyList>
       </ListBox>
     </>
