@@ -77,7 +77,7 @@ export const MAIN_COIN_SORT:any = {
 
 export const bridgeApi = USE_VERSION === VERSION.V1 ? 'https://l2api.anyswap.exchange' : 'https://bridgeapi.anyswap.exchange'
 export const scanApi = USE_VERSION === VERSION.V1 ? 'https://l2api.anyswap.exchange' : 'https://scanapi.multichain.org'
-export const multiAridgeApi = USE_VERSION === VERSION.V1 ? 'https://l2api.anyswap.exchange' : 'https://bridgeapi.multichain.org'
+export const multiBridgeApi = USE_VERSION === VERSION.V1 ? 'https://l2api.anyswap.exchange' : 'https://bridgeapi.multichain.org'
 
 export const explorer = 'https://scan.multichain.org'
 

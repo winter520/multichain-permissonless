@@ -4,8 +4,9 @@ import {
 import {
   isBrowser,
   bridgeApi,
+  multiBridgeApi,
   controlConfig,
-  initConfig
+  initConfig,
 } from '@/config/constant'
 // const isBrowser = () => typeof window !== 'undefined'
 
@@ -13,6 +14,7 @@ const config = {
   isBrowser,
   chainInfo,
   bridgeApi,
+  multiBridgeApi,
   controlConfig,
   initConfig
 }

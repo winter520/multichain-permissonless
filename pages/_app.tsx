@@ -15,6 +15,8 @@ import Header from '@/components/Header'
 // import dynamic from 'next/dynamic'
 import '@/utils/i18n'
 
+import {Updaters} from "@/state/updaters"
+
 
 // const MyComponentNoSSR = dynamic(() => import('my-component'), {
 //     ssr: false,
@@ -29,7 +31,7 @@ const isBrowser = (() => typeof window !== 'undefined')()
 
 
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const [load,setLoad] = useState(false)
   useEffect(()=>{
     setLoad(true)
@@ -57,11 +59,12 @@ function MyApp({ Component, pageProps }: AppProps) {
               </>
             </AppContainer>
           </ThemesProvider>
+          <Updaters />
         </Provider>
       </SSRProvider>
     </>
   )
 }
 
-export default MyApp
+export default App
 

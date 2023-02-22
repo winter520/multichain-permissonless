@@ -59,3 +59,21 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
+
+export function getParams(param: any) {
+  const str = window.location.href.indexOf('?') ? window.location.href.split('?')[1] : ''
+  if (str) {
+    const arr = str.split('&')
+    let value = ''
+    for (const str2 of arr) {
+      const arr2 = str2.split('=')
+      if (arr2[0] === param) {
+        value = arr2[1]
+        break
+      }
+    }
+    return value
+  } else {
+    return ''
+  }
+}

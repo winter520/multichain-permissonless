@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   ArrowDown
 } from 'react-feather'
@@ -16,8 +17,15 @@ import {
 import {t} from 'i18next'
 
 import CurrencySelect from "@/components/CurrencySelect"
-import { useCallback, useEffect, useState } from 'react'
 import { useActiveReact } from '@/hooks/useActiveReact'
+
+import {
+  useUSDCTokenList
+} from '@/state/lists/hooks'
+
+import {
+  getParams
+} from '@/utils'
  
 const SwapButton = styled(Button, {
   variants: {
@@ -69,30 +77,55 @@ export default function USDC () {
   const [tokenlist, setTokenlist] = useState<any>([])
   const [selectCurrency, setSelectCurrency] = useState<any>('')
 
-  const getTokenlist = useCallback(() => {
-    const url = `https://l2api.anyswap.exchange/v4/tokenlistV4/${chainId}`
-    // const url = `https://l2api.anyswap.exchange/v4/tokenlist/usdc/${chainId}`
-    fetch(url).then(res => res.json()).then((result:any) => {
-      console.log(result)
-      const arr = []
-      for (const tokenKey in result) {
-        const item = result[tokenKey]
-        arr.push({
-          ...item,
-          tokenKey
-        })
+  const initToken:any = getParams('fromToken') ? getParams('fromToken') : ''
+
+  const usdcTokenList = useUSDCTokenList(chainId)
+
+  const initTokenKey = useMemo(() => {
+    if (isNaN(chainId)) {
+      return initToken ? (chainId + initToken).toLowerCase() : ''
+    } else {
+      return initToken ? ('evm' + initToken).toLowerCase() : ''
+    }
+  }, [initToken, chainId])
+
+  let initToChainId:any = getParams('toChainId') ? getParams('toChainId') : ''
+  initToChainId = initToChainId ? initToChainId.toLowerCase() : ''
+
+  const destChainArr = useMemo(() => {
+    const arr = []
+    if (selectCurrency) {
+      const destList = selectCurrency?.destChains
+      for (const c in destList) {
+        arr.push(c)
       }
-      console.log(arr)
-      setTokenlist(arr)
-    }).catch((error) => {
-      console.log(error)
-    })
-  }, [chainId])
+    }
+    return arr
+  }, [selectCurrency])
 
   useEffect(() => {
-    // console.log(theme.colors.purple100)
-    getTokenlist()
-  }, [chainId])
+    const arr = []
+    for (const tokenKey in usdcTokenList) {
+      const item = usdcTokenList[tokenKey]
+      arr.push({
+        ...item,
+        tokenKey
+      })
+    }
+    console.log(arr)
+    setTokenlist(arr)
+  }, [usdcTokenList])
+
+  useEffect(() => {
+    if (initTokenKey && usdcTokenList[initTokenKey]) {
+      setSelectCurrency(usdcTokenList[initTokenKey])
+    } else {
+      const firstCurrencyKey = Object.keys(usdcTokenList).length > 0 ? Object.keys(usdcTokenList)[0] : ''
+      if (firstCurrencyKey) {
+        setSelectCurrency(usdcTokenList[firstCurrencyKey])
+      }
+    }
+  }, [initTokenKey, usdcTokenList])
 
   return <>
     <AppBody>

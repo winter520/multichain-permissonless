@@ -21,21 +21,23 @@ export const InputNumber = React.memo(function InnerInput({
   onUserInput,
   placeholder,
   underlined = false,
+  disabled = false,
   width = '100%',
   size = 'xl',
   css = {}
 }: {
   value: string | number
-  onUserInput: (input: string) => void
+  onUserInput?: (input: string) => void
   placeholder?: string
   underlined?: boolean
+  disabled?: boolean
   width?: string
   size?: any
   css?: any
 } & Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'onChange' | 'as'>) {
   const enforcer = (nextUserInput: string) => {
     if (nextUserInput === '' || inputRegex.test(escapeRegExp(nextUserInput))) {
-      onUserInput(nextUserInput)
+      if (onUserInput) onUserInput(nextUserInput)
     }
   }
   return (
@@ -55,6 +57,7 @@ export const InputNumber = React.memo(function InnerInput({
         className="nobg"
         css={css}
         size={size}
+        disabled={disabled}
       />
     </>
   )

@@ -11,7 +11,7 @@ import address from './address/reducer'
 import wallet from './wallet/reducer'
 import transactions from './transactions/reducer'
 // import swap from './swap/reducer'
-// import lists from './lists/reducer'
+import lists from './lists/reducer'
 // import burn from './burn/reducer'
 // import nft from './nft/reducer'
 // import multicall from './multicall/reducer'
@@ -27,7 +27,7 @@ import chains from "@/chains"
 const PERSISTED_KEYS: string[] = [
   'user',
   'transactions',
-  // 'lists', 
+  'lists', 
   // 'rpc', 
   // 'pools', 
   // 'nft'
@@ -40,12 +40,12 @@ const store = configureStore({
     address,
     wallet,
     transactions,
-    ...chains
+    ...chains,
     // swap,
     // burn,
     // nft,
     // multicall,
-    // lists,
+    lists,
     // pools,
     // wallet,
     // rpc,
