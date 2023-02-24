@@ -31,6 +31,8 @@ import {
   useNetworkModalToggle
 } from "@/state/application/hooks"
 
+
+
 import {
   InputPanel,
   ChainName,
@@ -40,9 +42,12 @@ import {
 } from './styled'
 
 import SearchModal from "./searchModal"
+import { BigAmount } from '@/utils/bigNumber'
+import { useActiveReact } from '@/hooks/useActiveReact'
 
 interface CurrencySelectProps {
   value: string  // token amount
+  balance: BigAmount | undefined,
   onUserInput: (value: string) => void // user input amount
   tokenlist: Array<any>
   selectCurrency: any
@@ -53,8 +58,34 @@ interface CurrencySelectProps {
   selectChain?: ChainId | string | number
   placeholder?: string
 }
+
+function BalanceBox ({
+  account,
+  balance
+}: {
+  account: string | undefined
+  balance: BigAmount | undefined
+}) {
+  if (account) {
+    if (balance) {
+      return <BalanceView auto colors='balance' size='balance'>
+        {t('Balance')}:{balance.toSignificant(6)}
+      </BalanceView>
+    } else {
+      return <BalanceView auto colors='balance' size='balance' disabled bordered color="primary" css={{ px: "$13" }}>
+        
+      </BalanceView>
+    }
+  } else {
+    return <BalanceView auto colors='balance' size='balance'>
+      -
+    </BalanceView>
+  }
+}
+
 export default function CurrencySelect ({
   value,
+  balance,
   onUserInput,
   tokenlist=[],
   selectCurrency,
@@ -67,6 +98,9 @@ export default function CurrencySelect ({
 }: CurrencySelectProps) {
   const { isDark } = useTheme();
   const toggleNetworkModal = useNetworkModalToggle()
+
+  const {account} = useActiveReact()
+
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleDismissSearch = useCallback(() => {
@@ -99,9 +133,11 @@ export default function CurrencySelect ({
                 </> : ''}
               </Row>
             </ChainName>
-            <BalanceView auto colors='balance' size='balance'>
-              
-            </BalanceView>
+            <BalanceBox
+              account={account}
+              balance={balance}
+            />
+            
           </Row>
         </Card.Header>
         <Card.Body css={{

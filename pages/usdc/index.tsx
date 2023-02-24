@@ -18,15 +18,23 @@ import {t} from 'i18next'
 
 import CurrencySelect from "@/components/CurrencySelect"
 import DestCurrencySelect from "@/components/CurrencySelect/destCurrencySelect"
+import ErrorCard from '@/components/ErrorTip/errorCard'
+
 import { useActiveReact } from '@/hooks/useActiveReact'
 import useInterval from '@/hooks/useInterval'
 import {
-  useFeeCallback
+  useFeeCallback,
+  useSwapCallback,
+  useApproveCallback,
+  ApprovalState
 } from './hooks'
 
 import {
   useUSDCTokenList
 } from '@/state/lists/hooks'
+import {
+  useTokenBalances
+} from '@/state/wallet/hooks'
 
 import {
   getParams
@@ -80,7 +88,7 @@ const SwapButton = styled(Button, {
 
 
 export default function USDC () {
-  const {chainId} = useActiveReact()
+  const {chainId, account} = useActiveReact()
   const { isDark } = useTheme();
   
   const [inputValue, setInputValue] = useState('')
@@ -97,8 +105,39 @@ export default function USDC () {
   const initToken:any = getParams('fromToken') ? getParams('fromToken') : ''
 
   const usdcTokenList = useUSDCTokenList(chainId)
+  const tokenBalance = useTokenBalances(account, [selectCurrency])
+
+  const useBalance = useMemo(() => {
+    return tokenBalance?.[selectCurrency?.address]
+  }, [tokenBalance, selectCurrency])
+  // useEffect(() => {
+  //   console.log(tokenBalance)
+  //   console.log(tokenBalance?.[selectCurrency?.address]?.toExact())
+  // }, [tokenBalance, selectCurrency])
+
+  const approveSpender = useMemo(() => {
+    if (selectDestCurrency?.isApprove) {
+      return selectDestCurrency.spender
+    }
+    return undefined
+  }, [selectDestCurrency])
+
+  const {approvelState, approve} = useApproveCallback(
+    account,
+    approveSpender,
+    inputValue,
+    selectCurrency
+  )
   
   const {getConfigFee} = useFeeCallback(selectDestCurrency)
+  const {excute} = useSwapCallback(
+    selectCurrency,
+    selectDestCurrency,
+    srcFee?.getAmount(),
+    inputValue,
+    account,
+    selectDestChain
+  )
 
   const initTokenKey = useMemo(() => {
     if (isNaN(chainId)) {
@@ -164,7 +203,7 @@ export default function USDC () {
       if (res) {
         const fee = BigAmount.format(18, res)
         // console.log(fee.toExact())
-        setSrcFee(fee.toExact())
+        setSrcFee(fee)
       } else {
         setSrcFee('')
       }
@@ -179,6 +218,23 @@ export default function USDC () {
 
   useInterval(getSrcFee, 1000 * 3)
 
+  const errorTip = useMemo(() => {
+    if (inputValue) {
+      if (inputValue === '0') {
+        return {
+          state: 'Error',
+          tip: t('inputNotValid')
+        }
+      } else if (Number(inputValue) > Number(useBalance?.toExact())) {
+        return {
+          state: 'Error',
+          tip: t('Insufficient', {symbol: selectCurrency?.symbol})
+        }
+      }
+    }
+    return undefined
+  }, [useBalance, inputValue, selectCurrency])
+
   return <>
     <AppBody>
       <Container xs css={{
@@ -192,6 +248,7 @@ export default function USDC () {
           <Card.Body>
             <CurrencySelect
               value={inputValue}
+              balance={useBalance}
               label='From'
               tokenlist={tokenlist}
               selectChain={chainId}
@@ -230,15 +287,30 @@ export default function USDC () {
             <Reminder
               selectDestCurrency={selectDestCurrency}
               selectDestChain={selectDestChain}
-              srcFee={srcFee}
+              srcFee={srcFee?.toExact()}
             />
+            <ErrorCard errorTip={errorTip} />
             <Spacer y={1} /> 
             <Row justify='center' align='center' css={{
               padding: '0 10px'
             }}>
-              <SwapButton color={isDark ? 'gray' : 'secondary'} size='swap'>
-                {t('swap')}
-              </SwapButton>
+              {
+                approvelState && [ApprovalState.NOT_APPROVED, ApprovalState.PENDING].includes(approvelState) ? (
+                  <>
+                    <SwapButton disabled={ApprovalState.PENDING === approvelState} color={isDark ? 'gray' : 'secondary'} size='swap' onClick={() => {
+                      if (approve && !errorTip) approve()
+                    }}>
+                      {ApprovalState.PENDING === approvelState ? t('Approvel') : t('Approved')}
+                    </SwapButton>
+                  </>
+                ) : (
+                  <SwapButton disabled={Boolean(errorTip)} color={isDark ? 'gray' : 'secondary'} size='swap' onClick={() => {
+                    if (excute && !errorTip) excute()
+                  }}>
+                    {t('swap')}
+                  </SwapButton>
+                )
+              }
             </Row>
             <Spacer y={1} />
           </Card.Body>

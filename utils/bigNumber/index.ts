@@ -31,6 +31,7 @@ const TEN = JSBI.BigInt(10)
 
 export class BigAmount extends Fraction {
   public readonly decimals: number
+  public readonly amount: BigintIsh
 
   public static format(decimals: number, amount:BigintIsh): BigAmount {
     return new BigAmount(decimals, amount)
@@ -43,11 +44,15 @@ export class BigAmount extends Fraction {
 
     super(parsedAmount, JSBI.exponentiate(TEN, JSBI.BigInt(decimals)))
     this.decimals = decimals
+    this.amount = amount
   }
 
 
   public get raw(): JSBI {
     return this.numerator
+  }
+  public getAmount(): BigintIsh {
+    return this.amount
   }
 
   public toSignificant(

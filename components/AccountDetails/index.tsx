@@ -252,6 +252,7 @@ export default function AccountDetails({
                     // hasENS={!!ENSName}
                     // isENS={false}
                     href={getEtherscanLink(chainId, account, 'address')}
+                    target="_blank"
                   >
                     <LinkIcon size={16} style={{
                       color: ActionColor

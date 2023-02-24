@@ -11,6 +11,7 @@ import { ChainId } from "@/config/chainConfig/chainId"
 import ENS_ABI from '@/config/abi/ens-registrar.json'
 import ENS_PUBLIC_RESOLVER_ABI from '@/config/abi/ens-public-resolver.json'
 import MULTICALL_ABI from '@/config/abi/multicall.json'
+import ERC20_ABI from '@/config/abi/erc20.json'
 
 import config from "@/config"
 
@@ -55,4 +56,8 @@ export function useMulticallContract(): Contract | null {
   // return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false)
   // console.log(config.getCurChainInfo(chainId).multicalToken)
   return useContract(config.chainInfo[chainId]?.multicalToken, MULTICALL_ABI, false)
+}
+
+export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }

@@ -1,5 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 import { AddressZero } from '@ethersproject/constants'
+import { parseUnits } from '@ethersproject/units'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import config from "@/config"
 import {
@@ -151,4 +152,21 @@ export function thousandBit (num:any, dec:any = 8) {
     num = '-' + num
   }
   return num
+}
+
+export function tryParseAmount(value?: string, decimals?: number): any | undefined {
+  if (!value || !decimals) {
+    return undefined
+  }
+  try {
+    const typedValueParsed = parseUnits(value, decimals).toString()
+    if (typedValueParsed !== '0') {
+      return typedValueParsed
+    }
+  } catch (error) {
+    // should fail if the user specifies too many decimal places of precision (or maybe exceed max uint?)
+    console.debug(`Failed to parse input amount: "${value}"`, error)
+  }
+  // necessary for all paths to return a value
+  return undefined
 }

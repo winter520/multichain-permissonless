@@ -225,3 +225,53 @@ export function useSingleContractMultipleData(
     return results.map(result => toCallState(result, contract?.interface, fragment, latestBlockNumber))
   }, [fragment, contract, results, latestBlockNumber])
 }
+
+export function useMultipleContractSingleData(
+  addresses: (string | undefined)[],
+  contractInterface: Interface,
+  methodName: string,
+  callInputs?: OptionalMethodInputs,
+  options?: ListenerOptions,
+  chainId?: any
+): CallState[] {
+  const fragment = useMemo(() => contractInterface.getFunction(methodName), [contractInterface, methodName])
+  // console.log(callInputs)
+  const callData: string | undefined = useMemo(
+    () =>
+      fragment && isValidMethodArgs(callInputs)
+        ? contractInterface.encodeFunctionData(fragment, callInputs)
+        : undefined,
+    [callInputs, contractInterface, fragment]
+  )
+    // console.log(fragment)
+    // console.log(callInputs)
+    // console.log(contractInterface)
+    // console.log(callData)
+    // console.log(contractInterface.encodeFunctionData(fragment, callInputs))
+  const calls = useMemo(
+    () =>
+      fragment && addresses && addresses.length > 0 && callData
+        ? addresses.map<Call | undefined>(address => {
+            return address && callData
+              ? {
+                  address,
+                  callData
+                }
+              : undefined
+          })
+        : [],
+    [addresses, callData, fragment]
+  )
+          // console.log(calls)
+  const results = useCallsData(calls, options, chainId)
+  // if (methodName === 'balanceOf') {
+  // if (methodName === 'getReserves') {
+  //   console.log(methodName)
+  //   console.log(addresses)
+  // }
+  const latestBlockNumber = useBlockNumber()
+
+  return useMemo(() => {
+    return results.map(result => toCallState(result, contractInterface, fragment, latestBlockNumber))
+  }, [fragment, results, contractInterface, latestBlockNumber])
+}

@@ -54,7 +54,7 @@ export const BalanceView = styled(Button, {
         border: 'none',
         background: 'none',
         boxShadow: 'none',
-        
+        color: theme.colors.text.value,
         '&:hover': {
           background: 'none',
         },

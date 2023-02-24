@@ -22,8 +22,11 @@ import {
 } from '@/utils/isAddress'
 
 import {
-  useSingleContractMultipleData
+  useSingleContractMultipleData,
+  useMultipleContractSingleData
 } from '@/chains/evm/multical'
+
+import ERC20_INTERFACE from '@/config/abi/erc20'
 
 import { ChainId } from '@/config/chainConfig/chainId'
 import { BigAmount } from '@/utils/bigNumber'
@@ -63,6 +66,58 @@ export function useETHWalletBalances(
       }, {}),
     [addresses, results]
   )
+}
+
+export function useTokenBalancesWithLoadingIndicator(
+  address?: string,
+  tokens?: (any | undefined)[],
+  chainId?:any
+): [{ [tokenAddress: string]: BigAmount | undefined }, boolean] {
+  const validatedTokens: any[] = useMemo(
+    () => tokens?.filter((t?: any): t is any => isAddress(t?.address) !== false) ?? [],
+    [tokens]
+  )
+
+  const validatedTokenAddresses = useMemo(() => validatedTokens.map(vt => vt.address), [validatedTokens])
+  // console.log(chainId)
+  // console.log(validatedTokenAddresses)
+  const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', [address], undefined, chainId)
+  // console.log(validatedTokenAddresses)
+  // console.log(address)
+  // console.log(balances)
+
+  const anyLoading: boolean = useMemo(() => balances.some(callState => callState.loading), [balances])
+
+  return [
+    useMemo(
+      () => {
+        if (address && validatedTokens.length > 0) {
+          const results = validatedTokens.reduce<{ [tokenAddress: string]: BigAmount | undefined }>((memo, token, i) => {
+            const value = balances?.[i]?.result?.[0]
+            const amount = value ? value.toString() : undefined
+            if (amount) {
+              memo[token.address.toLowerCase()] = BigAmount.format(token.decimals ? token.decimals : 0, amount)
+            }
+            // console.log(memo)
+            return memo
+          }, {})
+          return results
+        } else {
+          return {}
+        }
+      },
+      [address, validatedTokens, balances]
+    ),
+    anyLoading
+  ]
+}
+
+export function useTokenBalances(
+  address?: string,
+  tokens?: (any | undefined)[],
+  chainId?:any
+): { [tokenAddress: string]: BigAmount | undefined } {
+  return useTokenBalancesWithLoadingIndicator(address ? address?.toLowerCase() : undefined, tokens, chainId)[0]
 }
 
 export function useWalletViews () {

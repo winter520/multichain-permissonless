@@ -24,5 +24,7 @@
   "ViewOn": "查看",
   "txView": "您的交易将出现在这里...",
   "From": "发送",
-  "swap": "交易"
+  "swap": "交易",
+  "inputNotValid": "无效的输入值",
+  "Insufficient": "{{symbol}}余额不足"
 }

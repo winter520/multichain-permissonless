@@ -24,5 +24,7 @@
   "ViewOn": "View on",
   "txView": "Your transactions will appear here...",
   "From": "From",
-  "swap": "Swap"
+  "swap": "Swap",
+  "inputNotValid": "Not a valid input value",
+  "Insufficient": "Insufficient {{symbol}} balance"
 }
