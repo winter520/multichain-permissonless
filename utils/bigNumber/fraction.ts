@@ -1,7 +1,7 @@
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Decimal from 'decimal.js-light'
-import _Big, { RoundingMode } from 'big.js'
+import _Big from 'big.js'
 import toFormat from 'toformat'
 
 
@@ -10,6 +10,28 @@ export enum Rounding {
   ROUND_DOWN,
   ROUND_HALF_UP,
   ROUND_UP
+}
+
+export enum RoundingMode {
+  /**
+   * Rounds towards zero.
+   * I.e. truncate, no rounding.
+   */
+  RoundDown = 0,
+  /**
+   * Rounds towards nearest neighbour.
+   * If equidistant, rounds away from zero.
+   */
+  RoundHalfUp = 1,
+  /**
+   * Rounds towards nearest neighbour.
+   * If equidistant, rounds towards even neighbour.
+   */
+  RoundHalfEven = 2,
+  /**
+   * Rounds away from zero.
+   */
+  RoundUp = 3,
 }
 
 export const ONE = JSBI.BigInt(1)
@@ -30,7 +52,6 @@ const toSignificantRounding = {
   [Rounding.ROUND_HALF_UP]: Decimal.ROUND_HALF_UP,
   [Rounding.ROUND_UP]: Decimal.ROUND_UP
 }
-
 const toFixedRounding = {
   [Rounding.ROUND_DOWN]: RoundingMode.RoundDown,
   [Rounding.ROUND_HALF_UP]: RoundingMode.RoundHalfUp,

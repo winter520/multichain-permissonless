@@ -178,7 +178,7 @@ function Web3StatusInner() {
 
   const hasPendingTransactions = !!pending.length
   // const toggleWalletModal = useWalletModalToggle()
-
+  // console.log(account)
   if (account) {
     return (
       <Web3StatusConnected auto color="secondary" id="web3-status-connected" onClick={connectWallet}>

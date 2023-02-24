@@ -10,8 +10,11 @@ import {
 import { ChainId } from "@/config/chainConfig/chainId"
 import ENS_ABI from '@/config/abi/ens-registrar.json'
 import ENS_PUBLIC_RESOLVER_ABI from '@/config/abi/ens-public-resolver.json'
+import MULTICALL_ABI from '@/config/abi/multicall.json'
 
-function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
+import config from "@/config"
+
+export function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
   const { library, account }: any = useActiveReact()
 
   return useMemo(() => {
@@ -45,4 +48,11 @@ export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contrac
 
 export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
   return useContract(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
+}
+
+export function useMulticallContract(): Contract | null {
+  const { chainId } = useActiveReact()
+  // return useContract(chainId && MULTICALL_NETWORKS[chainId], MULTICALL_ABI, false)
+  // console.log(config.getCurChainInfo(chainId).multicalToken)
+  return useContract(config.chainInfo[chainId]?.multicalToken, MULTICALL_ABI, false)
 }

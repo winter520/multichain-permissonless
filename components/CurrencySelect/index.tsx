@@ -127,7 +127,7 @@ export default function CurrencySelect ({
                 colors='token'
                 size='token'
                 onClick={() => {
-                  console.log(modalOpen)
+                  // console.log(modalOpen)
                   setModalOpen(true)
                 }}
               >

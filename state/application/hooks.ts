@@ -13,6 +13,7 @@ export function useBlockNumber(initChainId?:any): number | undefined {
   const useChainId = initChainId ? initChainId : chainId
   // console.log(useChainId)
   return useSelector((state: AppState) => {
+    // console.log(state.application)
     return state.application.blockNumber[useChainId ?? -1]
   })
 }

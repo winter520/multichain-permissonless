@@ -47,6 +47,14 @@ import {
   useAccountModalToggle
 } from "@/state/application/hooks"
 
+import {
+  useETHWalletBalances
+} from '@/state/wallet/hooks'
+
+import {
+  thousandBit
+} from '@/utils'
+
 function PathMatch (match:any) {
   if (config.isBrowser) {
     // console.log(window.location)
@@ -103,8 +111,8 @@ function ViewAccountInfo () {
   // const {selectNetworkInfo} = useUserSelectChainId()
   
   const {account, chainId} = useActiveReact()
-  // const baseBalance = useBaseBalances(account)
-  const baseBalance = '0'
+  const baseBalance = useETHWalletBalances(account ? [account] : [])?.[account ?? '']
+  // const baseBalance = '0'
   // const toggleWalletModal = useNoWalletModalToggle()
 // console.log(baseBalance?.toSignificant(3))
   // if (selectNetworkInfo?.label === 'NOWALLET') {
@@ -113,6 +121,7 @@ function ViewAccountInfo () {
   //     <Web3Status />
   //   </AccountElement>
   // }
+  // console.log(baseBalance)
   return (
     <AccountElement justify="flex-end" align="center" className={account && baseBalance ? 'login' : ''}>
     {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
@@ -122,8 +131,8 @@ function ViewAccountInfo () {
         }}>
         {/* <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}> */}
           {/* {baseBalance?.toSignificant(6)} {config.getCurChainInfo(chainId).symbol} */}
-          {/* {thousandBit(baseBalance?.toExact(), 2)} {config.chainInfo[chainId].symbol} */}
-          {baseBalance} {config.chainInfo[chainId].symbol}
+          {thousandBit(baseBalance?.toExact(), 2)} {config.chainInfo[chainId].symbol}
+          {/* {baseBalance} {config.chainInfo[chainId].symbol} */}
         </BalanceText>
       ) : null}
       <Web3Status />

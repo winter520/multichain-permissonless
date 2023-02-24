@@ -56,10 +56,10 @@ function App({ Component, pageProps }: AppProps) {
               <>
                 <Header />
                 <Component {...pageProps} />
+                <Updaters />
               </>
             </AppContainer>
           </ThemesProvider>
-          <Updaters />
         </Provider>
       </SSRProvider>
     </>

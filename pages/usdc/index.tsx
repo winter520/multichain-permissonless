@@ -19,6 +19,10 @@ import {t} from 'i18next'
 import CurrencySelect from "@/components/CurrencySelect"
 import DestCurrencySelect from "@/components/CurrencySelect/destCurrencySelect"
 import { useActiveReact } from '@/hooks/useActiveReact'
+import useInterval from '@/hooks/useInterval'
+import {
+  useFeeCallback
+} from './hooks'
 
 import {
   useUSDCTokenList
@@ -27,6 +31,11 @@ import {
 import {
   getParams
 } from '@/utils'
+import {
+  BigAmount
+} from '@/utils/bigNumber/index'
+
+import Reminder from './reminder'
  
 const SwapButton = styled(Button, {
   variants: {
@@ -73,6 +82,7 @@ const SwapButton = styled(Button, {
 export default function USDC () {
   const {chainId} = useActiveReact()
   const { isDark } = useTheme();
+  
   const [inputValue, setInputValue] = useState('')
   
   const [tokenlist, setTokenlist] = useState<any>([])
@@ -82,9 +92,13 @@ export default function USDC () {
   const [selectDestCurrencyList, setSelectDestCurrencyList] = useState<any>()
   const [selectDestCurrency, setSelectDestCurrency] = useState<any>()
 
+  const [srcFee, setSrcFee] = useState<any>()
+
   const initToken:any = getParams('fromToken') ? getParams('fromToken') : ''
 
   const usdcTokenList = useUSDCTokenList(chainId)
+  
+  const {getConfigFee} = useFeeCallback(selectDestCurrency)
 
   const initTokenKey = useMemo(() => {
     if (isNaN(chainId)) {
@@ -115,6 +129,7 @@ export default function USDC () {
         })
       }
       setSelectDestCurrencyList(destCurrenyArr)
+      setSelectDestCurrency(destCurrenyArr[0])
     }
   }, [selectCurrency])
 
@@ -127,7 +142,7 @@ export default function USDC () {
         tokenKey
       })
     }
-    console.log(arr)
+    // console.log(arr)
     setTokenlist(arr)
   }, [usdcTokenList])
 
@@ -142,6 +157,28 @@ export default function USDC () {
     }
   }, [initTokenKey, usdcTokenList])
 
+
+  const getSrcFee = useCallback(() => {
+    getConfigFee(selectDestChain).then((res:any) => {
+      // console.log(res)
+      if (res) {
+        const fee = BigAmount.format(18, res)
+        // console.log(fee.toExact())
+        setSrcFee(fee.toExact())
+      } else {
+        setSrcFee('')
+      }
+    })
+  }, [selectDestCurrency, selectDestChain])
+
+  useEffect(() => {
+    if (selectDestCurrency?.configToken) {
+      getSrcFee()
+    }
+  }, [selectDestCurrency, selectDestChain])
+
+  useInterval(getSrcFee, 1000 * 3)
+
   return <>
     <AppBody>
       <Container xs css={{
@@ -152,8 +189,6 @@ export default function USDC () {
           maxW: '670px',
           width: '100%'
         }}>
-          <Card.Header>
-          </Card.Header>
           <Card.Body>
             <CurrencySelect
               value={inputValue}
@@ -192,8 +227,12 @@ export default function USDC () {
                 setSelectDestChain(destChainId)
               }}
             />
-          </Card.Body>
-          <Card.Footer css={{flexWrap: 'wrap'}}>
+            <Reminder
+              selectDestCurrency={selectDestCurrency}
+              selectDestChain={selectDestChain}
+              srcFee={srcFee}
+            />
+            <Spacer y={1} /> 
             <Row justify='center' align='center' css={{
               padding: '0 10px'
             }}>
@@ -201,8 +240,8 @@ export default function USDC () {
                 {t('swap')}
               </SwapButton>
             </Row>
-            <Spacer y={2} /> 
-          </Card.Footer>
+            <Spacer y={1} />
+          </Card.Body>
         </Card>
       </Container>
     </AppBody>

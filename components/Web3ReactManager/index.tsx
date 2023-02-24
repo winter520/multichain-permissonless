@@ -28,6 +28,7 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
   // }, [triedEager, networkActive, networkError, activateNetwork, active])
 
   // 当没有连接帐户时，对注入的提供程序（如果存在）上的登录（广义地说）作出反应
+  // console.log(triedEager)
   useInactiveListener(!triedEager)
 
   return (

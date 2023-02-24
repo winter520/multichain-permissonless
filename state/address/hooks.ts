@@ -31,6 +31,7 @@ export function useWalletAddress () {
   }, [])
 
   const getAccount = useCallback((chainId:any) => {
+    // console.log('evmAccount' ,evmAccount)
     if (isNaN(chainId)) {
       if (account?.[chainId]?.address) {
         return account?.[chainId]?.address
@@ -39,15 +40,11 @@ export function useWalletAddress () {
       return evmAccount
     }
     return undefined
-  }, [evmAccount])
+  }, [evmAccount, account])
 
   const useAccount = useMemo(() => {
-    if (isNaN(chainId)) {
-      return account?.[chainId]?.address
-    } else {
-      return evmAccount
-    }
-  }, [chainId, account, evmAccount])
+    return getAccount(chainId)
+  }, [chainId, getAccount])
   
   return {
     setAccount,

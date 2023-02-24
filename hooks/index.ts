@@ -65,13 +65,14 @@ export function useInactiveListener(suppress = false) {
   useEffect(() => {
     const { ethereum } = window
 
-    if (ethereum && ethereum.on && !active && !error && !suppress) {
+    // if (ethereum && ethereum.on && !active && !error && !suppress) {
+    if (ethereum && ethereum.on && !error && !suppress) {
       const handleChainChanged = (chainID:any) => {
         // console.log(chainID)
         // console.log(parseInt(chainID))
         if (chainID) {
           window.localStorage.setItem(ENV_NODE_CONFIG, chainID)
-          history.go(0)
+          // history.go(0)
         }
         // eat errors
         
@@ -81,6 +82,7 @@ export function useInactiveListener(suppress = false) {
       }
 
       const handleAccountsChanged = (accounts: string[]) => {
+        // console.log(accounts)
         if (accounts.length > 0) {
           // eat errors
           activate(injected, undefined, true).catch(error => {
