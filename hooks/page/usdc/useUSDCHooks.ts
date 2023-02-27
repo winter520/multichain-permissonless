@@ -37,9 +37,9 @@ const config_abi = [
 
 export function useFeeCallback (selectDestCurrency:any) {
   const contract = useContract(selectDestCurrency?.configToken, config_abi)
+
   const getConfigFee = useCallback((selectDestChain: any) => {
     return new Promise(resolve => {
-      // console.log(contract)
       if (contract && selectDestChain) {
         contract.calcSrcFees('', selectDestChain, 196).then((res:any) => {
           // console.log(res.toString())
@@ -54,7 +54,8 @@ export function useFeeCallback (selectDestCurrency:any) {
         })
       }
     })
-  }, [selectDestCurrency, contract])
+  }, [contract])
+
   return {
     getConfigFee
   }
@@ -112,16 +113,16 @@ export function useSwapCallback (
     return {
       excute: async () => {
         try {
-          const params = [inputAmount, '1', recipient, selectDestCurrency?.fromanytoken?.address, selectChain, 1]
+          const params = [inputAmount, selectDestCurrency.usdcdomain, recipient, selectDestCurrency?.fromanytoken?.address, selectChain, 1]
           console.log(params)
-          const txResut = contract.callout(...params, {value: srcFee})
+          const txResut = await contract.callout(...params, {value: srcFee})
           console.log(txResut)
         } catch (error) {
           console.log(error)
         }
       }
     }
-  }, [contract, selectCurrency, srcFee, inputAmount, recipient, selectDestCurrency, selectChain,typedValue])
+  }, [contract, srcFee, inputAmount, recipient, selectDestCurrency, selectChain])
 }
 
 export enum ApprovalState {
@@ -156,11 +157,11 @@ export function useApproveCallback(
   useEffect(() => {
     setApprovelPending(false)
     getApprovel()
-  }, [contract, spender, account])
+  }, [contract, spender, account, getApprovel])
   useInterval(getApprovel, 1000 * 3)
 
   const approvelState: ApprovalState = useMemo(() => {
-    console.log(allowance)
+    // console.log(allowance)
     if (approvelPending) {
       return ApprovalState.PENDING
     } else if (inputAmount) {
@@ -175,7 +176,7 @@ export function useApproveCallback(
   }, [allowance, inputAmount, approvelPending])
 
   return useMemo(() => {
-    console.log(approvelState)
+    // console.log(approvelState)
     if (!contract || !spender) return {}
     return {
       approvelState: approvelState,
@@ -192,3 +193,5 @@ export function useApproveCallback(
     }
   }, [approvelState, contract, spender])
 }
+
+export default null

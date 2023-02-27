@@ -16,7 +16,7 @@ const Loading = ({ duration = -1 }: { duration?: number }) => {
       }
     }
     return cancel;
-  }, [])
+  }, [duration])
 
   // const { t } = useTranslation();
   return show ? <LoadingView type="points" /> : null;

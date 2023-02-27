@@ -79,7 +79,7 @@ export default function WalletModal({
       setPendingError(false)
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
-  }, [walletModalOpen])
+  }, [walletModalOpen, setWalletView])
 
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)

@@ -7,5 +7,12 @@ export default function chunkArray<T>(items: T[], maxChunkSize: number): T[][] {
   const numChunks: number = Math.ceil(items.length / maxChunkSize)
   const chunkSize = Math.ceil(items.length / numChunks)
 
-  return [...Array(numChunks).keys()].map(ix => items.slice(ix * chunkSize, ix * chunkSize + chunkSize))
+  // return [...Array(numChunks).keys()].map(ix => items.slice(ix * chunkSize, ix * chunkSize + chunkSize))
+  // console.log(numChunks)
+  // console.log(Array(numChunks))
+  const arr = []
+  for (let i = 0; i < numChunks; i++) {
+    arr.push(i)
+  }
+  return arr.map(ix => items.slice(ix * chunkSize, ix * chunkSize + chunkSize))
 }

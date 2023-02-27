@@ -27,7 +27,7 @@ import {
   useSwapCallback,
   useApproveCallback,
   ApprovalState
-} from './hooks'
+} from '@/hooks/page/usdc/useUSDCHooks'
 
 import {
   useUSDCTokenList
@@ -208,13 +208,13 @@ export default function USDC () {
         setSrcFee('')
       }
     })
-  }, [selectDestCurrency, selectDestChain])
+  }, [selectDestChain, getConfigFee])
 
   useEffect(() => {
     if (selectDestCurrency?.configToken) {
       getSrcFee()
     }
-  }, [selectDestCurrency, selectDestChain])
+  }, [selectDestCurrency, selectDestChain, getConfigFee, getSrcFee])
 
   useInterval(getSrcFee, 1000 * 3)
 
@@ -230,10 +230,23 @@ export default function USDC () {
           state: 'Error',
           tip: t('Insufficient', {symbol: selectCurrency?.symbol})
         }
+      } else if (!srcFee) {
+        return {
+          state: 'Loading',
+          tip: t('FeeLoading')
+        }
       }
     }
     return undefined
-  }, [useBalance, inputValue, selectCurrency])
+  }, [useBalance, inputValue, selectCurrency, srcFee])
+
+  const isCrosschain = useMemo(() => {
+    if (
+      !inputValue
+      || errorTip
+    ) return true
+    return false
+  }, [errorTip, inputValue])
 
   return <>
     <AppBody>
@@ -304,7 +317,7 @@ export default function USDC () {
                     </SwapButton>
                   </>
                 ) : (
-                  <SwapButton disabled={Boolean(errorTip)} color={isDark ? 'gray' : 'secondary'} size='swap' onClick={() => {
+                  <SwapButton disabled={isCrosschain} color={isDark ? 'gray' : 'secondary'} size='swap' onClick={() => {
                     if (excute && !errorTip) excute()
                   }}>
                     {t('swap')}

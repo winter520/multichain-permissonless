@@ -3,7 +3,8 @@ import {
   Row,
   styled,
   Text,
-  theme
+  theme,
+  Loading
 } from "@nextui-org/react"
 import { useMemo } from "react"
 
@@ -16,7 +17,10 @@ const WarningBox = styled('div', {
   },
   '&.warning': {
     background: theme.colors.warning.value
-  }
+  },
+  '&.loading': {
+    background: null
+  },
 })
 
 export default function ErrorCard ({
@@ -25,20 +29,27 @@ export default function ErrorCard ({
   errorTip: any
 }) {
   if (!errorTip) return null
-  const warnColor = useMemo(() => {
+  const WarningView = () => {
     if (errorTip?.state === 'Error') {
-      return 'error'
-    } else if (errorTip?.state === 'Warning') {
-      return 'warning'
+      return <WarningBox className='error'>
+        <Text b size="$sm" color="white" css={{}}>{errorTip?.tip}</Text>
+      </WarningBox>
+    } else if (['Warning'].includes(errorTip?.state)) {
+      return <WarningBox className='warning'>
+        <Text b size="$sm" color="white" css={{}}>{errorTip?.tip}</Text>
+      </WarningBox>
+    } else if (['Loading'].includes(errorTip?.state)) {
+      return <WarningBox className='loading'>
+        <Text b size="$xs" color="secondary" css={{}}>{errorTip?.tip}</Text>
+        <Loading color="secondary" type="points-opacity" />
+      </WarningBox>
     }
-  }, [errorTip])
+    return null
+  }
 
   return (<>
     <Row justify="center" align="center">
-
-      <WarningBox className={warnColor}>
-        <Text b size="$sm" color="white" css={{}}>{errorTip?.tip}</Text>
-      </WarningBox>
+      <WarningView />
     </Row>
   </>)
 }

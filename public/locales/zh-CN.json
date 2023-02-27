@@ -26,5 +26,6 @@
   "From": "发送",
   "swap": "交易",
   "inputNotValid": "无效的输入值",
-  "Insufficient": "{{symbol}}余额不足"
+  "Insufficient": "{{symbol}}余额不足",
+  "FeeLoading": "手续费更新中"
 }

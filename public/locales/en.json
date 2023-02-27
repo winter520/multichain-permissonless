@@ -26,5 +26,6 @@
   "From": "From",
   "swap": "Swap",
   "inputNotValid": "Not a valid input value",
-  "Insufficient": "Insufficient {{symbol}} balance"
+  "Insufficient": "Insufficient {{symbol}} balance",
+  "FeeLoading": "Fee is being updated"
 }
