@@ -56,6 +56,10 @@ import {
   setLocalRPC
 } from "@/config/chainConfig/methods"
 
+import {
+  TabButton
+} from '@/components/CurrencySelect/styled'
+
 export const NetWorkList = styled('div',{
   width:"100%",
   overflow: "auto",
@@ -92,20 +96,6 @@ export const OptionCardClickable = styled('div', {
   }
 });
 
-const TabButton = styled(Button, {
-  variants: {
-    color: {
-      active: {
-        backgroundColor: theme.colors.secondary.value + "!important",
-        color: theme.colors.white.value + "!important",
-      },
-      default: {
-        // backgroundColor: theme.colors.secondary.value + "!important",
-        // color: theme.colors.white.value,
-      }
-    }
-  }
-})
 
 const defaultIconStroke = theme.colors.gray800.value
 

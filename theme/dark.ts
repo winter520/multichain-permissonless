@@ -17,6 +17,8 @@ export const darkTheme = createTheme({
       purple700: '#2A26B4',
       purple800: '#1A1891',
       purple900: '#100E78',
+
+      tabText: '$white'
     },
   }
 })

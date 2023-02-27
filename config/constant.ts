@@ -97,7 +97,7 @@ export const controlConfig:any = {
     hiddenChain: [],
     showCoin: [],
     showChain: [],
-    initNode: '56',
+    initNode: '5',
     isOpenRouter: 0,
     isOpenUSDC: 1,
   },

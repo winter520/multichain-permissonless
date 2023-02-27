@@ -118,3 +118,19 @@ export const TokenView = styled(Button, {
     color: theme.colors.white.value,
   },
 })
+
+export const TabButton = styled(Button, {
+  variants: {
+    color: {
+      active: {
+        backgroundColor: theme.colors.secondary.value + "!important",
+        color: theme.colors.white.value + "!important",
+      },
+      default: {
+        // backgroundColor: theme.colors.secondary.value + "!important",
+        // color: theme.colors.white.value,
+        color: "$tabText!important",
+      }
+    }
+  }
+})

@@ -67,13 +67,6 @@ function PathMatch (match:any) {
   return false
 }
 
-const IdenticonBox = styled('div', {
-  cursor: "pointer",
-  // backgroundColor: theme.colors.secondary.value,
-  // padding: "1px",
-  // borderRadius: "100%"
-})
-
 const AccountElement = styled(Row, {
   '&.login': {
     background: theme.colors.gray100.value,

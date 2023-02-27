@@ -28,20 +28,9 @@ import SearchInput from '@/components/Input/searchInput'
 import CommonBases from './commonBase'
 import CurrencyList from './currencyList'
 
-const TabButton = styled(Button, {
-  variants: {
-    color: {
-      active: {
-        backgroundColor: theme.colors.secondary.value + "!important",
-        color: theme.colors.white.value + "!important",
-      },
-      default: {
-        // backgroundColor: theme.colors.secondary.value + "!important",
-        // color: theme.colors.white.value,
-      }
-    }
-  }
-})
+import {
+  TabButton
+} from './styled'
 
 interface CurrencySearchModalProps {
   isOpen: boolean
