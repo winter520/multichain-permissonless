@@ -164,7 +164,7 @@ export default function App() {
           variant="underline"
         >
           {
-            navList.map((item, index) => {
+            navList.map((item:any, index:number) => {
               if (item.isOutLink) {
                 return <Navbar.Item key={index} id={index + ''}>
                   <Link href={item.path} target="_blank">{t(item.textKey)}</Link>
@@ -176,43 +176,47 @@ export default function App() {
               }
             })
           }
-          <Dropdown>
-            <Navbar.Item>
-              <Dropdown.Button
-                light
-                css={{
-                  px: 0,
-                  dflex: "center",
-                  svg: { pe: "none" },
-                }}
-              >
-                More
-              </Dropdown.Button>
-            </Navbar.Item>
-            <Dropdown.Menu
-              color={"default"}
-              variant="light"
-              aria-label="Actions"
-            >
-              {
-                moreList.map((item, index) => {
-                  return <Dropdown.Item
-                    variant="light"
-                    aria-label="Actions"
-                    key={index}
+          {
+            moreList.length > 0 ? (
+              <Dropdown>
+                <Navbar.Item>
+                  <Dropdown.Button
+                    light
+                    css={{
+                      px: 0,
+                      dflex: "center",
+                      svg: { pe: "none" },
+                    }}
                   >
-                    {
-                      item.isOutLink ? (
-                        <Link href={item.path} target="_blank">{t(item.textKey)}</Link>
-                      ) : (
-                        <Link href={item.path}>{t(item.textKey)}</Link>
-                      )
-                    }
-                  </Dropdown.Item>
-                })
-              }
-            </Dropdown.Menu>
-          </Dropdown>
+                    More
+                  </Dropdown.Button>
+                </Navbar.Item>
+                <Dropdown.Menu
+                  color={"default"}
+                  variant="light"
+                  aria-label="Actions"
+                >
+                  {
+                    moreList.map((item:any, index: number) => {
+                      return <Dropdown.Item
+                        variant="light"
+                        aria-label="Actions"
+                        key={index}
+                      >
+                        {
+                          item.isOutLink ? (
+                            <Link href={item.path} target="_blank">{t(item.textKey)}</Link>
+                          ) : (
+                            <Link href={item.path}>{t(item.textKey)}</Link>
+                          )
+                        }
+                      </Dropdown.Item>
+                    })
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : ''
+          }
         </Navbar.Content>
 
         <Navbar.Content
@@ -250,7 +254,7 @@ export default function App() {
 
         <Navbar.Collapse>
           {
-            navList.map((item, index) => {
+            navList.map((item:any, index:number) => {
               return <Navbar.CollapseItem key={index} id={index + ''} isActive={PathMatch(item.regex)}>
                 <Link href={item.path}>{t(item.textKey)}</Link>
               </Navbar.CollapseItem>
