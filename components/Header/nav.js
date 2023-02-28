@@ -65,6 +65,22 @@ const navVersion = {
       isOutLink: true,
       isView: 1,
     },
+  ],
+  [VERSION.ZK_DEMO]: [
+    {
+      path: '/zkrouter',
+      textKey: 'zkRouter',
+      regex: /^\/zkrouter$/,
+      isOutLink: false,
+      isView: 1,
+    },
+    {
+      path: '/zkrouter/claim',
+      textKey: 'Claim',
+      regex: /^\/zkrouter\/claim$/,
+      isOutLink: false,
+      isView: 1,
+    },
   ]
 }
 
@@ -101,7 +117,8 @@ const moreVersion = {
       isView: 1,
     },
   ],
-  [VERSION.USDC_DEMO]: []
+  [VERSION.USDC_DEMO]: [],
+  [VERSION.ZK_DEMO]: [],
 }
 
 export const moreList = moreVersion[USE_VERSION]

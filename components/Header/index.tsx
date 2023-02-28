@@ -34,17 +34,10 @@ import config from '@/config'
 import {
   useActiveReact
 } from '@/hooks/useActiveReact'
-import {
-  useActiveWeb3React
-} from "@/hooks"
-import {
-  injected
-} from "@/connectors"
 
 import {
   // useModalOpen,
   useNetworkModalToggle,
-  useAccountModalToggle
 } from "@/state/application/hooks"
 
 import {
@@ -57,7 +50,8 @@ import {
 
 function PathMatch (match:any) {
   if (config.isBrowser) {
-    // console.log(window.location)
+    // console.log(window.location.pathname)
+    // console.log(match)
     if (window?.location?.pathname.match(match)) {
       return true
     }else {

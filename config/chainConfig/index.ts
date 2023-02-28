@@ -346,6 +346,10 @@ const useChain:any = {
     ChainId.AVAX_TEST,
     ChainId.GOERLI
   ],
+  [VERSION.ZK_DEMO]: [
+    ChainId.FTM_TEST,
+    ChainId.GOERLI
+  ],
 }
 
 export const spportChainArr:any = useChain[USE_VERSION]

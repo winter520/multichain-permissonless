@@ -1,6 +1,7 @@
 import React, {Suspense} from 'react'
 import RouterView from './router'
 import UsdcView from './usdc'
+import ZkView from './zkrouter'
 
 import {
   VERSION,
@@ -13,6 +14,8 @@ export default function Home() {
       return <RouterView />
     } else if (VERSION.USDC_DEMO === version) {
       return <UsdcView />
+    } else if (VERSION.ZK_DEMO === version) {
+      return <ZkView />
     }
     return null
   }

@@ -3,6 +3,7 @@ export enum VERSION {
   V1 = 'MULTICHAIN',
   V1_TEST = 'MULTICHAIN_TEST',
   USDC_DEMO = 'USDC_DEMO',
+  ZK_DEMO = 'ZK_DEMO',
 }
 
 export enum CHAIN_TYPE {
@@ -11,7 +12,8 @@ export enum CHAIN_TYPE {
 }
 export const isBrowser = (() => typeof window !== 'undefined')()
 // export const INIT_VERSION = VERSION.V1
-export const INIT_VERSION = VERSION.USDC_DEMO
+// export const INIT_VERSION = VERSION.USDC_DEMO
+export const INIT_VERSION = VERSION.ZK_DEMO
 // export const INIT_VERSION = VERSION.V7_BAS_TEST
 
 function getUrlVersion (init:any) {
@@ -91,6 +93,7 @@ export const controlConfig:any = {
     showChain: [],
     initNode: '56',
     isOpenRouter: 1,
+    tokenlistUrl: 'https://l2api.anyswap.exchange/v4/tokenlistV4'
   },
   [VERSION.USDC_DEMO]: {
     hiddenCoin: [],
@@ -100,6 +103,17 @@ export const controlConfig:any = {
     initNode: '5',
     isOpenRouter: 0,
     isOpenUSDC: 1,
+    tokenlistUrl: 'https://l2api.anyswap.exchange/v4/tokenlist/usdc'
+  },
+  [VERSION.ZK_DEMO]: {
+    hiddenCoin: [],
+    hiddenChain: [],
+    showCoin: [],
+    showChain: [],
+    initNode: '5',
+    isOpenRouter: 0,
+    isOpenUSDC: 1,
+    tokenlistUrl: 'https://l2api.anyswap.exchange/v4/tokenlist/zk'
   },
 }
 export const initConfig = controlConfig[USE_VERSION]
