@@ -5,7 +5,8 @@ import {
 } from '@/hooks/useContract'
 import { useCallback } from "react"
 import {
-  Button
+  Button,
+  Row
 } from '@nextui-org/react'
 import {
   t
@@ -44,9 +45,13 @@ export default function ZkClaim () {
   }, [contract])
   return (
     <AppBody>
-      <Button onClick={() => claim()}>
-        {t('Claim')}
-      </Button>
+      <Row justify="center" align="center" css={{
+        padding: '100px 0'
+      }}>
+        <Button onClick={() => claim()}>
+          {t('Claim')}
+        </Button>
+      </Row>
     </AppBody>
   )
 }

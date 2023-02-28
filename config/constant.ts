@@ -93,7 +93,7 @@ export const controlConfig:any = {
     showChain: [],
     initNode: '56',
     isOpenRouter: 1,
-    tokenlistUrl: 'https://l2api.anyswap.exchange/v4/tokenlistV4'
+    tokenlistUrl: 'https://bridgeapi.anyswap.exchange/v4/tokenlistV4'
   },
   [VERSION.USDC_DEMO]: {
     hiddenCoin: [],
