@@ -10,3 +10,5 @@ export const starToken = createAction<{ chainId: any, token: any }>('application
 export const addTokenToWallet = createAction<{ chainId: any, tokenInfo: any }>('application/addTokenToWallet')
 export const removeTokenToWallet = createAction<{}>('application/removeTokenToWallet')
 export const changeStarTab = createAction<{ type: any, index: any }>('application/changeStarTab')
+
+export const toggleURLWarning = createAction<void>('app/toggleURLWarning')

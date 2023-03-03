@@ -7,6 +7,8 @@ const Web3 = require('web3')
 
 const TIMEOUT = 'timeout'
 
+const LIMIT = 100
+
 export function getWeb3 ({rpc, provider}: {rpc?:string, provider?:any}) {
   rpc = rpc ? rpc : ''
   if (provider) {
@@ -41,6 +43,7 @@ function getBatchWeb3Data ({rpc, calls, provider}:any) {
     const web3 = getWeb3({rpc, provider})
     const batch = new web3.BatchRequest()
     // console.log(calls)
+    batch.add(web3['eth']['getBlockNumber'].request())
     for (const obj of calls) {
       if (obj.callData) {
         batch.add(web3.eth.call.request({data: obj.callData, to: obj.target}, 'latest'))
@@ -49,18 +52,51 @@ function getBatchWeb3Data ({rpc, calls, provider}:any) {
         batch.add(web3[property][obj.methods].request(...obj.input))
       }
     }
-    batch.add(web3['eth']['getBlockNumber'].request())
+
     batch.requestManager.sendBatch(batch.requests, (err:any, res:any) => {
       if (err) {
         reject(err)
       } else {
-        // console.log(res)
         const len = res.length
-        const arr = res.splice(0, len - 1).map(({result}:any) => (result))
+        const blockNumber = res[0]?.result
+        const arr = res.splice(1, len).map(({result}:any) => (result))
         // console.log(arr)
-        resolve({returnData: arr, blockNumber: res[len - 1]})
+        // console.log(blockNumber, parseInt(blockNumber))
+        resolve({returnData: arr, blockNumber: parseInt(blockNumber)})
       }
     })
+  })
+}
+
+function getAllBatchWeb3Data ({rpc, calls, provider}:any) {
+  return new Promise((resolve,reject) => {
+    if (calls.length > LIMIT) {
+      const arr = []
+      for (let i = 0; i < calls.length; i+=LIMIT) {
+        arr.push(getBatchWeb3Data({rpc, calls: calls.slice(i, i + LIMIT), provider}))
+      }
+      Promise.all(arr).then((res:any) => {
+        // console.log(res)
+        const result:any = {returnData: [], blockNumber: 0}
+        for (const item of res) {
+          result.returnData.push(...item.returnData)
+          if ( Number(result.blockNumber) < Number(item.blockNumber)) {
+            result.blockNumber = item.blockNumber
+          }
+        }
+        // console.log(result)
+        resolve(result)
+        // console.log(result)
+      }).catch(err => {
+        reject(err)
+      })
+    } else {
+      getBatchWeb3Data({rpc, calls, provider}).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    }
   })
 }
 
@@ -68,10 +104,7 @@ export function getMulticallData ({chainId, rpc, calls, provider}:any) {
   return new Promise((resolve, reject) => {
     const contract = getContract({abi: multicallABI, rpc: rpc, provider})
     contract.options.address = config.chainInfo[chainId].multicalToken
-    // console.log(chainId)
-    // console.log(rpc)
-    // console.log(calls)
-    // console.log(provider)
+
     const arr = []
     for (const obj of calls) {
       if (obj.target) {
@@ -89,10 +122,6 @@ export function getMulticallData ({chainId, rpc, calls, provider}:any) {
         }
       }
     }
-    // arr.push({
-    //   target: config.chainInfo[chainId].multicalToken,
-    //   callData: contract.methods.getEthBalance('0xC03033d8b833fF7ca08BF2A58C9BC9d711257249').encodeABI()
-    // })
     contract.methods.aggregate(arr).call((err:any, res:any) => {
       // console.log(res)
       if (err) {
@@ -106,13 +135,59 @@ export function getMulticallData ({chainId, rpc, calls, provider}:any) {
     })
   })
 }
+function getAllMulticallData ({chainId, rpc, calls, provider}:any) {
+  return new Promise((resolve, reject) => {
+    if (calls.length > LIMIT) {
+      const arr = []
+      for (let i = 0; i < calls.length; i+=LIMIT) {
+        arr.push(getMulticallData({chainId, rpc, calls: calls.slice(i, i + LIMIT), provider}))
+      }
+      Promise.all(arr).then((res:any) => {
+        const result:any = {returnData: [], blockNumber: 0}
+        for (const item of res) {
+          result.returnData.push(...item.returnData)
+          if ( Number(result.blockNumber) < Number(item.blockNumber)) {
+            result.blockNumber = item.blockNumber
+          }
+        }
+        // console.log(result)
+        resolve(result)
+      }).catch(err => {
+        reject(err)
+      })
+    } else {
+      getMulticallData({chainId, rpc, calls, provider}).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    }
+  })
+}
 
 function getBatchResult ({chainId, rpc, calls, provider}:any) {
   return new Promise((resolve, reject) => {
     // console.log(config.chainInfo[chainId].multicalToken)
     // console.log(calls)
-    const useMethods = config.chainInfo[chainId].multicalToken ? getMulticallData : getBatchWeb3Data
+    // const useMethods = config.chainInfo[chainId].multicalToken ? getMulticallData : getBatchWeb3Data
     // const useMethods = getBatchWeb3Data
+    let useMethods
+    let isUseMultical = true
+    if (config.chainInfo[chainId].multicalToken) {
+      for (const obj of calls) {
+        if (!obj.target) {
+          isUseMultical = false
+          break
+        }
+      }
+    } else {
+      isUseMultical = false
+    }
+    if (isUseMultical) {
+      useMethods = getAllMulticallData
+    } else {
+      useMethods = getAllBatchWeb3Data
+    }
     Promise.race([
       timeoutWeb3(),
       useMethods({chainId, rpc, calls, provider})

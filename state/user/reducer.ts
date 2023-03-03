@@ -8,7 +8,8 @@ import {
   addTokenToWallet,
   removeTokenToWallet,
   changeStarTab,
-  updateInterfaceMode
+  updateInterfaceMode,
+  toggleURLWarning
 } from './actions'
 
 const currentTimestamp = () => new Date().getTime()
@@ -22,6 +23,7 @@ export interface UserState {
   starToken: any
   addTokenToWallet: any
   changeStarTab: any
+  URLWarningVisible: boolean
 }
 
 
@@ -34,6 +36,8 @@ export const initialState: UserState = {
   starToken: {},
   addTokenToWallet: '',
   changeStarTab: {},
+  URLWarningVisible: true,
+  
 }
 
 export default createReducer(initialState, builder =>
@@ -109,5 +113,8 @@ export default createReducer(initialState, builder =>
     .addCase(updateUserExpertMode, (state, action) => {
       state.userExpertMode = action.payload.userExpertMode
       state.timestamp = currentTimestamp()
+    })
+    .addCase(toggleURLWarning, state => {
+      state.URLWarningVisible = !state.URLWarningVisible
     })
 )

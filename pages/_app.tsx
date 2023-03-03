@@ -12,6 +12,7 @@ import store from '@/state'
 import ThemesProvider from '@/theme'
 
 import Header from '@/components/Header'
+import Popups from '@/components/Popups'
 // import dynamic from 'next/dynamic'
 import '@/utils/i18n'
 
@@ -57,6 +58,7 @@ function App({ Component, pageProps }: AppProps) {
                 <Header />
                 <Component {...pageProps} />
                 <Updaters />
+                <Popups />
               </>
             </AppContainer>
           </ThemesProvider>

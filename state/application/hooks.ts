@@ -9,7 +9,10 @@ import {
 } from "@/hooks/useActiveReact"
 
 import {
-  viewTxnsDtils
+  viewTxnsDtils,
+  removePopup,
+  addPopup,
+  PopupContent
 } from './actions'
 
 export function useBlockNumber(initChainId?:any): number | undefined {
@@ -73,4 +76,29 @@ export function useTxnsDtilOpen(): any {
     }),
     onChangeViewDtil
   }
+}
+
+export function useActivePopups(): AppState['application']['popupList'] {
+  const list = useSelector((state: AppState) => state.application.popupList)
+  return useMemo(() => list.filter(item => item.show), [list])
+}
+
+export function useRemovePopup(): (key: string) => void {
+  const dispatch = useDispatch()
+  return useCallback(
+    (key: string) => {
+      dispatch(removePopup({ key }))
+    },
+    [dispatch]
+  )
+}
+export function useAddPopup(): (content: PopupContent, key?: string) => void {
+  const dispatch = useDispatch()
+
+  return useCallback(
+    (content: PopupContent, key?: string) => {
+      dispatch(addPopup({ content, key }))
+    },
+    [dispatch]
+  )
 }

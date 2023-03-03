@@ -22,7 +22,9 @@ export const lightTheme = createTheme({
       purple800: '#1A1891',
       purple900: '#100E78',
 
-      tabText: '$purple600'
+      tabText: '$purple600',
+
+      modalBg: '#999'
 
       // secondary: "$purple600",
       // secondaryBorder: "$purple500",

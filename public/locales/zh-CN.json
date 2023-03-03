@@ -27,5 +27,6 @@
   "swap": "交易",
   "inputNotValid": "无效的输入值",
   "Insufficient": "{{symbol}}余额不足",
+  "txnsTip": "请等待几分钟，在浏览器查看跨链交易状态",
   "FeeLoading": "手续费更新中"
 }

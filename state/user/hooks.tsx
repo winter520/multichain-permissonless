@@ -146,3 +146,7 @@ export function useChangeStarTab(type:any): any {
     onChangeStarTab
   }
 }
+
+export function useURLWarningVisible(): boolean {
+  return useSelector((state: AppState) => state.user.URLWarningVisible)
+}

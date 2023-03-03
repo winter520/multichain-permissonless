@@ -94,6 +94,18 @@ const BalanceText = styled(Text, {
 //   `};
 // `
 
+const NavbarItem = styled(Navbar.Item, {
+
+})
+
+const NavbarItemLink = styled(Link, {
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center',
+  width: '100%',
+  height: '100%'
+})
+
 function ViewAccountInfo () {
   // const {selectNetworkInfo} = useUserSelectChainId()
   
@@ -153,13 +165,13 @@ export default function App() {
           {
             navList.map((item:any, index:number) => {
               if (item.isOutLink) {
-                return <Navbar.Item key={index} id={index + ''}>
-                  <Link href={item.path} target="_blank">{t(item.textKey)}</Link>
-                </Navbar.Item>
+                return <NavbarItem key={index} id={index + ''}>
+                  <NavbarItemLink href={item.path} target="_blank">{t(item.textKey)}</NavbarItemLink>
+                </NavbarItem>
               } else {
-                return <Navbar.Item key={index} id={index + ''} isActive={PathMatch(item.regex)} underlineHeight="light">
-                  <Link href={item.path}>{t(item.textKey)}</Link>
-                </Navbar.Item>
+                return <NavbarItem key={index} id={index + ''} isActive={PathMatch(item.regex)} underlineHeight="light">
+                  <NavbarItemLink href={item.path}>{t(item.textKey)}</NavbarItemLink>
+                </NavbarItem>
               }
             })
           }
