@@ -8,6 +8,10 @@ import {
   useActiveReact
 } from "@/hooks/useActiveReact"
 
+import {
+  viewTxnsDtils
+} from './actions'
+
 export function useBlockNumber(initChainId?:any): number | undefined {
   const { chainId } = useActiveReact()
   const useChainId = initChainId ? initChainId : chainId
@@ -50,23 +54,23 @@ export function useNetworkModalToggle(): () => void {
 }
 
 export function useTxnsDtilOpen(): any {
-  // const viewTxnsDtilsData = useSelector((state: AppState) => state.application.viewTxnsDtils)
-  // const dispatch = useDispatch<AppDispatch>()
-  // const onChangeViewDtil = useCallback(
-  //   (hash: any, isOpenModal: any) => {
-  //     // console.log(field)
-  //     // console.log(typedValue)
-  //     // console.log(typeInput({ field, typedValue }))
-  //     dispatch(viewTxnsDtils({ hash, isOpenModal }))
-  //   },
-  //   [dispatch]
-  // )
+  const viewTxnsDtilsData = useSelector((state: AppState) => state.application.viewTxnsDtils)
+  const dispatch = useDispatch<AppDispatch>()
+  const onChangeViewDtil = useCallback(
+    (hash: any, isOpenModal: any) => {
+      // console.log(field)
+      // console.log(typedValue)
+      // console.log(typeInput({ field, typedValue }))
+      dispatch(viewTxnsDtils({ hash, isOpenModal }))
+    },
+    [dispatch]
+  )
 
   return {
-    // ...(viewTxnsDtilsData ? viewTxnsDtilsData : {
-    //   hash: '',
-    //   isOpenModal: ''
-    // }),
-    // onChangeViewDtil
+    ...(viewTxnsDtilsData ? viewTxnsDtilsData : {
+      hash: '',
+      isOpenModal: ''
+    }),
+    onChangeViewDtil
   }
 }

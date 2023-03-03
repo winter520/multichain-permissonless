@@ -14,7 +14,8 @@ import {Status, getStatus} from '@/config/status'
 import {
   Loading,
   Text,
-  styled
+  styled,
+  Row
 } from "@nextui-org/react"
 import Link from 'next/link'
 
@@ -34,7 +35,8 @@ const TransactionStatusText = styled('div', {
 // `
 
 const TransactionState = styled(Link, {
-
+  textDecoration: 'none !important',
+  padding: '0.25rem 0rem',
 })
 // const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: boolean }>`
 //   display: flex;
@@ -49,7 +51,8 @@ const TransactionState = styled(Link, {
 // `
 
 const TransactionState1 = styled('div', {
-
+  cursor:'pointer',
+  padding: '0.25rem 0rem',
 })
 // const TransactionState1 = styled.div`
 //   display: flex;
@@ -147,32 +150,36 @@ export default function Transaction({ hash }: { hash: string }) {
             // console.log(hash)
             onChangeViewDtil(hash, true)
           }}>
-            {/* <RowFixed>
-              <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
-            </RowFixed> */}
-            <Text>
-              {summary ?? hash} ↗
-            </Text>
-            <IconWrapper>
-            {/* <IconWrapper pending={pending} success={success}> */}
-              {/* {pending ? <Loader stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-              {pending ? <Loading /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
-            </IconWrapper>
+            <Row justify='space-between' align='center'>
+              {/* <RowFixed>
+                <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
+              </RowFixed> */}
+              <Text size="small" color='primary'>
+                {summary ?? hash} ↗
+              </Text>
+              <IconWrapper>
+              {/* <IconWrapper pending={pending} success={success}> */}
+                {/* {pending ? <Loader stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
+                {pending ? <Loading size='xs' /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+              </IconWrapper>
+            </Row>
           </TransactionState1>
         ) : (
           <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')}>
-          {/* <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} pending={pending} success={success}> */}
-            {/* <RowFixed>
-              <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
-            </RowFixed> */}
-            <Text>
-              {summary ?? hash} ↗
-            </Text>
-            {/* <IconWrapper pending={pending} success={success}> */}
-            <IconWrapper>
-              {/* {pending ? <Loading stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-              {pending ? <Loading /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
-            </IconWrapper>
+            <Row justify='space-between' align='center'>
+              {/* <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} pending={pending} success={success}> */}
+                {/* <RowFixed>
+                  <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
+                </RowFixed> */}
+                <Text size="small" color='primary'>
+                  {summary ?? hash} ↗
+                </Text>
+                {/* <IconWrapper pending={pending} success={success}> */}
+                <IconWrapper>
+                  {/* {pending ? <Loading stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
+                  {pending ? <Loading size='xs' /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+                </IconWrapper>
+            </Row>
           </TransactionState>
         )
       }

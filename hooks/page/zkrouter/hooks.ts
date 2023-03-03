@@ -8,6 +8,10 @@ import {
 import { MaxUint256 } from '@ethersproject/constants'
 import useInterval from "@/hooks/useInterval";
 
+import {
+  useSendTraction
+} from '@/hooks/useSendTraction'
+
 const zkrouter_abi = [
   {
     "inputs": [
@@ -49,6 +53,7 @@ export function useSwapCallback (
 ) {
   const contract = useContract(selectCurrency?.address, zkrouter_abi)
   const inputAmount = useMemo(() => tryParseAmount(typedValue, selectCurrency?.decimals), [selectCurrency, typedValue])
+  const {sendTraction} = useSendTraction()
   // console.log(inputAmount)
   // console.log(selectCurrency)
   return useMemo(() => {
@@ -62,12 +67,23 @@ export function useSwapCallback (
         try {
           const params = [inputAmount, selectChain, recipient]
           console.log(params)
-          const txResut = await contract.swapout(...params)
-          console.log(txResut)
+          const s = () => {
+            return contract.swapout(...params)
+          }
+          // const txResut = await contract.swapout(...params)
+          sendTraction({
+            callback: s,
+            toChainId: selectChain,
+            recipient: recipient,
+            inputAmount: typedValue,
+            selectCurrency,
+            selectDestCurrency
+          })
+          // console.log(txResut)
         } catch (error) {
           console.log(error)
         }
       }
     }
-  }, [contract, inputAmount, recipient, selectDestCurrency, selectChain])
+  }, [contract, inputAmount, recipient, selectDestCurrency, selectChain, typedValue, selectCurrency])
 }

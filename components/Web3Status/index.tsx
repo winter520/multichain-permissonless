@@ -186,7 +186,7 @@ function Web3StatusInner() {
           <>
             {/* <RowBetween> */}
               {/* <Text>{pending?.length} {t('Pending')}</Text> <Loader stroke="white" /> */}
-              {pending?.length} {t('Pending')} <Loading />
+              {pending?.length} {t('Pending')} <Loading size='xs' color="success" css={{marginLeft: '5px!important'}} />
             {/* </RowBetween> */}
           </>
         ) : (

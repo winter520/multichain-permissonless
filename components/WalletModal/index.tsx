@@ -8,6 +8,9 @@ import { isMobile } from 'react-device-detect'
 import { injected } from '@/connectors'
 import { SUPPORTED_WALLETS } from '@/connectors'
 import usePrevious from '@/hooks/usePrevious'
+import {
+  useSwitchNetworks
+} from "@/hooks/useSwitchNetwork"
 import {useActiveReact} from '../../hooks/useActiveReact'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hooks'
@@ -51,6 +54,7 @@ export default function WalletModal({
   // 重要的是，这些都是从特定于帐户的web3 react上下文中销毁的
   const { active, connector, activate, error } = useWeb3React()
   const { account, chainId } = useActiveReact()
+  const {switchNetwork} = useSwitchNetworks()
 // console.log(active)
 // console.log(connector)
 
@@ -214,7 +218,14 @@ export default function WalletModal({
           </Modal.Header>
           <Modal.Body>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>{t('WrongNetworkTip', {name:config.chainInfo[chainId].name})}</h5>
+              <>
+                {/* <h5>{t('WrongNetworkTip', {name:config.chainInfo[chainId].name})}</h5> */}
+                <Button color="error" onClick={() => {
+                  switchNetwork(chainId, 1)
+                }}>
+                  {t('WrongNetworkTip', {name:config.chainInfo[chainId].name})}
+                </Button>
+              </>
             ) : (
               t('ErrorConnectingTip')
             )}

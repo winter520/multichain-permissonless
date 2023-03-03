@@ -1,14 +1,13 @@
 // import { TransactionResponse } from '@ethersproject/providers'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 
-import { useActiveReact } from '../../hooks/useActiveReact'
+import { useActiveReact } from '@/hooks/useActiveReact'
 import { AppDispatch, AppState } from '../index'
 import { addTransaction, updateUnderlyingStatus, noWalletTxList } from './actions'
 import { TransactionDetails } from './reducer'
 
-import config from '../../config'
+import config from '@/config'
 
 import {useIsGnosisSafeWallet} from '../wallet/hooks'
 

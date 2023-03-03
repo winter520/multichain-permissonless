@@ -79,7 +79,35 @@ const WalletAction = styled(Button, {
     }
   }
 });
-const LinkStyledButton = styled(Button, {})
+const LinkStyledButton = styled(Button, {
+  variants: {
+    size: {
+      clear: {
+        height: '$12', // space[12]
+        padding: '4px 6px!important',
+        fontSize: 'small'
+      }
+    },
+    color: {
+      clear: {
+        background: 'none', // colors.green800
+        color: theme.colors.secondary.value, 
+        border: 'none',
+        '&:hover': {
+          background: 'none',
+          color: theme.colors.secondary.value,
+          border: 'none',
+        },
+        '&:active': {
+          background: 'none',
+        },
+        '&:focus': {
+          borderColor: 'none',
+        },
+      }
+    }
+  }
+})
 
 const ActionColor = theme.colors.gray700.value
 const ActionText = styled(Text, {
@@ -173,7 +201,9 @@ export default function AccountDetails({
 
   return (
     <>
-      <InfoCard>
+      <InfoCard css={{
+        minHeight: '140px'
+      }}>
         <Card.Header>
 
           <Row justify="space-between" align='center'>
@@ -267,15 +297,10 @@ export default function AccountDetails({
       </InfoCard>
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
-          <Row>
-            <Text>{t('RecentTransactions')}</Text>
-            <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
+          <Row justify='space-between' align='center'>
+            <Text size="small">{t('RecentTransactions')}</Text>
+            <LinkStyledButton auto color="clear" size="clear" onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
           </Row>
-          <Grid.Container gap={0} justify="center">
-            <Grid xs={12}>
-              <Text>{t('RecentTransactions')}</Text>
-            </Grid>
-          </Grid.Container>
           {renderTransactions(pendingTransactions)}
           {renderTransactions(confirmedTransactions)}
         </LowerSection>
