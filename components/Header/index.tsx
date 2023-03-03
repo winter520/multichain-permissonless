@@ -63,7 +63,7 @@ function PathMatch (match:any) {
 
 const AccountElement = styled(Row, {
   '&.login': {
-    background: theme.colors.gray100.value,
+    background: '$bgContent',
     borderRadius: '12px',
     paddingLeft: '1rem'
   }
@@ -126,7 +126,7 @@ function ViewAccountInfo () {
     {/* <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}> */}
       {account && baseBalance ? (
         <BalanceText css={{
-          color: theme.colors.gray800.value
+          color: theme.colors.text.value
         }}>
         {/* <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}> */}
           {/* {baseBalance?.toSignificant(6)} {config.getCurChainInfo(chainId).symbol} */}

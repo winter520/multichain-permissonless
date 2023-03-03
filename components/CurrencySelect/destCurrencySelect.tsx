@@ -218,7 +218,7 @@ export default function DestCurrencySelect ({
           paddingTop: '0',
           paddingBottom: '0',
         }}>
-          <CurrencyInput className={isDark ? 'dark' : 'light'}>
+          <CurrencyInput>
             <Row css={{width: '100%'}} align="center">
               <InputNumber
                 value={value}

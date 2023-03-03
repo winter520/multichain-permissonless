@@ -75,8 +75,8 @@ const Fader = styled('div', {
   bottom: '0px',
   left: '0px',
   width: '100%',
-  height: '2px',
-  backgroundColor: '$modalBg',
+  height: '5px',
+  backgroundColor: '$success',
   // backgroundColor: theme.colors.backgroundContrast.value
 })
 

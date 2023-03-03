@@ -24,7 +24,8 @@ export const lightTheme = createTheme({
 
       tabText: '$purple600',
 
-      modalBg: '#999'
+      modalBg: '#f8f8f8',
+      bgContent: 'rgba(0,0,0,.05)'
 
       // secondary: "$purple600",
       // secondaryBorder: "$purple500",

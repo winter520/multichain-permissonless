@@ -76,8 +76,8 @@ export default function Updater(): null {
       .forEach(hash => {
         // console.log(hash)
         const tx = transactions[hash]
-        // if (!tx.receipt) {
         if (!tx.receipt) {
+        // if (tx.receipt) {
           getHashStatus(chainId, hash)?.then((receipt:any) => {
             console.log(receipt)
             if (receipt.msg === 'Success' || receipt.msg === 'Failure') {
@@ -98,6 +98,7 @@ export default function Updater(): null {
                 })
               )
               if (!tx?.version) {
+              // if (tx?.version) {
                 addPopup(
                   {
                     txn: {

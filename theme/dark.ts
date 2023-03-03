@@ -20,7 +20,8 @@ export const darkTheme = createTheme({
 
       tabText: '$white',
 
-      modalBg: '#394358'
+      modalBg: '#394358',
+      bgContent: '#394358'
     },
   }
 })

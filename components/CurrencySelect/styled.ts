@@ -78,12 +78,7 @@ export const BalanceView = styled(Button, {
 export const CurrencyInput = styled('div', {
   margin: '12px 0',
   padding: '0 10px 0 0', 
-  '&.light': {
-    background: 'rgba(0,0,0,.05)'
-  },
-  '&.dark': {
-    background: '#394358'
-  }
+  background: '$bgContent'
 })
 
 export const TokenView = styled(Button, {
