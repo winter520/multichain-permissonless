@@ -86,7 +86,7 @@ const FixedPopupColumn = styled(Grid.Container, {
 export default function Popups() {
   // get all popups
   const activePopups = useActivePopups()
-  console.log(activePopups)
+  // console.log(activePopups)
   const urlWarningActive = useURLWarningVisible()
 
   return (

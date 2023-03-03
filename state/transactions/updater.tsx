@@ -70,14 +70,14 @@ export default function Updater(): null {
     Object.keys(transactions)
       .filter(hash => {
         const tx = transactions[hash]
-        // if (tx.info && END_STATUS.includes(tx.info.status)) return false
+        if (tx.info && END_STATUS.includes(tx.info.status)) return false
         return true
       })
       .forEach(hash => {
         // console.log(hash)
         const tx = transactions[hash]
         // if (!tx.receipt) {
-        if (tx.receipt) {
+        if (!tx.receipt) {
           getHashStatus(chainId, hash)?.then((receipt:any) => {
             console.log(receipt)
             if (receipt.msg === 'Success' || receipt.msg === 'Failure') {
@@ -97,7 +97,7 @@ export default function Updater(): null {
                   }
                 })
               )
-              if (tx?.version) {
+              if (!tx?.version) {
                 addPopup(
                   {
                     txn: {

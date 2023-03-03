@@ -125,11 +125,15 @@ export const TabButton = styled(Button, {
       active: {
         backgroundColor: theme.colors.secondary.value + "!important",
         color: theme.colors.white.value + "!important",
+        '&:hover': {
+          color: '$white'
+        }
       },
       default: {
-        // backgroundColor: theme.colors.secondary.value + "!important",
-        // color: theme.colors.white.value,
         color: "$tabText!important",
+        '&:hover': {
+          color: '$white!important'
+        }
       }
     }
   }

@@ -109,7 +109,7 @@ export function useConnectWallet () {
       // }
     } else {
       // loginEvm()
-      console.log(chainId)
+      // console.log(chainId)
       toggleWalletModal()
     }
   }, [])
