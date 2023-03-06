@@ -76,7 +76,7 @@ const navVersion = {
     },
     {
       path: '/zkrouter/claim',
-      textKey: 'Claim',
+      textKey: 'Faucet',
       regex: /^\/zkrouter\/claim$/,
       isOutLink: false,
       isView: 1,
