@@ -52,6 +52,10 @@ export function useAccountModalToggle(): () => void {
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
+export function useWalletModalClose(): () => void {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(() => dispatch(setOpenModal(null)), [dispatch])
+}
 export function useNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NETWORK)
 }

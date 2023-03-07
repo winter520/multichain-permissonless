@@ -29,6 +29,7 @@ const initialState: ApplicationState = {
 export default createReducer(initialState, builder =>
   builder
   .addCase(setOpenModal, (state, action) => {
+    // console.log(action)
     state.openModal = action.payload
   })
   .addCase(updateBlockNumber, (state, action) => {

@@ -6,7 +6,14 @@ import {useTxnsDtilOpen} from '@/state/application/hooks'
 import {useActiveReact} from '@/hooks/useActiveReact'
 import { getEtherscanLink } from '../../utils'
 // import { ExternalLink } from '../../theme'
-import { useAllTransactions } from '../../state/transactions/hooks'
+import { useAllTransactions } from '@/state/transactions/hooks'
+
+import {
+  // useModalOpen,
+  // useWalletModalToggle,
+  useWalletModalClose
+} from '@/state/application/hooks'
+// import { ApplicationModal } from '@/state/application/actions'
 // import { RowFixed } from '../Row'
 // import Loader from '../Loader'
 import {Status, getStatus} from '@/config/status'
@@ -78,7 +85,8 @@ export default function Transaction({ hash }: { hash: string }) {
 
   const { chainId } = useActiveReact()
   const {onChangeViewDtil} = useTxnsDtilOpen()
-  
+  const closeWalletModal = useWalletModalClose()
+  // const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
   const allTransactions = useAllTransactions()
   // console.log(allTransactions)
   const tx = allTransactions?.[hash]
@@ -147,7 +155,10 @@ export default function Transaction({ hash }: { hash: string }) {
       {
         tx?.version ? (
           <TransactionState1 onClick={() => {
-            // console.log(hash)
+            // console.log(walletModalOpen)
+            // if (!walletModalOpen) {
+            // }
+            closeWalletModal()
             onChangeViewDtil(hash, true)
           }}>
             <Row justify='space-between' align='center'>
@@ -160,7 +171,7 @@ export default function Transaction({ hash }: { hash: string }) {
               <IconWrapper>
               {/* <IconWrapper pending={pending} success={success}> */}
                 {/* {pending ? <Loader stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-                {pending ? <Loading size='xs' /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+                {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
               </IconWrapper>
             </Row>
           </TransactionState1>
@@ -177,7 +188,7 @@ export default function Transaction({ hash }: { hash: string }) {
                 {/* <IconWrapper pending={pending} success={success}> */}
                 <IconWrapper>
                   {/* {pending ? <Loading stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-                  {pending ? <Loading size='xs' /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+                  {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
                 </IconWrapper>
             </Row>
           </TransactionState>

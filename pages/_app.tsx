@@ -13,6 +13,7 @@ import ThemesProvider from '@/theme'
 
 import Header from '@/components/Header'
 import Popups from '@/components/Popups'
+import TxModal from '@/components/Transactions/txModal'
 // import dynamic from 'next/dynamic'
 import '@/utils/i18n'
 
@@ -59,6 +60,7 @@ function App({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
                 <Updaters />
                 <Popups />
+                <TxModal />
               </>
             </AppContainer>
           </ThemesProvider>

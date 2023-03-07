@@ -308,7 +308,7 @@ export default function WalletModal({
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={walletModalOpen}
-      onClose={toggleWalletModal}
+      onClose={walletModalOpen ? toggleWalletModal : () => {}}
     >
       {getModalContent()}
     </Modal>
