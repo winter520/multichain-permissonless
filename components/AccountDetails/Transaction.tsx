@@ -163,15 +163,10 @@ export default function Transaction({ hash }: { hash: string }) {
             onChangeViewDtil(hash, true)
           }}>
             <Row justify='space-between' align='center'>
-              {/* <RowFixed>
-                <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
-              </RowFixed> */}
               <Text size="small" color='primary'>
                 {summary ?? hash} ↗
               </Text>
               <IconWrapper>
-              {/* <IconWrapper pending={pending} success={success}> */}
-                {/* {pending ? <Loader stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
                 {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" style={{stroke: theme.colors.success.value}} /> : <Triangle size="16" style={{stroke: theme.colors.warning.value}} />}
               </IconWrapper>
             </Row>
@@ -179,18 +174,12 @@ export default function Transaction({ hash }: { hash: string }) {
         ) : (
           <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} target="_blank">
             <Row justify='space-between' align='center'>
-              {/* <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} pending={pending} success={success}> */}
-                {/* <RowFixed>
-                  <TransactionStatusText>{summary ?? hash} ↗</TransactionStatusText>
-                </RowFixed> */}
-                <Text size="small" color='primary'>
-                  {summary ?? hash} ↗
-                </Text>
-                {/* <IconWrapper pending={pending} success={success}> */}
-                <IconWrapper>
-                  {/* {pending ? <Loading stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-                  {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" style={{stroke: theme.colors.success.value}} /> : <Triangle size="16" style={{stroke: theme.colors.warning.value}} />}
-                </IconWrapper>
+              <Text size="small" color='primary'>
+                {summary ?? hash} ↗
+              </Text>
+              <IconWrapper>
+                {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" style={{stroke: theme.colors.success.value}} /> : <Triangle size="16" style={{stroke: theme.colors.warning.value}} />}
+              </IconWrapper>
             </Row>
           </TransactionState>
         )
