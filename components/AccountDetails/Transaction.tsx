@@ -22,7 +22,8 @@ import {
   Loading,
   Text,
   styled,
-  Row
+  Row,
+  theme
 } from "@nextui-org/react"
 import Link from 'next/link'
 
@@ -171,12 +172,12 @@ export default function Transaction({ hash }: { hash: string }) {
               <IconWrapper>
               {/* <IconWrapper pending={pending} success={success}> */}
                 {/* {pending ? <Loader stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-                {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+                {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" style={{stroke: theme.colors.success.value}} /> : <Triangle size="16" style={{stroke: theme.colors.warning.value}} />}
               </IconWrapper>
             </Row>
           </TransactionState1>
         ) : (
-          <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')}>
+          <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} target="_blank">
             <Row justify='space-between' align='center'>
               {/* <TransactionState href={getEtherscanLink(chainId, hash, 'transaction')} pending={pending} success={success}> */}
                 {/* <RowFixed>
@@ -188,7 +189,7 @@ export default function Transaction({ hash }: { hash: string }) {
                 {/* <IconWrapper pending={pending} success={success}> */}
                 <IconWrapper>
                   {/* {pending ? <Loading stroke="#5f6bfb" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />} */}
-                  {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+                  {pending ? <Loading size='xs' color="primary" /> : success ? <CheckCircle size="16" style={{stroke: theme.colors.success.value}} /> : <Triangle size="16" style={{stroke: theme.colors.warning.value}} />}
                 </IconWrapper>
             </Row>
           </TransactionState>

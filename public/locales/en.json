@@ -28,5 +28,8 @@
   "inputNotValid": "Not a valid input value",
   "Insufficient": "Insufficient {{symbol}} balance",
   "txnsTip": "Please wait minutes to check the cross-chain tx status on the explorer",
-  "FeeLoading": "Fee is being updated"
+  "FeeLoading": "Fee is being updated",
+  "To": "To",
+  "TxHash": "Tx Hash",
+  "TransactionDetails": "Transaction Details"
 }

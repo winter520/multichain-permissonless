@@ -6,6 +6,7 @@ import {
   styled,
   Text
 } from '@nextui-org/react'
+import Link from 'next/link';
 import {t} from 'i18next'
 import {
   useAllTransactions
@@ -20,6 +21,8 @@ import config from '@/config'
 
 import CopyHelper from '../AccountDetails/copy'
 
+import { getEtherscanLink } from '../../utils'
+
 const ContentLabel = styled(Text, {
   textAlign: 'left',
   fontSize: '$sm'
@@ -27,6 +30,11 @@ const ContentLabel = styled(Text, {
 const ContentText = styled(Text, {
   textAlign: 'right',
   fontSize: '$sm'
+})
+
+const OutLink = styled(Link, {
+  fontSize: '$sm',
+  color: '$secondary'
 })
 
 export default function TransactionDetail ({
@@ -56,17 +64,22 @@ export default function TransactionDetail ({
           <Col span={8}><ContentText>- {value} {symbol}</ContentText></Col>
         </Row>
         <Row justify='space-between' align='center'>
-          <Col span={4}><ContentLabel>Tx Hash:</ContentLabel></Col>
+          <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <ContentText color='secondary'>{shortenAddress(txid, 6)}</ContentText>
-              <CopyHelper toCopy='txid' />
+              <OutLink href={getEtherscanLink(fromChain, txid, 'transaction')}>{shortenAddress(txid, 6)}</OutLink>
+              <CopyHelper toCopy={txid} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
         </Row>
         <Row justify='space-between' align='center'>
           <Col span={4}><ContentLabel>{t('From')}:</ContentLabel></Col>
-          <Col span={8}><ContentText color='secondary'>{from ? shortenAddress(from, 6) : '-'}</ContentText></Col>
+          <Col span={8}>
+            <Row justify='flex-end' align='center'>
+              <OutLink href={getEtherscanLink(fromChain, from, 'address')}>{from ? shortenAddress(from, 6) : '-'}</OutLink>
+              <CopyHelper toCopy={from} style={{marginLeft: '10px'}} />
+            </Row>
+          </Col>
         </Row>
       </Card.Body>
     </Card>
@@ -85,12 +98,22 @@ export default function TransactionDetail ({
           <Col span={8}><ContentText>+ {value} {symbol}</ContentText></Col>
         </Row>
         <Row justify='space-between' align='center'>
-          <Col span={4}><ContentLabel>Tx Hash:</ContentLabel></Col>
-          <Col span={8}><ContentText color='secondary'>{shortenAddress(swaptx, 6)}</ContentText></Col>
+          <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
+          <Col span={8}>
+            <Row justify='flex-end' align='center'>
+              <OutLink href={getEtherscanLink(toChain, swaptx, 'transaction')}>{shortenAddress(swaptx, 6)}</OutLink>
+              <CopyHelper toCopy={swaptx} style={{marginLeft: '10px'}} />
+            </Row>
+          </Col>
         </Row>
         <Row justify='space-between' align='center'>
           <Col span={4}><ContentLabel>{t('To')}:</ContentLabel></Col>
-          <Col span={8}><ContentText color='secondary'>{to ? shortenAddress(to, 6) : '-'}</ContentText></Col>
+          <Col span={8}>
+            <Row justify='flex-end' align='center'>
+              <OutLink href={getEtherscanLink(toChain, to, 'address')}>{to ? shortenAddress(to, 6) : '-'}</OutLink>
+              <CopyHelper toCopy={to} style={{marginLeft: '10px'}} />
+            </Row>
+          </Col>
         </Row>
       </Card.Body>
     </Card>

@@ -6,6 +6,7 @@ import {
 } from '@/state/application/hooks'
 
 import Transactions from './index'
+import { t } from 'i18next'
 
 
 export default function TxModal () {
@@ -21,7 +22,7 @@ export default function TxModal () {
       onClose={() => onChangeViewDtil(hash, false)}
     >
       <Modal.Header>
-        <Text b size="$md">Transaction Details</Text>
+        <Text b size="$md">{t('TransactionDetails')}</Text>
       </Modal.Header>
       <Modal.Body>
         <Transactions></Transactions>

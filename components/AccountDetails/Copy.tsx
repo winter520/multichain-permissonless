@@ -7,7 +7,8 @@ import { CheckCircle, Copy } from 'react-feather'
 
 import {
   styled,
-  theme
+  theme,
+  Row
 } from "@nextui-org/react";
 
 const CopyIcon = styled('div', {
@@ -29,8 +30,9 @@ const CopyIcon = styled('div', {
 //     color: ${({ theme }) => theme.text2};
 //   }
 // `
-const TransactionStatusText = styled('span', {
-  
+const TransactionStatusText = styled(Row, {
+  fontSize: '0.825rem',
+  lineHeight: '16px'
 })
 // const TransactionStatusText = styled.span`
 //   margin-left: 0.25rem;
@@ -39,21 +41,21 @@ const TransactionStatusText = styled('span', {
 //   align-items: center;
 // `
 
-export default function CopyHelper({toCopy, children}: { toCopy: string; children?: React.ReactNode }) {
+export default function CopyHelper({toCopy, style, children}: { toCopy: string; style?: React.CSSProperties; children?: React.ReactNode }) {
   const [isCopied, setCopied] = useCopyClipboard()
   // console.log(toCopy)
   return (
-    <CopyIcon onClick={(event:any) => {
+    <CopyIcon style={style} onClick={(event:any) => {
       setCopied(toCopy)
       event.stopPropagation()
     }}>
       {isCopied ? (
-        <TransactionStatusText>
+        <TransactionStatusText justify="center" align='center'>
           <CheckCircle size={'16'} />
-          <TransactionStatusText css={{lineHeight: '16px'}}>Copied</TransactionStatusText>
+          <TransactionStatusText css={{marginLeft: '6px'}}>Copied</TransactionStatusText>
         </TransactionStatusText>
       ) : (
-        <TransactionStatusText css={{lineHeight: '16px'}}>
+        <TransactionStatusText justify="center" align='center'>
           <Copy size={'16'} />
         </TransactionStatusText>
       )}
