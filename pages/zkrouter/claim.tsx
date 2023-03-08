@@ -17,6 +17,11 @@ import {
   t
 } from 'i18next'
 
+import {
+  SENDTXTYPE,
+  useSendTraction
+} from '@/hooks/useSendTraction'
+
 const abi = [
   {
     "inputs": [
@@ -37,15 +42,23 @@ const abi = [
 
 export default function ZkClaim () {
   const {account} = useActiveReact()
-  const contract = useContract('0xd29c3915d84e0127c4eee95ec99eda9b88c034e5', abi)
+  const {sendTraction} = useSendTraction()
+  const contract = useContract('0xd4615151D874C97d50b413911b2ba52367042368', abi)
 
   const claim = useCallback(() => {
     if (contract) {
-      contract.claim().then((res:any) => {
-        console.log(res)
-      }).catch((error:any) => {
-        console.log(error)
+      const st = () => {
+        return contract.claim()
+      }
+      sendTraction({
+        callback: st,
+        type: SENDTXTYPE.CLAIM
       })
+      // contract.claim().then((res:any) => {
+      //   console.log(res)
+      // }).catch((error:any) => {
+      //   console.log(error)
+      // })
     }
   }, [contract])
   return (

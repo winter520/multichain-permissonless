@@ -50,10 +50,10 @@ export default function CopyHelper({toCopy, children}: { toCopy: string; childre
       {isCopied ? (
         <TransactionStatusText>
           <CheckCircle size={'16'} />
-          <TransactionStatusText>Copied</TransactionStatusText>
+          <TransactionStatusText css={{lineHeight: '16px'}}>Copied</TransactionStatusText>
         </TransactionStatusText>
       ) : (
-        <TransactionStatusText>
+        <TransactionStatusText css={{lineHeight: '16px'}}>
           <Copy size={'16'} />
         </TransactionStatusText>
       )}

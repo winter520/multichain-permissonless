@@ -1,11 +1,4 @@
-import {
-  Card,
-  Col,
-  Grid,
-  Row,
-  Text
-} from '@nextui-org/react'
-import {t} from 'i18next'
+
 import {
   useAllTransactions
 } from '@/state/transactions/hooks'
@@ -13,27 +6,33 @@ import {
   useTxnsDtilOpen
 } from '@/state/application/hooks'
 import { useEffect } from 'react'
+import TransactionDetail from './details'
+import {
+  useActiveReact
+} from '@/hooks/useActiveReact'
+
 
 export default function Transactions () {
+  const { chainId } = useActiveReact()
   const allTransactions = useAllTransactions()
-  const {hash, isOpenModal, onChangeViewDtil} = useTxnsDtilOpen()
-
+  const {hash} = useTxnsDtilOpen()
+  const tx = allTransactions?.[hash]
   useEffect(() => {
     console.log(hash)
     console.log(allTransactions)
   }, [hash, allTransactions])
 
   return (<>
-    <Card variant="bordered">
-      <Card.Header>
-        <Text>{t('From')}</Text>
-      </Card.Header>
-      <Card.Body>
-        <Row>
-          <Col span={4}>Tx Hash</Col>
-          <Col span={8}></Col>
-        </Row>
-      </Card.Body>
-    </Card>
+    <TransactionDetail
+      from={tx?.from}
+      to={tx?.from}
+      txid={tx?.hash}
+      swaptx={tx?.toAddress}
+      fromChain={chainId}
+      toChain={tx?.toChainId}
+      logoUrl={tx?.logoUrl}
+      symbol={tx?.symbol}
+      value={tx?.value}
+    />
   </>)
 }

@@ -9,6 +9,7 @@ import { MaxUint256 } from '@ethersproject/constants'
 import useInterval from "@/hooks/useInterval";
 
 import {
+  SENDTXTYPE,
   useSendTraction
 } from '@/hooks/useSendTraction'
 
@@ -73,6 +74,7 @@ export function useSwapCallback (
           // const txResut = await contract.swapout(...params)
           sendTraction({
             callback: s,
+            type: SENDTXTYPE.SWAP,
             toChainId: selectChain,
             recipient: recipient,
             inputAmount: typedValue,
