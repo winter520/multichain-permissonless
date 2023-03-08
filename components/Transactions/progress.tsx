@@ -70,20 +70,43 @@ const ProgressLine = styled('div', {
 
 const stepArr = [
   {state: 'Pending'},
+  {state: 'Send'},
   {state: 'Finalizing'},
   {state: 'zkproving'},
   {state: 'Success'},
 ]
 
 export default function ProgressView({
-  state
+  tx
 }: {
-  state: number
+  tx: any
 }) {
   const pecent = useMemo(() => {
     // return ((state + 1) / stepArr.length ) * 100 + 10
     return 0
-  }, [state, stepArr])
+  }, [tx, stepArr])
+
+  const state = useMemo(() => {
+    if (!tx?.info) {
+      return 0
+    } else {
+      const status = tx?.info?.status
+      if (!status) {
+        return 1
+      } else {
+        if ([0].includes(status)) {
+          return 1
+        } else if ([8].includes(status)) {
+          return 2
+        } else if ([9].includes(status)) {
+          return 3
+        } else if ([10].includes(status)) {
+          return 4
+        }
+      }
+    }
+  }, [tx])
+
   return (<>
     <ProgressBox>
       <ProgressLine>

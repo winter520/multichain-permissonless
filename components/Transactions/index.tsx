@@ -36,7 +36,7 @@ export default function Transactions () {
       value={tx?.value}
     />
     <Progress
-      state={1}
+      tx={tx}
     />
   </>)
 }

@@ -5,19 +5,53 @@ import {
   USE_VERSION,
   VERSION
 } from '@/config/constant'
+import axios from 'axios'
 
 export function getZKhash (hash:string) {
   return new Promise(resolve => {
-    const baseUrl = 'http://18.138.122.22:9999'
-    // fetch(`${baseUrl}/checkTransactionStatus/checkTransactionStatus/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`).then(res => res.json()).then(data => {
+    const baseUrl = 'https://zktestnetapi.multichain.org'
+    // fetch(`${baseUrl}/checkTransactionStatus/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`).then(res => res.json()).then(data => {
     //   console.log(data)
     // })
-    // Promise.all([
-    //   fetch(`${baseUrl}/checkTransactionStatus/checkTransactionStatus/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`),
-    //   fetch(`${baseUrl}/getTargetTransaction/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`),
-    // ]).then((res:any) => {
-    //   console.log(res)
-    // })
+    Promise.all([
+      axios.get(`${baseUrl}/checkTransactionStatus/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`),
+      axios.get(`${baseUrl}/getTargetTransaction/${hash}?key=b2362a491edb655be31315981110c3f6c68c914f63442db91481993725576c71`),
+    ]).then((res:any) => {
+      // console.log(res)
+      const sRes = res[0]
+      const data:any = {}
+      if (sRes?.data) {
+        // data.status = sRes?.data
+        switch (sRes?.data?.toString()) {
+          case  '1':
+            data.status = 0
+            break;
+          case  '2':
+            data.status = 8
+            break;
+          case  '3':
+            data.status = 9
+            break;
+          case  '4':
+            data.status = 10
+            break;
+        }
+      }
+
+      const hRes = res[1]
+      if (hRes?.data) {
+        data.swaptx = hRes?.data
+      }
+      resolve({
+        msg: 'Success',
+        info: data
+      })
+    }).catch((error:any) => {
+      resolve({
+        msg: 'Error',
+        error: error
+      })
+    })
   })
 }
 

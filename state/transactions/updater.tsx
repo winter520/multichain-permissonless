@@ -118,6 +118,7 @@ export default function Updater(): null {
           && tx?.version
         )  {
           getHashStateOnServer(hash).then((receipt:any) => {
+            console.log(receipt)
             if (receipt && receipt.msg === 'Success' && receipt.info) {
               dispatch(
                 updateTransaction({

@@ -72,7 +72,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(fromChain, txid, 'transaction')}>{txid ? shortenAddress(txid, 6) : '-'}</OutLink>
+              <OutLink href={getEtherscanLink(fromChain, txid, 'transaction')} target="_blank">{txid ? shortenAddress(txid, 6) : '-'}</OutLink>
               <CopyHelper toCopy={txid} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
@@ -81,7 +81,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('From')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(fromChain, from, 'address')}>{from ? shortenAddress(from, 6) : '-'}</OutLink>
+              <OutLink href={getEtherscanLink(fromChain, from, 'address')} target="_blank">{from ? shortenAddress(from, 6) : '-'}</OutLink>
               <CopyHelper toCopy={from} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
@@ -106,7 +106,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(toChain, swaptx, 'transaction')}>{swaptx ? shortenAddress(swaptx, 6) : '-'}</OutLink>
+              <OutLink href={getEtherscanLink(toChain, swaptx, 'transaction')} target="_blank">{swaptx ? shortenAddress(swaptx, 6) : '-'}</OutLink>
               <CopyHelper toCopy={swaptx} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
@@ -115,7 +115,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('To')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(toChain, to, 'address')}>{to ? shortenAddress(to, 6) : '-'}</OutLink>
+              <OutLink href={getEtherscanLink(toChain, to, 'address')} target="_blank">{to ? shortenAddress(to, 6) : '-'}</OutLink>
               <CopyHelper toCopy={to} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
