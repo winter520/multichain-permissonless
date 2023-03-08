@@ -15,7 +15,8 @@ const CopyIcon = styled('div', {
   display: 'flex',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  color: theme.colors.gray700.value
+  color: theme.colors.gray700.value,
+  whiteSpace: 'nowrap'
 })
 // const CopyIcon = styled(LinkStyledButton)`
 //   color: ${({ theme }) => theme.text3};

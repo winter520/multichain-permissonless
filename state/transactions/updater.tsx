@@ -17,7 +17,7 @@ import { AppDispatch, AppState } from '../index'
 import { checkedTransaction, finalizeTransaction, updateTransaction } from './actions'
 
 
-import {getHashCrosschain} from '@/hooks/useHashResults'
+import {getHashStateOnServer} from '@/hooks/useHashResults'
 import useInterval from '@/hooks/useInterval'
 
 // import {TERRA_MAIN_CHAINID} from '../../config/chainConfig/terra'
@@ -117,7 +117,7 @@ export default function Updater(): null {
           && (tx.receipt.status === 1 || typeof tx.receipt?.status === 'undefined')
           && tx?.version
         )  {
-          getHashCrosschain(hash).then((receipt:any) => {
+          getHashStateOnServer(hash).then((receipt:any) => {
             if (receipt && receipt.msg === 'Success' && receipt.info) {
               dispatch(
                 updateTransaction({
@@ -183,7 +183,7 @@ export default function Updater(): null {
     //       && (tx.receipt.status === 1 || typeof tx.receipt?.status === 'undefined')
     //       && tx?.version
     //     )  {
-    //       getHashCrosschain(hash).then((receipt:any) => {
+    //       getHashStateOnServer(hash).then((receipt:any) => {
     //         if (receipt && receipt.msg === 'Success' && receipt.info) {
     //           dispatch(
     //             updateTransaction({
@@ -250,7 +250,7 @@ export default function Updater(): null {
     //         && (tx.receipt.status === 1 || typeof tx.receipt?.status === 'undefined')
     //         && tx?.version
     //       )  {
-    //         getHashCrosschain(hash).then((receipt:any) => {
+    //         getHashStateOnServer(hash).then((receipt:any) => {
     //           if (receipt && receipt.msg === 'Success' && receipt.info) {
     //             dispatch(
     //               updateTransaction({

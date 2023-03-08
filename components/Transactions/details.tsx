@@ -23,6 +23,11 @@ import CopyHelper from '../AccountDetails/copy'
 
 import { getEtherscanLink } from '../../utils'
 
+const CardBody = styled(Card, {
+  height: '145px',
+  minHeight: '145px',
+})
+
 const ContentLabel = styled(Text, {
   textAlign: 'left',
   fontSize: '$sm'
@@ -49,7 +54,7 @@ export default function TransactionDetail ({
   value
 }: any) {
   return (<>
-    <Card variant="bordered">
+    <CardBody variant="bordered">
       <Card.Header>
         <Text b>{t('From')}</Text>
       </Card.Header>
@@ -67,7 +72,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(fromChain, txid, 'transaction')}>{shortenAddress(txid, 6)}</OutLink>
+              <OutLink href={getEtherscanLink(fromChain, txid, 'transaction')}>{txid ? shortenAddress(txid, 6) : '-'}</OutLink>
               <CopyHelper toCopy={txid} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
@@ -82,12 +87,12 @@ export default function TransactionDetail ({
           </Col>
         </Row>
       </Card.Body>
-    </Card>
-    <Card variant="bordered">
+    </CardBody>
+    <CardBody variant="bordered">
       <Card.Header>
         <Text b>{t('To')}</Text>
       </Card.Header>
-      <Card.Body css={{paddingTop: '0'}}>
+      <Card.Body css={{paddingTop: '0', minHeight: '140px'}}>
         <Row justify='space-between' align='center'>
           <Col span={4}>
             <Row justify='flex-start' align='center'>
@@ -101,7 +106,7 @@ export default function TransactionDetail ({
           <Col span={4}><ContentLabel>{t('TxHash')}:</ContentLabel></Col>
           <Col span={8}>
             <Row justify='flex-end' align='center'>
-              <OutLink href={getEtherscanLink(toChain, swaptx, 'transaction')}>{shortenAddress(swaptx, 6)}</OutLink>
+              <OutLink href={getEtherscanLink(toChain, swaptx, 'transaction')}>{swaptx ? shortenAddress(swaptx, 6) : '-'}</OutLink>
               <CopyHelper toCopy={swaptx} style={{marginLeft: '10px'}} />
             </Row>
           </Col>
@@ -116,6 +121,6 @@ export default function TransactionDetail ({
           </Col>
         </Row>
       </Card.Body>
-    </Card>
+    </CardBody>
   </>)
 }

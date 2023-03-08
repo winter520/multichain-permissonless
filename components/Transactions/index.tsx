@@ -7,6 +7,7 @@ import {
 } from '@/state/application/hooks'
 import { useEffect } from 'react'
 import TransactionDetail from './details'
+import Progress from './progress'
 import {
   useActiveReact
 } from '@/hooks/useActiveReact'
@@ -27,12 +28,15 @@ export default function Transactions () {
       from={tx?.from}
       to={tx?.from}
       txid={tx?.hash}
-      swaptx={tx?.toAddress}
+      swaptx={tx?.info?.swaptx}
       fromChain={chainId}
       toChain={tx?.toChainId}
       logoUrl={tx?.logoUrl}
       symbol={tx?.symbol}
       value={tx?.value}
+    />
+    <Progress
+      state={1}
     />
   </>)
 }
