@@ -74,7 +74,10 @@ const OptionCard = styled('div', {
 // `
 
 const OptionCardLeft = styled('div', {
-  height: '100%'
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center'
 })
 // const OptionCardLeft = styled.div`
 //   ${({ theme }) => theme.flexColumnNoWrap};
@@ -83,6 +86,7 @@ const OptionCardLeft = styled('div', {
 // `
 
 const OptionCardClickable:any = styled(Button, {
+  margin: '5px 0',
   variants: {
     size: {
       wallet: {
@@ -144,7 +148,7 @@ const CircleWrapper = styled('div', {
 // `
 
 const HeaderText = styled('div', {
-
+  marginRight: '5px!important',
 })
 // const HeaderText = styled.div`
 //   ${({ theme }) => theme.flexRowNoWrap};

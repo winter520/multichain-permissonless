@@ -17,7 +17,7 @@ export const FTM_MAIN_EXPLORER = 'https://ftmscan.com'
 
 export const FTM_TEST_CHAINID = ChainId.FTM_TEST
 export const FTM_TESTNET = getLocalRPC(FTM_TEST_CHAINID, 'https://rpc.testnet.fantom.network')
-export const FTM_TEST_EXPLORER = 'https://testnet.ftmscan.com/'
+export const FTM_TEST_EXPLORER = 'https://testnet.ftmscan.com'
 
 const symbol = 'FTM'
 

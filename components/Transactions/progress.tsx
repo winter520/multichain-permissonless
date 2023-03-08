@@ -92,7 +92,7 @@ export default function ProgressView({
       <ProgressContent>
         {
           stepArr.map((item, index) => {
-            return <ProgressState>
+            return <ProgressState key={index}>
               <ProgressStateStep className={state === index ? 'active' : ''}>{index + 1}</ProgressStateStep>
               <ProgressStateText className={state === index ? 'active' : ''}>{item.state}</ProgressStateText>
             </ProgressState>

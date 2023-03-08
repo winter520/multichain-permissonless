@@ -8,7 +8,9 @@ import { injected } from '@/connectors'
 // import Loader from '../Loader'
 import {
   Loading,
-  styled
+  styled,
+  Row,
+  Text
 } from "@nextui-org/react"
 
 const PendingSection = styled('div', {
@@ -119,10 +121,10 @@ export default function PendingView({
               </ErrorButton>
             </ErrorGroup>
           ) : (
-            <>
-              <Loading />
-              Initializing...
-            </>
+            <Row justify='flex-start' align='center'>
+              <Text color="secondary">Initializing</Text>
+              <Loading size='sm' type="points" color="secondary" />
+            </Row>
           )}
         </LoadingWrapper>
       </LoadingMessage>

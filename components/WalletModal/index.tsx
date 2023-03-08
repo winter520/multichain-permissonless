@@ -40,7 +40,7 @@ import {
 
 const OptionGrid = styled('div', {
   display: 'grid',
-  gridGap: '10px'
+  // gridGap: '10px'
 })
 export default function WalletModal({
   pendingTransactions,

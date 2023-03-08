@@ -12,7 +12,7 @@ export function getEtherscanLink(
   data: string,
   type: 'transaction' | 'token' | 'address' | 'block'
 ): string {
-
+  if (!chainId || !data || !type) return ''
   switch (type) {
     case 'transaction': {
       const url = config.chainInfo[chainId].lookHash + data
